@@ -6,13 +6,14 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
+import pl.lodz.p.security.interfaces.IJwsProvider;
 
 import javax.crypto.SecretKey;
 import java.security.Key;
 
 @Component
 @PropertySource("classpath:application.properties")
-public class JwsProvider {
+public class JwsProvider implements IJwsProvider {
 
     @Value("${app.jws_secret}")
     private String secret;

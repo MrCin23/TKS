@@ -18,6 +18,7 @@ import pl.lodz.p.model.user.Client;
 import pl.lodz.p.model.user.User;
 import pl.lodz.p.security.JwsProvider;
 import pl.lodz.p.security.JwtTokenProvider;
+import pl.lodz.p.security.interfaces.IJwsProvider;
 import pl.lodz.p.service.IUserService;
 import pl.lodz.p.service.implementation.UserService;
 
@@ -32,7 +33,7 @@ import java.util.Map;
 //@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
-    private JwsProvider jwsProvider;
+    private IJwsProvider jwsProvider;
     private IUserService clientServiceImplementation;
 
     @PostMapping//tested
@@ -53,17 +54,13 @@ public class UserController {
 
     @GetMapping//tested
     public ResponseEntity<Object> getAllUsers() {
+        List<User> users;
         try {
-            List<User> users;
-            try {
-                users = clientServiceImplementation.getAllUsers();
-            } catch (RuntimeException ex) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No users found");
-            }
-            return ResponseEntity.status(HttpStatus.OK).body(users);
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+            users = clientServiceImplementation.getAllUsers();
+        } catch (RuntimeException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No users found");
         }
+        return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
     @GetMapping("/{uuid}")
