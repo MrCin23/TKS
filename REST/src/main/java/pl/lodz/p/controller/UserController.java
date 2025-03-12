@@ -18,6 +18,7 @@ import pl.lodz.p.model.user.Client;
 import pl.lodz.p.model.user.User;
 import pl.lodz.p.security.JwsProvider;
 import pl.lodz.p.security.JwtTokenProvider;
+import pl.lodz.p.service.IUserService;
 import pl.lodz.p.service.implementation.UserService;
 
 import java.util.List;
@@ -32,7 +33,7 @@ import java.util.Map;
 public class UserController {
 
     private JwsProvider jwsProvider;
-    private UserService clientServiceImplementation;
+    private IUserService clientServiceImplementation;
 
     @PostMapping//tested
     public ResponseEntity<Object> createUser(@Valid @RequestBody User user, BindingResult bindingResult) {
@@ -91,8 +92,6 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getAllErrors());
             }
             User user = clientServiceImplementation.getUser(uuid.uuid());
-            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"+ifMatchHeader+"\n\n\n\n"+
-                    jwsProvider.validateJws(ifMatchHeader, user.getEntityId().getUuid().toString(), user.getUsername()));
 
             if (ifMatchHeader == null || !jwsProvider.validateJws(ifMatchHeader, user.getEntityId().getUuid().toString(), user.getUsername())) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
