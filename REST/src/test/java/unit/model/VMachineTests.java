@@ -63,5 +63,6 @@ public class VMachineTests {
         Assertions.assertEquals(80, other.getActualRentalPrice());
         other.setCPUNumber(8);
         Assertions.assertEquals(40, other.getActualRentalPrice());
+
     }
 }
