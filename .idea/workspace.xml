@@ -9,15 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f9ba8b0f-eaff-41dd-b297-a165c8d5cc1e" name="Changes" comment="test from intellij">
-      <change afterPath="$PROJECT_DIR$/REST/src/main/java/pl/lodz/p/security/interfaces/IJwsProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="f9ba8b0f-eaff-41dd-b297-a165c8d5cc1e" name="Changes" comment="tests">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/REST/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/REST/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/REST/src/main/java/pl/lodz/p/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/REST/src/main/java/pl/lodz/p/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/REST/src/main/java/pl/lodz/p/security/JwsProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/REST/src/main/java/pl/lodz/p/security/JwsProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/REST/src/test/java/unit/controllers/ClientControllerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/REST/src/test/java/unit/controllers/ClientControllerTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Hexagonal/src/main/java/pl/lodz/p/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/REST/src/main/java/pl/lodz/p/controller/UserController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/REST/src/main/java/pl/lodz/p/security/JwsProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/REST/src/main/java/pl/lodz/p/security/interfaces/IJwsProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/REST/src/test/java/unit/controllers/ClientControllerTests.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +72,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Piotr/Desktop/MKWA_SR_1015_01",
+    "last_opened_file_path": "C:/Users/Piotr/Desktop/SEM6/MKWA_SR_1015_01/Hexagonal",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -209,7 +207,8 @@
       <workItem from="1737645405335" duration="52000" />
       <workItem from="1741814411313" duration="97000" />
       <workItem from="1741814848220" duration="87000" />
-      <workItem from="1741820595279" duration="27000" />
+      <workItem from="1741820595279" duration="79000" />
+      <workItem from="1742333686515" duration="144000" />
     </task>
     <task id="LOCAL-00001" summary="test from intellij">
       <option name="closed" value="true" />
@@ -219,7 +218,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741814437161</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="tests">
+      <option name="closed" value="true" />
+      <created>1741820662112</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1741820662112</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -238,6 +245,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test from intellij" />
-    <option name="LAST_COMMIT_MESSAGE" value="test from intellij" />
+    <MESSAGE value="tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="tests" />
   </component>
 </project>

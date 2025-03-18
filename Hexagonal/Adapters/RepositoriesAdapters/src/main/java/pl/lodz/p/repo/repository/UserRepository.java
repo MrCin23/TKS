@@ -1,4 +1,4 @@
-package pl.lodz.p.repository;
+package pl.lodz.p.repo.repository;
 
 import com.mongodb.DuplicateKeyException;
 import com.mongodb.MongoCommandException;
@@ -9,8 +9,8 @@ import com.mongodb.client.model.*;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.springframework.stereotype.Repository;
-import pl.lodz.p.model.MongoUUID;
-import pl.lodz.p.model.user.User;
+import pl.lodz.p.repo.MongoUUIDEnt;
+import pl.lodz.p.repo.user.UserEnt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 @Repository
 public class UserRepository extends AbstractMongoRepository {
     private final String collectionName = "users";
-    private final MongoCollection<User> users;
+    private final MongoCollection<UserEnt> users;
 
 
     public UserRepository() {
@@ -90,7 +90,7 @@ public class UserRepository extends AbstractMongoRepository {
         CreateCollectionOptions createCollectionOptions = new CreateCollectionOptions() .validationOptions (validationOptions);
         this.getDatabase().createCollection(collectionName, createCollectionOptions);
 
-        this.users = this.getDatabase().getCollection(collectionName, User.class);
+        this.users = this.getDatabase().getCollection(collectionName, UserEnt.class);
         this.getDatabase().getCollection(collectionName).createIndex(
                 new Document("username", 1),
                 new IndexOptions().unique(true)
@@ -100,7 +100,7 @@ public class UserRepository extends AbstractMongoRepository {
     //-------------METHODS---------------------------------------
     //TODO dorobić metody z diagramu
 
-    public void update(MongoUUID uuid, Map<String, Object> fieldsToUpdate) {
+    public void update(MongoUUIDEnt uuid, Map<String, Object> fieldsToUpdate) {
         ClientSession session = getMongoClient().startSession();
         try {
             session.startTransaction();
@@ -128,7 +128,7 @@ public class UserRepository extends AbstractMongoRepository {
         }
     }
 
-    public void update(MongoUUID uuid, String field, Object value) {
+    public void update(MongoUUIDEnt uuid, String field, Object value) {
         ClientSession session = getMongoClient().startSession();
         try {
             session.startTransaction();
@@ -152,7 +152,7 @@ public class UserRepository extends AbstractMongoRepository {
         }
     }
 
-    public void add(User user) {
+    public void add(UserEnt user) {
         ClientSession session = getMongoClient().startSession();
         try {
             session.startTransaction();
@@ -173,7 +173,7 @@ public class UserRepository extends AbstractMongoRepository {
         }
     }
 
-    public void remove(User user) {
+    public void remove(UserEnt user) {
         users.findOneAndDelete(Filters.eq("_id", user.getEntityId()));
     }
 
@@ -181,21 +181,21 @@ public class UserRepository extends AbstractMongoRepository {
         return users.find().into(new ArrayList<Object>()).size();
     }
 
-    public List<User> getUsers() {
+    public List<UserEnt> getUsers() {
         return users.find().into(new ArrayList<>());
     }
 
-    public User getUserByID(MongoUUID uuid) {
+    public UserEnt getUserByID(MongoUUIDEnt uuid) {
         Bson filter = Filters.eq("_id", uuid.getUuid());
         return users.find(filter).first();
     }
 
-    public User getUserByUsername(String username) {
+    public UserEnt getUserByUsername(String username) {
         Bson filter = Filters.eq("username", username);
         return users.find(filter).first();
     }
 
-    public List<User> getUsersByUsername(String username) {
+    public List<UserEnt> getUsersByUsername(String username) {
         Bson filter = Filters.regex("username", ".*" + Pattern.quote(username) + ".*", "i"); // "i" for case-insensitive search
         return users.find(filter).into(new ArrayList<>());
     }

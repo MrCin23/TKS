@@ -1,4 +1,4 @@
-package pl.lodz.p.repository;
+package pl.lodz.p.repo.repository;
 
 import com.mongodb.MongoCommandException;
 import com.mongodb.client.ClientSession;
@@ -8,11 +8,13 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import org.bson.conversions.Bson;
 import org.springframework.stereotype.Repository;
-import pl.lodz.p.model.MongoUUID;
-import pl.lodz.p.model.Rent;
-import pl.lodz.p.model.VMachine;
-import pl.lodz.p.model.user.Client;
-import pl.lodz.p.model.user.User;
+import pl.lodz.p.port.repository.RentPort;
+import pl.lodz.p.repo.MongoUUIDEnt;
+import pl.lodz.p.repo.RentEnt;
+import pl.lodz.p.repo.VMachineEnt;
+import pl.lodz.p.repo.user.ClientEnt;
+import pl.lodz.p.repo.user.UserEnt;
+import pl.lodz.p.repo.repository.AbstractMongoRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,10 +23,10 @@ import java.util.Map;
 import java.util.UUID;
 
 @Repository
-public class RentRepository extends AbstractMongoRepository {
-    private final MongoCollection<Rent> rents;
-    private final MongoCollection<VMachine> vMachines;
-    private final MongoCollection<User> clients;
+public class RentRepository extends AbstractMongoRepository implements RentPort {
+    private final MongoCollection<RentEnt> rents;
+    private final MongoCollection<VMachineEnt> vMachines;
+    private final MongoCollection<UserEnt> clients;
 
     public RentRepository() {
         super.initDbConnection();
@@ -37,20 +39,20 @@ public class RentRepository extends AbstractMongoRepository {
         }
         this.getDatabase().createCollection("rents");
 
-        this.rents = this.getDatabase().getCollection("rents", Rent.class);
-        this.vMachines = this.getDatabase().getCollection("vMachines", VMachine.class);
-        this.clients = this.getDatabase().getCollection("users", User.class);
+        this.rents = this.getDatabase().getCollection("rents", RentEnt.class);
+        this.vMachines = this.getDatabase().getCollection("vMachines", VMachineEnt.class);
+        this.clients = this.getDatabase().getCollection("users", UserEnt.class);
     }
 
-    public void endRent(MongoUUID uuid, LocalDateTime endTime){
+    public void endRent(MongoUUIDEnt uuid, LocalDateTime endTime){
         ClientSession session = getMongoClient().startSession();
         try {
             session.startTransaction();
 
             Bson filter1 = Filters.eq("_id", uuid.getUuid());
-            Rent rent = rents.find(filter1).first();
+            RentEnt rent = rents.find(filter1).first();
             if(rent == null){
-                throw new RuntimeException("Rent not found");
+                throw new RuntimeException("RentEnt not found");
             } else if(rent.getEndTime() == null) {
                 rent.endRent(endTime);
                 Bson update1 = Updates.set("endTime", rent.getEndTime());
@@ -60,14 +62,14 @@ public class RentRepository extends AbstractMongoRepository {
             }
 
             if(endTime.isBefore(rent.getBeginTime())){
-                throw new RuntimeException("Rent cannot be ended before it has even begun! Aborting transaction");
+                throw new RuntimeException("RentEnt cannot be ended before it has even begun! Aborting transaction");
             }
 
             Bson filter = Filters.eq("_id", rent.getVMachine().getEntityId().getUuid().toString());
             Bson update = Updates.inc("isRented", -1);
             vMachines.updateOne(session, filter, update);
 
-            Bson filter2 = Filters.eq("_id", rent.getClient().getEntityId().getUuid());
+            Bson filter2 = Filters.eq("_id", rent.getClientEnt().getEntityId().getUuid());
             Bson update2 = Updates.inc("currentRents", -1);
             vMachines.updateOne(session, filter2, update2);
             clients.updateOne(session, filter2, update2);
@@ -83,19 +85,19 @@ public class RentRepository extends AbstractMongoRepository {
 
     }
 
-    public void add(Rent rent) {
+    public void add(RentEnt rent) {
         ClientSession session = getMongoClient().startSession();
-        User client;
+        UserEnt client;
         try {
             session.startTransaction();
 //            VMachine vm = getVMachineById(rent.getVMachine().getEntityId().getUuid());
 //            if(vm.isRented()>0){
 //                throw new RuntimeException("I really shouldnt have to do this");
 //            }
-            Bson clientFilter = Filters.eq("_id", rent.getClient().getEntityId().getUuid());
+            Bson clientFilter = Filters.eq("_id", rent.getClientEnt().getEntityId().getUuid());
             Bson updateClientFilter = Updates.inc("currentRents", 1);
             clients.updateOne(session, clientFilter, updateClientFilter);
-            Bson currentRentsFilter = Filters.lt("currentRents", rent.getClient().getClientType().getMaxRentedMachines());
+            Bson currentRentsFilter = Filters.lt("currentRents", rent.getClientEnt().getClientTypeEnt().getMaxRentedMachines());
             client = clients.find(Filters.and(clientFilter, currentRentsFilter)).first();
             if(client == null || !client.isActive()){
                 throw new RuntimeException("Client doesnt exist or is not active");
@@ -122,26 +124,26 @@ public class RentRepository extends AbstractMongoRepository {
         return rents.find().into(new ArrayList<>()).size();
     }
 
-    public List<Rent> getRents(boolean active) {
+    public List<RentEnt> getRents(boolean active) {
         return rents.find().into(new ArrayList<>());
     }
 
-//    public List<Rent> getClientRents(MongoUUID clientId) {
+//    public List<RentEnt> getClientRents(MongoUUID clientId) {
 //        Bson filter1 = Filters.eq("client._id", clientId.getUuid());
 //        return rents.find(filter1).into(new ArrayList<>());
 //    }
 
-    public List<Rent> getClientRents(String username) {
+    public List<RentEnt> getClientRents(String username) {
         Bson filter1 = Filters.eq("client.username", username);
         return rents.find(filter1).into(new ArrayList<>());
     }
 
-    public List<Rent> getClientRents(UUID uuid) {
+    public List<RentEnt> getClientRents(UUID uuid) {
         Bson filter1 = Filters.eq("client._id", uuid);
         return rents.find(filter1).into(new ArrayList<>());
     }
 
-    public List<Rent> getClientRents(MongoUUID clientId, boolean active) {
+    public List<RentEnt> getClientRents(MongoUUIDEnt clientId, boolean active) {
         Bson filter1 = Filters.eq("client._id", clientId.getUuid());
         Bson filter2;
         if(active){
@@ -153,7 +155,7 @@ public class RentRepository extends AbstractMongoRepository {
         return rents.find(filter3).into(new ArrayList<>());
     }
 
-    public List<Rent> getVMachineRents(MongoUUID vmId, boolean active) {
+    public List<RentEnt> getVMachineRents(MongoUUIDEnt vmId, boolean active) {
         Bson filter1 = Filters.eq("vMachine._id", vmId.getUuid().toString());
         Bson filter2;
         if(active){
@@ -166,39 +168,39 @@ public class RentRepository extends AbstractMongoRepository {
         return rents.find(filter3).into(new ArrayList<>());
     }
 
-    public List<Rent> getRents() {
+    public List<RentEnt> getRents() {
         return rents.find().into(new ArrayList<>());
     }
 
-    public Rent getRentByID(MongoUUID uuid) {
+    public RentEnt getRentByID(MongoUUIDEnt uuid) {
         Bson filter = Filters.eq("_id", uuid.getUuid());
         return rents.find(filter).first();
     }
 
-    public List<Rent> findBy(String field, Object value) {
+    public List<RentEnt> findBy(String field, Object value) {
         return rents.find(Filters.eq(field, value)).into(new ArrayList<>());
     }
 
-    public List<Rent> findByNegation(String field, Object value) {
+    public List<RentEnt> findByNegation(String field, Object value) {
         return rents.find(Filters.ne(field, value)).into(new ArrayList<>());
     }
 
-    public void remove(MongoUUID uuid) {
+    public void remove(MongoUUIDEnt uuid) {
         ClientSession session = getMongoClient().startSession();
-        Client client;
+        ClientEnt client;
         try {
             Bson idFilter = Filters.eq("_id", uuid.getUuid());
             Bson activeFilter = Filters.eq("endTime", null);
             Bson filter = Filters.and(idFilter, activeFilter);
-            Rent rentToDelete = rents.find(filter).first();
+            RentEnt rentToDelete = rents.find(filter).first();
             if (rentToDelete != null) {
                 Bson clientUpdate = Updates.inc("currentRents", -1);
                 Bson vMachineUpdate = Updates.inc("isRented", -1);
-                clients.updateOne(session, Filters.eq("_id", rentToDelete.getClient().getEntityId().getUuid()), clientUpdate);
+                clients.updateOne(session, Filters.eq("_id", rentToDelete.getClientEnt().getEntityId().getUuid()), clientUpdate);
                 vMachines.updateOne(session, Filters.eq("_id", rentToDelete.getVMachine().getEntityId().getUuid().toString()), vMachineUpdate);
                 rents.deleteOne(filter);
             } else {
-                throw new RuntimeException("Rent do not exist");
+                throw new RuntimeException("RentEnt do not exist");
             }
         }
         catch (MongoCommandException ex) {

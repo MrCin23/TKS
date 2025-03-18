@@ -1,4 +1,4 @@
-package pl.lodz.p.repository;
+package pl.lodz.p.repo.repository;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -12,12 +12,10 @@ import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.Conventions;
 import org.bson.codecs.pojo.PojoCodecProvider;
-import pl.lodz.p.codec.CodecProvider;
-import pl.lodz.p.model.AppleArch;
-import pl.lodz.p.model.user.*;
-import pl.lodz.p.model.x86;
-import pl.lodz.p.model.*;
-import pl.lodz.p.model.user.*;
+import pl.lodz.p.repo.codec.CodecProvider;
+import pl.lodz.p.repo.AppleArchEnt;
+import pl.lodz.p.repo.user.*;
+import pl.lodz.p.repo.x86Ent;
 
 @Getter
 public abstract class AbstractMongoRepository implements AutoCloseable {
@@ -33,8 +31,8 @@ private final ConnectionString connectionString = new ConnectionString(
 //                    .conventions(List.of(Conventions.ANNOTATION_CONVENTION)).build());
     private final CodecRegistry pojoCodecRegistry = CodecRegistries.fromProviders(
             PojoCodecProvider.builder().automatic(true)
-                    .register(Premium.class).register(Standard.class).register(x86.class).register(AppleArch.class)
-                    .register(Client.class).register(Admin.class).register(ResourceManager.class)
+                    .register(PremiumEnt.class).register(StandardEnt.class).register(x86Ent.class).register(AppleArchEnt.class)
+                    .register(ClientEnt.class).register(AdminEnt.class).register(ResourceManagerEnt.class)
                     .conventions(Conventions.DEFAULT_CONVENTIONS).build());
     private MongoClient mongoClient;
     private MongoDatabase database;

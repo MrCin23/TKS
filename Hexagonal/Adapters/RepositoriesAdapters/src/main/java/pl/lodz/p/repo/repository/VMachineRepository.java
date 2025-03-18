@@ -1,4 +1,4 @@
-package pl.lodz.p.repository;
+package pl.lodz.p.repo.repository;
 
 import com.mongodb.MongoCommandException;
 import com.mongodb.client.ClientSession;
@@ -8,8 +8,8 @@ import com.mongodb.client.model.*;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.springframework.stereotype.Repository;
-import pl.lodz.p.model.MongoUUID;
-import pl.lodz.p.model.VMachine;
+import pl.lodz.p.repo.MongoUUIDEnt;
+import pl.lodz.p.repo.VMachineEnt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.Objects;
 @Repository
 public class VMachineRepository extends AbstractMongoRepository {
     private final String collectionName = "vMachines";
-    private final MongoCollection<VMachine> vMachines;
+    private final MongoCollection<VMachineEnt> vMachines;
 
     public VMachineRepository() {
         super.initDbConnection();
@@ -73,13 +73,13 @@ public class VMachineRepository extends AbstractMongoRepository {
         CreateCollectionOptions createCollectionOptions = new CreateCollectionOptions() .validationOptions (validationOptions);
         this.getDatabase().createCollection(collectionName, createCollectionOptions);
 
-        this.vMachines = this.getDatabase().getCollection(collectionName, VMachine.class);
+        this.vMachines = this.getDatabase().getCollection(collectionName, VMachineEnt.class);
     }
 
     //-------------METHODS---------------------------------------
     //TODO dorobić metody z diagramu
 
-    public void update(MongoUUID uuid, Map<String, Object> fieldsToUpdate) {
+    public void update(MongoUUIDEnt uuid, Map<String, Object> fieldsToUpdate) {
         ClientSession session = getMongoClient().startSession();
         try {
             session.startTransaction();
@@ -107,7 +107,7 @@ public class VMachineRepository extends AbstractMongoRepository {
         }
     }
 
-    public void update(MongoUUID uuid, String field, Object value) {
+    public void update(MongoUUIDEnt uuid, String field, Object value) {
         ClientSession session = getMongoClient().startSession();
         try {
             session.startTransaction();
@@ -131,13 +131,13 @@ public class VMachineRepository extends AbstractMongoRepository {
         }
     }
 
-    public void add(VMachine vMachine) {
+    public void add(VMachineEnt vMachine) {
         vMachines.insertOne(vMachine);
     }
 
-    public void remove(VMachine vMachine) {
+    public void remove(VMachineEnt vMachine) {
         Bson filter = Filters.eq("_id", vMachine.getEntityId().getUuid().toString());
-        VMachine deletedVMachine = vMachines.findOneAndDelete(filter);
+        VMachineEnt deletedVMachine = vMachines.findOneAndDelete(filter);
     }
 
     public long size() {
@@ -152,11 +152,11 @@ public class VMachineRepository extends AbstractMongoRepository {
         return 0;
     }
 
-    public List<VMachine> getVMachines() {
+    public List<VMachineEnt> getVMachines() {
         return vMachines.find().into(new ArrayList<>());
     }
 
-    public VMachine getVMachineByID(MongoUUID uuid) {
+    public VMachineEnt getVMachineByID(MongoUUIDEnt uuid) {
         Bson filter = Filters.eq("_id", uuid.getUuid().toString());
         return vMachines.find(filter).first();
     }

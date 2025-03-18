@@ -1,19 +1,14 @@
 package pl.lodz.p.model;
 
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.bson.codecs.pojo.annotations.BsonCreator;
-import org.bson.codecs.pojo.annotations.BsonDiscriminator;
-import org.bson.codecs.pojo.annotations.BsonProperty;
 
 @Getter
 @Setter
-@BsonDiscriminator(value="x86", key="_clazz")
 public class x86 extends VMachine {
-    @BsonProperty("CPUManufacturer")
-    @NotNull(message = "CPU manufacturer cannot be null")
+
+
     private String CPUManufacturer;
 
     public x86(int CPUNumber, String ramSize, String CPUManufacturer) {
@@ -26,9 +21,9 @@ public class x86 extends VMachine {
         super();
     }
 
-    @BsonCreator
-    public x86(@BsonProperty("_id") MongoUUID uuid, @BsonProperty("CPUNumber") int CPUNumber, @BsonProperty("ramSize") String ramSize,
-               @BsonProperty("isRented") int isRented, @BsonProperty("CPUManufacturer") String CPUManufacturer) {
+
+    public x86(MongoUUID uuid, int CPUNumber, String ramSize,
+               int isRented, String CPUManufacturer) {
         super(uuid, CPUNumber, ramSize, isRented);
         this.CPUManufacturer = CPUManufacturer;
         this.actualRentalPrice = getActualRentalPrice();

@@ -1,8 +1,6 @@
 package pl.lodz.p.repo;
 
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,16 +13,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        property = "_clazz"
-)
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = AppleArchEnt.class, name = "applearch"),
-        @JsonSubTypes.Type(value = x86Ent.class, name = "x86")
-})
-public abstract class VMachineEnt extends AbstractEnt { //FIXME z jakiegoś powodu nie było tutaj abstract. Możliwe że coś się wywróci
-
+public abstract class VMachineEnt extends AbstractEnt {
     @BsonProperty("CPUNumber")
     @NotNull(message = "CPU number cannot be null")
     @Min(1)
