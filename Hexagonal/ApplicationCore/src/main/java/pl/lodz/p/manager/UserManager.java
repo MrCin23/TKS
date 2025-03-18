@@ -8,7 +8,6 @@ import pl.lodz.p.model.MongoUUID;
 import pl.lodz.p.model.user.User;
 import pl.lodz.p.repository.UserRepository;
 
-import java.util.List;
 import java.util.Map;
 
 @Getter

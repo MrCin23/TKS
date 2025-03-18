@@ -8,9 +8,7 @@ import pl.lodz.p.model.MongoUUID;
 import pl.lodz.p.model.Rent;
 import pl.lodz.p.model.VMachine;
 import pl.lodz.p.model.user.Client;
-import pl.lodz.p.model.user.Role;
 import pl.lodz.p.model.user.Standard;
-import pl.lodz.p.model.user.User;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

@@ -9,12 +9,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.lodz.p.dto.UuidDTO;
 import pl.lodz.p.model.VMachine;
-import pl.lodz.p.model.VMachine;
 import pl.lodz.p.service.implementation.VMachineService;
 
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @AllArgsConstructor
 @RestController

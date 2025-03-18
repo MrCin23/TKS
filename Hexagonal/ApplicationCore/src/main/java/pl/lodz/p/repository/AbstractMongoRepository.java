@@ -13,6 +13,9 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.Conventions;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import pl.lodz.p.codec.CodecProvider;
+import pl.lodz.p.model.AppleArch;
+import pl.lodz.p.model.user.*;
+import pl.lodz.p.model.x86;
 import pl.lodz.p.model.*;
 import pl.lodz.p.model.user.*;
 

@@ -9,7 +9,6 @@ import com.mongodb.client.model.*;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.springframework.stereotype.Repository;
-import pl.lodz.p.model.user.Client;
 import pl.lodz.p.model.MongoUUID;
 import pl.lodz.p.model.user.User;
 
@@ -36,7 +35,7 @@ public class UserRepository extends AbstractMongoRepository {
         }
 //        Bson currentRentsType = Filters.type("currentRents", BsonType.INT32);
 //        Bson currentRentsMin  = Filters.gte("currentRents", 0);
-//        Bson currentRentsMax  = Filters.expr(Filters.lte("$currentRents", "$clientType.maxRentedMachines"));
+//        Bson currentRentsMax  = Filters.expr(Filters.lte("$currentRents", "$clientTypeEnt.maxRentedMachines"));
 
         ValidationOptions validationOptions = new ValidationOptions().validator(
                         Document.parse("""
@@ -50,7 +49,7 @@ public class UserRepository extends AbstractMongoRepository {
                         "active" : {
                             "bsonType": "bool"
                         }
-                        "clientType" : {
+                        "clientTypeEnt" : {
                             "bsonType": "object"
                             "required": [ "_clazz", "maxRentedMachines", "name" ],
                             "properties": {

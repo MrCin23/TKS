@@ -5,10 +5,8 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import pl.lodz.p.model.AbstractEntityMgd;
 import pl.lodz.p.model.MongoUUID;
 //import org.springframework.data.mongodb.core.mapping.Document;
 

@@ -4,21 +4,17 @@ import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.lodz.p.dto.EndRentDTO;
 import pl.lodz.p.dto.RentDTO;
 import pl.lodz.p.dto.UuidDTO;
 import pl.lodz.p.model.Rent;
 import pl.lodz.p.service.implementation.RentService;
 
-import javax.naming.Binding;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @AllArgsConstructor
 @RestController

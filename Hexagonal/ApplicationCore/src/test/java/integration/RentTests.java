@@ -52,8 +52,8 @@ public class RentTests {
                     "username": "JDoe",
                     "emailAddress": "john.doe@example.com",
                     "_clazz": "Client",
-                    "role": "CLIENT",
-                    "clientType": {
+                    "roleEnt": "CLIENT",
+                    "clientTypeEnt": {
                         "_clazz": "standard",
                         "entityId": {
                             "uuid": "5bd23f3d-0be9-41d7-9cd8-0ae77e6f463d"
@@ -70,7 +70,7 @@ public class RentTests {
                 .contentType(ContentType.JSON)
                 .body(clientJson)
                 .when()
-                .post("/client")
+                .post("/clientEnt")
                 .then()
                 .statusCode(201);
     }
@@ -86,7 +86,7 @@ public class RentTests {
                 .contentType(ContentType.JSON)
                 .body(payloadLogin)
                 .when()
-                .post("/client/login")
+                .post("/clientEnt/login")
                 .then()
                 .statusCode(200)
                 .extract()
@@ -104,7 +104,7 @@ public class RentTests {
                 .contentType(ContentType.JSON)
                 .body(payloadLogin)
                 .when()
-                .post("/client/login")
+                .post("/clientEnt/login")
                 .then()
                 .statusCode(200)
                 .extract()
@@ -135,7 +135,7 @@ public class RentTests {
 
     @Test
     public void testCreateRent() {
-        //create client
+        //create clientEnt
         createClient();
         //create vm
         createVM();
@@ -158,7 +158,7 @@ public class RentTests {
 
     @Test
     public void testRentRented(){
-        //create client
+        //create clientEnt
         createClient();
         //create vm
         createVM();

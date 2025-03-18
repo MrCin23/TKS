@@ -7,8 +7,12 @@ import org.bson.Document;
 import pl.lodz.p.manager.UserManager;
 import pl.lodz.p.manager.RentManager;
 import pl.lodz.p.manager.VMachineManager;
-import pl.lodz.p.model.*;
+import pl.lodz.p.model.AppleArch;
+import pl.lodz.p.model.Rent;
+import pl.lodz.p.model.VMachine;
 import pl.lodz.p.model.user.*;
+import pl.lodz.p.model.x86;
+
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

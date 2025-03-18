@@ -8,7 +8,9 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import org.bson.conversions.Bson;
 import org.springframework.stereotype.Repository;
-import pl.lodz.p.model.*;
+import pl.lodz.p.model.MongoUUID;
+import pl.lodz.p.model.Rent;
+import pl.lodz.p.model.VMachine;
 import pl.lodz.p.model.user.Client;
 import pl.lodz.p.model.user.User;
 

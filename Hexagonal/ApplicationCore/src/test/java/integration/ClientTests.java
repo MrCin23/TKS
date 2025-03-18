@@ -23,8 +23,8 @@ public class ClientTests {
                     "username": "JDoe",
                     "emailAddress": "john.doe@example.com",
                     "_clazz": "Client",
-                    "role": "CLIENT",
-                    "clientType": {
+                    "roleEnt": "CLIENT",
+                    "clientTypeEnt": {
                         "_clazz": "standard",
                         "entityId": {
                             "uuid": "5bd23f3d-0be9-41d7-9cd8-0ae77e6f463d"
@@ -42,7 +42,7 @@ public class ClientTests {
     public void initCollection() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = 8081;
-        RestAssured.basePath = "/REST/api/client";
+        RestAssured.basePath = "/REST/api/clientEnt";
         dataInitializer.dropAndCreateClient();
         dataInitializer.initClient();
     }
@@ -286,8 +286,8 @@ public class ClientTests {
                     "username": "JDoe",
                     "emailAddress": "john.doe@example.com",
                     "_clazz": "Client",
-                    "role": "CLIENT",
-                    "clientType": {
+                    "roleEnt": "CLIENT",
+                    "clientTypeEnt": {
                         "_clazz": "standard",
                         "entityId": {
                             "uuid": "5bd23f3d-0be9-41d7-9cd8-0ae77e6f463d"
@@ -322,8 +322,8 @@ public class ClientTests {
                     "username": "JDoe",
                     "emailAddress": "john.doe@example.com",
                     "_clazz": "Client",
-                    "role": "CLIENT",
-                    "clientType": {
+                    "roleEnt": "CLIENT",
+                    "clientTypeEnt": {
                         "_clazz": "standard",
                         "entityId": {
                             "uuid": "5bd23f3d-0be9-41d7-9cd8-0ae77e6f463d"

@@ -28,7 +28,7 @@
     <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer"/>
     <!--<bean id="postValidator" class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>-->
     <mvc:annotation-driven validator="validator" />
-    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
+    <bean id="restTemplate" class="org.springframework.web.clientEnt.RestTemplate" />
     <bean id="vMachineManager" class="pl.lodz.p.manager.VMachineManager" />
     <bean id="clientManager" class="pl.lodz.p.manager.UserManager" />
     <bean id="rentManager" class="pl.lodz.p.manager.RentManager" />
@@ -39,19 +39,19 @@
     </bean>
 
     <bean id="userService" class="pl.lodz.p.service.implementation.UserService"/>
+<!--    <bean id="tokenProvider" class="pl.lodz.p.security.JwtTokenProvider"/>-->
     <bean id="filter" class="pl.lodz.p.security.JwtFilter"/>
-    <bean id="tokenProvider" class="pl.lodz.p.security.JwtTokenProvider"/>
     <bean id="jwsProvider" class="pl.lodz.p.security.JwsProvider"/>
     <bean id="customAuthEntryPoint"
-          class="pl.lodz.p.controller.CustomAuthenticationEntryPoint"/>
-<!--    -->
+    class="pl.lodz.p.controller.CustomAuthenticationEntryPoint"/>
+    <!--    -->
     <security:http use-expressions="true" create-session="stateless" entry-point-ref="customAuthEntryPoint">
 <!--    <security:http auto-config="true" use-expressions="true" create-session="stateless" entry-point-ref="customAuthEntryPoint">-->
         <security:csrf disabled="true"/>
-        <security:intercept-url pattern="/api/client" method="POST" access="permitAll"/>
-        <security:intercept-url pattern="/api/client/login" access="permitAll"/>
-        <security:intercept-url pattern="/api/client/activate" access="hasRole('ADMIN')"/>
-        <security:intercept-url pattern="/api/client/deactivate" access="hasRole('ADMIN')"/>
+        <security:intercept-url pattern="/api/clientEnt" method="POST" access="permitAll"/>
+        <security:intercept-url pattern="/api/clientEnt/login" access="permitAll"/>
+        <security:intercept-url pattern="/api/clientEnt/activate" access="hasRole('ADMIN')"/>
+        <security:intercept-url pattern="/api/clientEnt/deactivate" access="hasRole('ADMIN')"/>
         <security:intercept-url pattern="/api/rent" access="isAuthenticated()"/>
         <security:intercept-url pattern="/api/rent/active" access="hasRole('RESOURCE_MANAGER')"/>
         <security:intercept-url pattern="/api/rent/archived" access="hasRole('RESOURCE_MANAGER')"/>
@@ -67,8 +67,8 @@
 <!--        <security:access-denied-handler ref="customAccessDeniedHandler"/>-->
         <security:custom-filter ref="jwtFilter" before="FORM_LOGIN_FILTER"/>
     </security:http>
-
     <bean id="jwtFilter" class="pl.lodz.p.security.JwtFilter"/>
+
 <!--    &lt;!&ndash; Bean dla filtra JWT &ndash;&gt;-->
 <!--&lt;!&ndash;    <bean id="jwtFilter" class="pl.lodz.p.security.JwtFilter"/>&ndash;&gt;-->
 

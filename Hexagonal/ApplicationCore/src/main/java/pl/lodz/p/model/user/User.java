@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,9 +14,7 @@ import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import pl.lodz.p.model.AbstractEntityMgd;
-import pl.lodz.p.model.AppleArch;
 import pl.lodz.p.model.MongoUUID;
-import pl.lodz.p.model.x86;
 
 @Getter
 @Setter

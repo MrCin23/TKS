@@ -19,13 +19,11 @@ import pl.lodz.p.model.user.Client;
 import pl.lodz.p.model.user.Standard;
 import pl.lodz.p.model.user.User;
 import pl.lodz.p.service.IUserService;
-import pl.lodz.p.service.implementation.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @ExtendWith(MockitoExtension.class)

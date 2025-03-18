@@ -2,7 +2,6 @@ package pl.lodz.p.service.implementation;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.lodz.p.manager.VMachineManager;
 import pl.lodz.p.model.MongoUUID;
 import pl.lodz.p.model.VMachine;
 import pl.lodz.p.repository.VMachineRepository;
