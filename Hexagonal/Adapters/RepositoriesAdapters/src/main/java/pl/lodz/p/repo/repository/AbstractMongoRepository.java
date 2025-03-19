@@ -13,9 +13,9 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.Conventions;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import pl.lodz.p.repo.codec.CodecProvider;
-import pl.lodz.p.repo.AppleArchEnt;
-import pl.lodz.p.repo.user.*;
-import pl.lodz.p.repo.x86Ent;
+import pl.lodz.p.repo.model.AppleArchEnt;
+import pl.lodz.p.repo.model.user.*;
+import pl.lodz.p.repo.model.x86Ent;
 
 @Getter
 public abstract class AbstractMongoRepository implements AutoCloseable {

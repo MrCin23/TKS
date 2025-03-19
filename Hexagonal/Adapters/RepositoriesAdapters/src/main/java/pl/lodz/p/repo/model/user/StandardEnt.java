@@ -1,6 +1,6 @@
-package pl.lodz.p.repo.user;
+package pl.lodz.p.repo.model.user;
 
-import pl.lodz.p.repo.MongoUUIDEnt;
+import pl.lodz.p.repo.model.MongoUUIDEnt;
 
 import java.util.UUID;
 

@@ -9,12 +9,11 @@ import com.mongodb.client.model.Updates;
 import org.bson.conversions.Bson;
 import org.springframework.stereotype.Repository;
 import pl.lodz.p.port.repository.RentPort;
-import pl.lodz.p.repo.MongoUUIDEnt;
-import pl.lodz.p.repo.RentEnt;
-import pl.lodz.p.repo.VMachineEnt;
-import pl.lodz.p.repo.user.ClientEnt;
-import pl.lodz.p.repo.user.UserEnt;
-import pl.lodz.p.repo.repository.AbstractMongoRepository;
+import pl.lodz.p.repo.model.MongoUUIDEnt;
+import pl.lodz.p.repo.model.RentEnt;
+import pl.lodz.p.repo.model.VMachineEnt;
+import pl.lodz.p.repo.model.user.ClientEnt;
+import pl.lodz.p.repo.model.user.UserEnt;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

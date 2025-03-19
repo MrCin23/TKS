@@ -8,8 +8,8 @@ import com.mongodb.client.model.*;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.springframework.stereotype.Repository;
-import pl.lodz.p.repo.MongoUUIDEnt;
-import pl.lodz.p.repo.VMachineEnt;
+import pl.lodz.p.repo.model.MongoUUIDEnt;
+import pl.lodz.p.repo.model.VMachineEnt;
 
 import java.util.ArrayList;
 import java.util.List;

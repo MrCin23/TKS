@@ -1,4 +1,4 @@
-package pl.lodz.p.repo;
+package pl.lodz.p.repo.model;
 
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonDiscriminator;

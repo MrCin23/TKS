@@ -1,4 +1,4 @@
-package pl.lodz.p.repo.user;
+package pl.lodz.p.repo.model.user;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import pl.lodz.p.repo.AbstractEnt;
-import pl.lodz.p.repo.MongoUUIDEnt;
+import pl.lodz.p.repo.model.AbstractEnt;
+import pl.lodz.p.repo.model.MongoUUIDEnt;
 
 @Getter
 @Setter

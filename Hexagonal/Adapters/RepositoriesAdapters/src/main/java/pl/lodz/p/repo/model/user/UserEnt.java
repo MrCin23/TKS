@@ -1,4 +1,4 @@
-package pl.lodz.p.repo.user;
+package pl.lodz.p.repo.model.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -13,8 +13,8 @@ import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import pl.lodz.p.repo.AbstractEnt;
-import pl.lodz.p.repo.MongoUUIDEnt;
+import pl.lodz.p.repo.model.AbstractEnt;
+import pl.lodz.p.repo.model.MongoUUIDEnt;
 
 @Getter
 @Setter

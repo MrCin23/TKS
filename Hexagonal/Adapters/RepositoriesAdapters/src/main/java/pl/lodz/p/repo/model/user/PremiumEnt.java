@@ -1,7 +1,7 @@
-package pl.lodz.p.repo.user;
+package pl.lodz.p.repo.model.user;
 
 import org.bson.codecs.pojo.annotations.BsonDiscriminator;
-import pl.lodz.p.repo.MongoUUIDEnt;
+import pl.lodz.p.repo.model.MongoUUIDEnt;
 
 import java.util.UUID;
 

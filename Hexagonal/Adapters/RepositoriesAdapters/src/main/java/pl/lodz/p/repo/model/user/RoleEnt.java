@@ -1,4 +1,4 @@
-package pl.lodz.p.repo.user;
+package pl.lodz.p.repo.model.user;
 
 public enum RoleEnt {
     ADMIN,

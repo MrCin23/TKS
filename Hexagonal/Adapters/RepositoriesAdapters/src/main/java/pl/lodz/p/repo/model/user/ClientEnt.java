@@ -1,4 +1,4 @@
-package pl.lodz.p.repo.user;
+package pl.lodz.p.repo.model.user;
 
 
 import jakarta.validation.constraints.Min;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import pl.lodz.p.repo.MongoUUIDEnt;
+import pl.lodz.p.repo.model.MongoUUIDEnt;
 
 import java.util.UUID;
 

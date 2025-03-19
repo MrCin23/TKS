@@ -1,4 +1,4 @@
-package pl.lodz.p.repo;
+package pl.lodz.p.repo.model;
 
 
 import jakarta.validation.constraints.Min;

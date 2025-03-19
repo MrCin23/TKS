@@ -1,4 +1,4 @@
-package pl.lodz.p.repo.user;
+package pl.lodz.p.repo.model.user;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,11 +1,11 @@
-package pl.lodz.p.repo;
+package pl.lodz.p.repo.model;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import pl.lodz.p.repo.user.ClientEnt;
+import pl.lodz.p.repo.model.user.ClientEnt;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
