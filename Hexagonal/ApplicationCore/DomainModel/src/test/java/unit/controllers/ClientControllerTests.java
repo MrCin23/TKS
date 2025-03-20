@@ -14,11 +14,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import pl.lodz.p.controller.UserController;
-import pl.lodz.p.model.user.Client;
-import pl.lodz.p.model.user.Standard;
-import pl.lodz.p.model.user.User;
-import pl.lodz.p.service.IUserService;
+import pl.lodz.p.core.services.controller.UserController;
+import pl.lodz.p.core.domain.user.Client;
+import pl.lodz.p.core.domain.user.Standard;
+import pl.lodz.p.core.domain.user.User;
+import pl.lodz.p.core.services.service.IUserService;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,7 +5,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import org.junit.jupiter.api.*;
-import pl.lodz.p.data.DataInitializer;
+//import pl.lodz.p.data.DataInitializer;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -13,17 +13,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class RentTests {
 
-    DataInitializer dataInitializer = new DataInitializer();
+//    DataInitializer dataInitializer = new DataInitializer();
 
     @BeforeEach
     public void initCollection() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = 8081;
         RestAssured.basePath = "/REST/api";
-        dataInitializer.dropAndCreateRent();
-        dataInitializer.dropAndCreateClient();
-//        dataInitializer.initClient();
-        dataInitializer.init();
+//        dataInitializer.dropAndCreateRent();
+//        dataInitializer.dropAndCreateClient();
+////        dataInitializer.initClient();
+//        dataInitializer.init();
 //        dataInitializer.init();
     }
 

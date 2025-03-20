@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.*;
-import pl.lodz.p.data.DataInitializer;
+//import pl.lodz.p.data.DataInitializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.greaterThan;
 
 public class VMachineTests {
 
-    DataInitializer dataInitializer = new DataInitializer();
+//    DataInitializer dataInitializer = new DataInitializer();
 
 
     @BeforeEach
@@ -25,10 +25,10 @@ public class VMachineTests {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = 8081;
         RestAssured.basePath = "/REST/api";
-        dataInitializer.dropAndCreateVMachine();
-        dataInitializer.dropAndCreateClient();
-        dataInitializer.initClient();
-        dataInitializer.initVM();
+//        dataInitializer.dropAndCreateVMachine();
+//        dataInitializer.dropAndCreateClient();
+//        dataInitializer.initClient();
+//        dataInitializer.initVM();
     }
 
 //    @AfterEach
