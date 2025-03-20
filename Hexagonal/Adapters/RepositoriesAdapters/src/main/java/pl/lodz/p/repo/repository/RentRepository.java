@@ -17,7 +17,6 @@ import pl.lodz.p.repo.model.user.UserEnt;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Repository
@@ -79,10 +78,6 @@ public class RentRepository extends AbstractMongoRepository {
         }
     }
 
-    public void update(long id, Map<String, Object> fieldsToUpdate) {
-
-    }
-
     public void add(RentEnt rent) {
         ClientSession session = getMongoClient().startSession();
         UserEnt client;
@@ -113,23 +108,10 @@ public class RentRepository extends AbstractMongoRepository {
 
     }
 
-    public long size(boolean active) {
-
-        return 0;
-    }
 
     public long size() {
         return rents.find().into(new ArrayList<>()).size();
     }
-
-    public List<RentEnt> getRents(boolean active) {
-        return rents.find().into(new ArrayList<>());
-    }
-
-//    public List<RentEnt> getClientRents(MongoUUID clientId) {
-//        Bson filter1 = Filters.eq("client._id", clientId.getUuid());
-//        return rents.find(filter1).into(new ArrayList<>());
-//    }
 
     public List<RentEnt> getClientRents(String username) {
         Bson filter1 = Filters.eq("client.username", username);
@@ -208,14 +190,4 @@ public class RentRepository extends AbstractMongoRepository {
             session.close();
         }
     }
-//
-//    private VMachine getVMachineById(UUID vMachineId) {
-//        RestTemplate restTemplate = new RestTemplate();
-//        String url = "http://localhost:8081/REST/api/vmachine/" + vMachineId;
-//        try {
-//            return restTemplate.getForObject(url, VMachine.class);
-//        } catch (Exception e) {
-//            throw new RuntimeException("Request GET http://localhost:8081/REST/api/vmachine/" + vMachineId + " failed: " + e);
-//        }
-//    }
 }
