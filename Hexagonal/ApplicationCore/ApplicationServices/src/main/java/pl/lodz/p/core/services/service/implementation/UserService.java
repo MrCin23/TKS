@@ -14,6 +14,10 @@ import pl.lodz.p.core.domain.user.UserPrincipal;
 //import pl.lodz.p.repository.UserRepository;
 import pl.lodz.p.core.services.security.JwtTokenProvider;
 import pl.lodz.p.core.services.service.IUserService;
+import pl.lodz.p.port.infrastructure.user.UAdd;
+import pl.lodz.p.port.infrastructure.user.UGet;
+import pl.lodz.p.port.infrastructure.user.URemove;
+import pl.lodz.p.port.infrastructure.user.UUpdate;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +29,10 @@ import java.util.concurrent.ConcurrentHashMap;
 @AllArgsConstructor
 public class UserService implements IUserService, UserDetailsService {
 
-    private UserRepository repo;
+    UGet uGet;
+    UAdd uAdd;
+    URemove uRemove;
+    UUpdate uUpdate;
 
     private JwtTokenProvider tokenProvider;
 
@@ -34,8 +41,8 @@ public class UserService implements IUserService, UserDetailsService {
     @Override
     public User createUser(User user) {
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-        if(repo.getUserByID(user.getEntityId()) == null) {
-            repo.add(user);
+        if(uGet.getUserByID(user.getEntityId()) == null) {
+            uAdd.add(user);
             return user;
         }
         throw new RuntimeException("User with id " + user.getEntityId() + " already exists");
@@ -43,16 +50,16 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Override
     public List<User> getAllUsers() {
-        List<User> users = repo.getUsers();
+        List<User> users = uGet.getUsers();
         if(users == null || users.isEmpty()) {
             throw new RuntimeException("No users found");
         }
-        return repo.getUsers();
+        return uGet.getUsers();
     }
 
     @Override
     public User getUser(UUID uuid) {
-        User user = repo.getUserByID(new MongoUUID(uuid));
+        User user = uGet.getUserByID(new MongoUUID(uuid));
         if(user == null) {
             throw new RuntimeException("User with id " + uuid + " does not exist");
         }
@@ -61,26 +68,26 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Override
     public void updateUser(UUID uuid, Map<String, Object> fieldsToUpdate) {
-        if(repo.getUserByID(new MongoUUID(uuid)) == null) {
+        if(uGet.getUserByID(new MongoUUID(uuid)) == null) {
             throw new RuntimeException("User with id " + uuid + " does not exist");
         }
-        repo.update(new MongoUUID(uuid), fieldsToUpdate);
+        uUpdate.update(new MongoUUID(uuid), fieldsToUpdate);
     }
 
     @Override
     public void activateUser(UUID uuid) {
-        if(repo.getUserByID(new MongoUUID(uuid)) == null) {
+        if(uGet.getUserByID(new MongoUUID(uuid)) == null) {
             throw new RuntimeException("User with id " + uuid + " does not exist");
         }
-        repo.update(new MongoUUID(uuid), "active", true);
+        uUpdate.update(new MongoUUID(uuid), "active", true);
     }
 
     @Override
     public void deactivateUser(UUID uuid) {
-        if(repo.getUserByID(new MongoUUID(uuid)) == null) {
+        if(uGet.getUserByID(new MongoUUID(uuid)) == null) {
             throw new RuntimeException("User with id " + uuid + " does not exist");
         }
-        repo.update(new MongoUUID(uuid), "active", false);
+        uUpdate.update(new MongoUUID(uuid), "active", false);
     }
 
 //    @Override
@@ -90,10 +97,10 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Override
     public String getUserByUsername(LoginDTO loginDTO) {
-        if(repo.getUserByUsername(loginDTO.getUsername()) == null) {
+        if(uGet.getUserByUsername(loginDTO.getUsername()) == null) {
             throw new RuntimeException("User with username " + loginDTO.getUsername() + " does not exist");
         }
-        User user = repo.getUserByUsername(loginDTO.getUsername());
+        User user = uGet.getUserByUsername(loginDTO.getUsername());
         if(!user.isActive()) {
             throw new DeactivatedUserException("User with username " + loginDTO.getUsername() + " does not exist");
         }
@@ -106,23 +113,23 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Override
     public User getUserByUsername(String username) {
-        if(repo.getUsersByUsername(username) == null || repo.getUsersByUsername(username).isEmpty()) {
+        if(uGet.getUsersByUsername(username) == null || uGet.getUsersByUsername(username).isEmpty()) {
             throw new RuntimeException("No users with username " + username + " found");
         }
-        return repo.getUserByUsername(username);
+        return uGet.getUserByUsername(username);
     }
 
     @Override
     public List<User> getUsersByUsername(String username) {
-        if(repo.getUsersByUsername(username) == null || repo.getUsersByUsername(username).isEmpty()) {
+        if(uGet.getUsersByUsername(username) == null || uGet.getUsersByUsername(username).isEmpty()) {
             throw new RuntimeException("No users with username " + username + " found");
         }
-        return repo.getUsersByUsername(username);
+        return uGet.getUsersByUsername(username);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        User user = repo.getUserByUsername(username);
+        User user = uGet.getUserByUsername(username);
         if (user == null) {
             throw new RuntimeException("User with login " + username + " not found");
         }
@@ -141,6 +148,6 @@ public class UserService implements IUserService, UserDetailsService {
 
     @Override
     public void changePassword(String username, String newPassword){
-        repo.update(repo.getUserByUsername(username).getEntityId(), "password", BCrypt.hashpw(newPassword, BCrypt.gensalt()));
+        uUpdate.update(uGet.getUserByUsername(username).getEntityId(), "password", BCrypt.hashpw(newPassword, BCrypt.gensalt()));
     }
 }
