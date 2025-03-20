@@ -5,11 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>pl.lodz.p</groupId>
-        <artifactId>Hexagonal</artifactId>
+        <artifactId>ApplicationCore</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ApplicationPorts</artifactId>
+    <groupId>pl.lodz.p.core</groupId>
+    <artifactId>ApplicationServices</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -17,18 +18,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
-
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils-core</artifactId>
-        </dependency>
         <dependency>
             <groupId>pl.lodz.p.core.domain</groupId>
             <artifactId>DomainModel</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>pl.lodz.p</groupId>
+            <artifactId>ApplicationPorts</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

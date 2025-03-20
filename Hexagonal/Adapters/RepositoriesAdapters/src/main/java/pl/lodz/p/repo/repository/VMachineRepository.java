@@ -76,9 +76,6 @@ public class VMachineRepository extends AbstractMongoRepository {
         this.vMachines = this.getDatabase().getCollection(collectionName, VMachineEnt.class);
     }
 
-    //-------------METHODS---------------------------------------
-    //TODO dorobić metody z diagramu
-
     public void update(MongoUUIDEnt uuid, Map<String, Object> fieldsToUpdate) {
         ClientSession session = getMongoClient().startSession();
         try {
@@ -138,18 +135,6 @@ public class VMachineRepository extends AbstractMongoRepository {
     public void remove(VMachineEnt vMachine) {
         Bson filter = Filters.eq("_id", vMachine.getEntityId().getUuid().toString());
         VMachineEnt deletedVMachine = vMachines.findOneAndDelete(filter);
-    }
-
-    public long size() {
-//        try (Session session = sessionFactory.openSession()) {
-//            Transaction transaction = session.beginTransaction();
-//            Long count = (Long) session.createQuery("SELECT COUNT(vm) FROM VMachine vm").uniqueResult();
-//            transaction.commit();
-//            return count;
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-        return 0;
     }
 
     public List<VMachineEnt> getVMachines() {

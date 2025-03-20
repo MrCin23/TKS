@@ -6,12 +6,16 @@
 
 <!--    <groupId>pl.lodz.p</groupId>-->
     <artifactId>ApplicationCore</artifactId>
+    <modules>
+        <module>DomainModel</module>
+        <module>ApplicationServices</module>
+    </modules>
     <parent>
         <groupId>pl.lodz.p</groupId>
         <version>1.0-SNAPSHOT</version>
         <artifactId>Hexagonal</artifactId>
     </parent>
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
 
     <reporting>
         <plugins>

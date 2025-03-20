@@ -8,7 +8,6 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import org.bson.conversions.Bson;
 import org.springframework.stereotype.Repository;
-import pl.lodz.p.port.repository.RentPort;
 import pl.lodz.p.repo.model.MongoUUIDEnt;
 import pl.lodz.p.repo.model.RentEnt;
 import pl.lodz.p.repo.model.VMachineEnt;
@@ -22,7 +21,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Repository
-public class RentRepository extends AbstractMongoRepository implements RentPort {
+public class RentRepository extends AbstractMongoRepository {
     private final MongoCollection<RentEnt> rents;
     private final MongoCollection<VMachineEnt> vMachines;
     private final MongoCollection<UserEnt> clients;
