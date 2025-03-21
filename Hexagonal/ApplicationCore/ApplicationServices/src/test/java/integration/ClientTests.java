@@ -5,14 +5,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import org.junit.jupiter.api.*;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.utility.DockerImageName;
-import pl.lodz.p.core.services.controller.UserController;
 import pl.lodz.p.repo.repository.UserRepository;
 
 
@@ -21,13 +14,11 @@ import java.util.UUID;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-@RunWith(SpringRunner.class)
 public class ClientTests {
 //
 //    GenericContainer<> mongoDBContainer = new GenericContainer<>(DockerImageName.parse("mongo:4.0.10"));
 //    mongoDBContainer.start();
 
-    @Autowired
     private MockMvc mockMvc;
 
     String payloadJson = """
@@ -40,7 +31,7 @@ public class ClientTests {
                     "username": "JDoe",
                     "emailAddress": "john.doe@example.com",
                     "_clazz": "Client",
-                    "roleEnt": "CLIENT",
+                    "role": "CLIENT",
                     "clientTypeEnt": {
                         "_clazz": "standard",
                         "entityId": {
@@ -54,16 +45,12 @@ public class ClientTests {
                     "password": "12345678"
                 }""";
 
-
-    private final UserRepository userRepository = new UserRepository();
-
     @BeforeEach
     public void initCollection() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = 8081;
         RestAssured.basePath = "/REST/api/client";
     }
-
 
     public String loginClient() {
         RestAssured.given()
@@ -79,6 +66,7 @@ public class ClientTests {
                         "password": "12345678"
                     }
                     """;
+
         return RestAssured.given()
                 .contentType(ContentType.JSON)
                 .body(payloadLogin)
@@ -145,7 +133,7 @@ public class ClientTests {
         UUID uuid = UUID.fromString("123e4567-e89b-12d3-a456-426614174000"); // Przykładowy UUID
 
         RestAssured.given()
-//                .header("Authorization", "Bearer " + loginClient())
+                .header("Authorization", "Bearer " + loginClient())
                 .when()
                 .get("/{uuid}", uuid)
                 .then()
@@ -157,7 +145,7 @@ public class ClientTests {
     public void testDeactivateClient() {
         UUID uuid = UUID.fromString("123e4567-e89b-12d3-a456-426614174000"); // Przykładowy UUID
         RestAssured.given()
-//                .header("Authorization", "Bearer " + loginClient())
+                .header("Authorization", "Bearer " + loginClient())
                 .when()
                 .put("/deactivate/{uuid}", uuid)
                 .then()
@@ -169,7 +157,7 @@ public class ClientTests {
 
         UUID uuid = UUID.fromString("123e4567-e89b-12d3-a456-426614174000"); // Przykładowy UUID
         RestAssured.given()
-//                .header("Authorization", "Bearer " + loginClient())
+                .header("Authorization", "Bearer " + loginClient())
                 .when()
                 .put("/activate/{uuid}", uuid)
                 .then()
@@ -180,7 +168,7 @@ public class ClientTests {
     public void testFindClientByUsername() {
         String username = "JDoe";
         RestAssured.given()
-//                .header("Authorization", "Bearer " + loginClient())
+                .header("Authorization", "Bearer " + loginClient())
                 .when()
                 .get("/findClient/{username}", username)
                 .then()
@@ -199,24 +187,24 @@ public class ClientTests {
                 .statusCode(201);
         String username = "JDoe";
 
-//        String payloadLogin = """
-//                {
-//                    "username": "JDoe",
-//                    "password": "12345678"
-//                }
-//                """;
-//        String token = RestAssured.given()
-//                .contentType(ContentType.JSON)
-//                .body(payloadLogin)
-//                .when()
-//                .post("/login")
-//                .then()
-//                .statusCode(200)
-//                .extract()
-//                .asString();
+        String payloadLogin = """
+                {
+                    "username": "JDoe",
+                    "password": "12345678"
+                }
+                """;
+        String token = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .body(payloadLogin)
+                .when()
+                .post("/login")
+                .then()
+                .statusCode(200)
+                .extract()
+                .asString();
 
         RestAssured.given()
-//                .header("Authorization", "Bearer " + token)
+                .header("Authorization", "Bearer " + token)
                 .when()
                 .get("/findClients/{username}", username)
                 .then()

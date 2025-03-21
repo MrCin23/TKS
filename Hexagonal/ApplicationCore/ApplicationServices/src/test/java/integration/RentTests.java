@@ -20,18 +20,8 @@ public class RentTests {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = 8081;
         RestAssured.basePath = "/REST/api";
-//        dataInitializer.dropAndCreateRent();
-//        dataInitializer.dropAndCreateClient();
-////        dataInitializer.initClient();
-//        dataInitializer.init();
-//        dataInitializer.init();
     }
 
-//    @AfterEach
-//    public void dropCollection() {
-//        dataInitializer.dropAndCreateRent();
-//        dataInitializer.init();
-//    }
 
     String rentJson = """
                 {
@@ -52,7 +42,7 @@ public class RentTests {
                     "username": "JDoe",
                     "emailAddress": "john.doe@example.com",
                     "_clazz": "Client",
-                    "roleEnt": "CLIENT",
+                    "role": "CLIENT",
                     "clientTypeEnt": {
                         "_clazz": "standard",
                         "entityId": {
@@ -64,13 +54,13 @@ public class RentTests {
                     "currentRents": 0,
                     "active": true,
                     "password": "12345678"
-                }""";
+                }"""; //todo co to ma byc "clientTypeEnt": {
 
         RestAssured.given()
                 .contentType(ContentType.JSON)
                 .body(clientJson)
                 .when()
-                .post("/clientEnt")
+                .post("/client")
                 .then()
                 .statusCode(201);
     }

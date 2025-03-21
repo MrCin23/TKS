@@ -29,7 +29,6 @@ public class UserAdapter implements UGet, UUpdate, URemove, UAdd {
 
     @Override
     public void add(User user) {
-        System.out.println("Szczepaniak chuj: Adapter, obj: " + user);
         userRepository.add(convert(user));
     }
 
@@ -82,28 +81,26 @@ public class UserAdapter implements UGet, UUpdate, URemove, UAdd {
     }
 
     private UserEnt convert(User user) {
-        UserEnt ent = switch (user.getClass().getSimpleName()) {
+        return switch (user.getClass().getSimpleName()) {
             case "Client" -> new ClientEnt(convert(user.getEntityId()), user.getFirstName(), user.getUsername(), user.getPassword(),
                     user.getSurname(), user.getEmailAddress(), convert(user.getRole()), user.isActive(), new StandardEnt(), ((Client) user).getCurrentRents());
             case "ResourceManager" -> new ResourceManagerEnt(convert(user.getEntityId()), user.getFirstName(), user.getSurname(), user.getUsername(), user.getPassword(), user.getEmailAddress());
             case "Admin" -> new AdminEnt(convert(user.getEntityId()), user.getFirstName(), user.getSurname(), user.getUsername(), user.getEmailAddress(), user.getPassword());
             default -> throw new RuntimeException("Unsupported type: " + user.getClass().getSimpleName());
         };
-        return ent;
     }
 
     private User convert(UserEnt ent) {
         if (ent == null) {
             return null;
         }
-        User user = switch (ent.getClass().getSimpleName()) {
+        return switch (ent.getClass().getSimpleName()) {
             case "ClientEnt" -> new Client(convert(ent.getEntityId()), ent.getFirstName(), ent.getUsername(), ent.getPassword(),
                     ent.getSurname(), ent.getEmailAddress(), convert(ent.getRoleEnt()), ent.isActive(), new Standard(), ((ClientEnt) ent).getCurrentRents());
             case "ResourceManagerEnt" -> new ResourceManager(convert(ent.getEntityId()), ent.getFirstName(), ent.getSurname(), ent.getUsername(), ent.getPassword(), ent.getEmailAddress());
             case "AdminEnt" -> new Admin(convert(ent.getEntityId()), ent.getFirstName(), ent.getSurname(), ent.getUsername(), ent.getEmailAddress(), ent.getPassword());
             default -> throw new RuntimeException("Unsupported type: " + ent.getClass().getSimpleName());
         };
-        return user;
     }
 
     private MongoUUID convert(MongoUUIDEnt ent) {
