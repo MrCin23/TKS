@@ -1,7 +1,9 @@
 package pl.lodz.p.repo.adapter;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.lodz.p.core.domain.MongoUUID;
 import pl.lodz.p.core.domain.Rent;
@@ -18,7 +20,7 @@ import java.util.UUID;
 @Component
 @AllArgsConstructor
 public class RentAdapter implements RentAdd, RentEnd, RentGet, RentRemove, RentSize {
-    RentRepository rentRepo;
+    private final RentRepository rentRepo;
 
     @Override
     public void add(Rent rent) {

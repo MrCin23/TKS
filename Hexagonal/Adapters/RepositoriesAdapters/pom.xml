@@ -9,7 +9,10 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <groupId>pl.lodz.p.repo</groupId>
     <artifactId>RepositoriesAdapters</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -58,6 +61,10 @@
             <artifactId>DomainModel</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
         </dependency>
     </dependencies>
 

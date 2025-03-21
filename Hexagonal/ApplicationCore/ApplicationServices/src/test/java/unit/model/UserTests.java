@@ -2,9 +2,9 @@ package unit.model;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import pl.lodz.p.model.MongoUUID;
-import pl.lodz.p.model.user.*;
-import pl.lodz.p.model.user.*;
+import pl.lodz.p.core.domain.MongoUUID;
+import pl.lodz.p.core.domain.user.*;
+import pl.lodz.p.core.domain.user.*;
 
 import java.util.UUID;
 

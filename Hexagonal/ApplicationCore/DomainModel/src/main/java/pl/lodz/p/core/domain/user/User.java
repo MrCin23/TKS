@@ -44,7 +44,7 @@ public abstract class User extends AbstractEntityMgd {
         this.firstName = firstName;
         this.surname = surname;
         this.username = username;
-        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+        this.password = password;//BCrypt.hashpw(password, BCrypt.gensalt());
         this.emailAddress = emailAddress;
         this.role = role;
         this.active = active;

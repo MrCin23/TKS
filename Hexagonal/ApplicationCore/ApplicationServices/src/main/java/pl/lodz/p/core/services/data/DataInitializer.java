@@ -1,17 +1,21 @@
 //package pl.lodz.p.core.services.data;
 //
 //import com.mongodb.client.model.IndexOptions;
+//import lombok.AllArgsConstructor;
 //import lombok.Getter;
+//import lombok.NoArgsConstructor;
 //import lombok.Setter;
 //import org.bson.Document;
-//import pl.lodz.p.manager.UserManager;
-//import pl.lodz.p.manager.RentManager;
-//import pl.lodz.p.manager.VMachineManager;
-//import pl.lodz.p.model.AppleArch;
-//import pl.lodz.p.model.Rent;
-//import pl.lodz.p.model.VMachine;
-//import pl.lodz.p.model.user.*;
-//import pl.lodz.p.model.x86;
+//import pl.lodz.p.core.domain.user.User;
+//import pl.lodz.p.core.domain.AppleArch;
+//import pl.lodz.p.core.domain.Rent;
+//import pl.lodz.p.core.domain.VMachine;
+//import pl.lodz.p.core.domain.user.*;
+//import pl.lodz.p.core.domain.x86;
+//import pl.lodz.p.core.services.service.implementation.RentService;
+//import pl.lodz.p.core.services.service.implementation.UserService;
+//import pl.lodz.p.core.services.service.implementation.VMachineService;
+//
 //
 //
 //import java.time.LocalDateTime;
@@ -20,10 +24,11 @@
 //
 //@Getter
 //@Setter
+//@AllArgsConstructor
 //public class DataInitializer {
-//    private UserManager clientMan = UserManager.getInstance();
-//    private RentManager rentMan = RentManager.getInstance();
-//    private VMachineManager vmMan = VMachineManager.getInstance();
+//    private UserService clientMan;
+//    private RentService rentMan;
+//    private VMachineService vmMan;
 //    List<User> clients = new ArrayList<>();
 //    List<Rent> rents = new ArrayList<>();
 //    List<VMachine> vms = new ArrayList<>();

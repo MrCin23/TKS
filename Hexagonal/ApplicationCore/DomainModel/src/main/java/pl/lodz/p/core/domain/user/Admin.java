@@ -11,9 +11,9 @@ public class Admin extends User{
         super(new MongoUUID(UUID.randomUUID()), firstName, username, password, surname, emailAddress, Role.ADMIN, true);
     }
 
-//    public Admin(MongoUUID uuid, String firstName, String surname, String username, String emailAddress) {
-//        super(uuid, firstName, username, surname, emailAddress, Role.ADMIN, true);
-//    }
+    public Admin(MongoUUID uuid, String firstName, String surname, String username, String emailAddress, String password) {
+        super(uuid, firstName, username, password, surname, emailAddress, Role.ADMIN, true);
+    }
 
     @Override
     public String toString() {

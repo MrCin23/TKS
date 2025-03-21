@@ -69,7 +69,7 @@ public abstract class UserEnt extends AbstractEnt {
         this.firstName = firstName;
         this.surname = surname;
         this.username = username;
-        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+        this.password = password; //BCrypt.hashpw(password, BCrypt.gensalt());
         this.emailAddress = emailAddress;
         this.roleEnt = roleEnt;
         this.active = active;

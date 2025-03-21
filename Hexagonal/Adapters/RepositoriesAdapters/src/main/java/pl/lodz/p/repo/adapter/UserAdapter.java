@@ -2,22 +2,18 @@ package pl.lodz.p.repo.adapter;
 
 import com.mongodb.client.model.Filters;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.lodz.p.core.domain.MongoUUID;
-import pl.lodz.p.core.domain.user.Admin;
-import pl.lodz.p.core.domain.user.Client;
-import pl.lodz.p.core.domain.user.ResourceManager;
-import pl.lodz.p.core.domain.user.User;
+import pl.lodz.p.core.domain.user.*;
 import pl.lodz.p.port.infrastructure.user.UAdd;
 import pl.lodz.p.port.infrastructure.user.UGet;
 import pl.lodz.p.port.infrastructure.user.URemove;
 import pl.lodz.p.port.infrastructure.user.UUpdate;
 import pl.lodz.p.repo.model.MongoUUIDEnt;
-import pl.lodz.p.repo.model.user.AdminEnt;
-import pl.lodz.p.repo.model.user.ClientEnt;
-import pl.lodz.p.repo.model.user.ResourceManagerEnt;
-import pl.lodz.p.repo.model.user.UserEnt;
+import pl.lodz.p.repo.model.user.*;
 import pl.lodz.p.repo.repository.UserRepository;
 
 import java.lang.reflect.InvocationTargetException;
@@ -28,10 +24,12 @@ import java.util.Map;
 @Component
 @AllArgsConstructor
 public class UserAdapter implements UGet, UUpdate, URemove, UAdd {
-    private UserRepository userRepository;
+    @Autowired
+    private final UserRepository userRepository;
 
     @Override
     public void add(User user) {
+        System.out.println("Szczepaniak chuj: Adapter, obj: " + user);
         userRepository.add(convert(user));
     }
 
@@ -85,31 +83,26 @@ public class UserAdapter implements UGet, UUpdate, URemove, UAdd {
 
     private UserEnt convert(User user) {
         UserEnt ent = switch (user.getClass().getSimpleName()) {
-            case "Client" -> new ClientEnt();
-            case "ResourceManager" -> new ResourceManagerEnt();
-            case "Admin" -> new AdminEnt();
+            case "Client" -> new ClientEnt(convert(user.getEntityId()), user.getFirstName(), user.getUsername(), user.getPassword(),
+                    user.getSurname(), user.getEmailAddress(), convert(user.getRole()), user.isActive(), new StandardEnt(), ((Client) user).getCurrentRents());
+            case "ResourceManager" -> new ResourceManagerEnt(convert(user.getEntityId()), user.getFirstName(), user.getSurname(), user.getUsername(), user.getPassword(), user.getEmailAddress());
+            case "Admin" -> new AdminEnt(convert(user.getEntityId()), user.getFirstName(), user.getSurname(), user.getUsername(), user.getEmailAddress(), user.getPassword());
             default -> throw new RuntimeException("Unsupported type: " + user.getClass().getSimpleName());
         };
-        try {
-            PropertyUtils.copyProperties(ent, user);
-        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-            throw new RuntimeException("Property copying failed" + e);
-        }
         return ent;
     }
 
     private User convert(UserEnt ent) {
+        if (ent == null) {
+            return null;
+        }
         User user = switch (ent.getClass().getSimpleName()) {
-            case "ClientEnt" -> new Client();
-            case "ResourceManagerEnt" -> new ResourceManager();
-            case "AdminEnt" -> new Admin();
+            case "ClientEnt" -> new Client(convert(ent.getEntityId()), ent.getFirstName(), ent.getUsername(), ent.getPassword(),
+                    ent.getSurname(), ent.getEmailAddress(), convert(ent.getRoleEnt()), ent.isActive(), new Standard(), ((ClientEnt) ent).getCurrentRents());
+            case "ResourceManagerEnt" -> new ResourceManager(convert(ent.getEntityId()), ent.getFirstName(), ent.getSurname(), ent.getUsername(), ent.getPassword(), ent.getEmailAddress());
+            case "AdminEnt" -> new Admin(convert(ent.getEntityId()), ent.getFirstName(), ent.getSurname(), ent.getUsername(), ent.getEmailAddress(), ent.getPassword());
             default -> throw new RuntimeException("Unsupported type: " + ent.getClass().getSimpleName());
         };
-        try {
-            PropertyUtils.copyProperties(user, ent);
-        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-            throw new RuntimeException("Property copying failed" + e);
-        }
         return user;
     }
 
@@ -117,7 +110,7 @@ public class UserAdapter implements UGet, UUpdate, URemove, UAdd {
         MongoUUID uuid = new MongoUUID();
         try {
             PropertyUtils.copyProperties(uuid, ent);
-        } catch (IllegalAccessException | java.lang.reflect.InvocationTargetException | NoSuchMethodException e) {
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new RuntimeException("Property copying failed: " + e);
         }
         return uuid;
@@ -127,9 +120,35 @@ public class UserAdapter implements UGet, UUpdate, URemove, UAdd {
         MongoUUIDEnt ent = new MongoUUIDEnt();
         try {
             PropertyUtils.copyProperties(ent, uuid);
-        } catch (IllegalAccessException | java.lang.reflect.InvocationTargetException | NoSuchMethodException e) {
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new RuntimeException("Property copying failed: " + e);
         }
         return ent;
+    }
+
+    private Role convert(RoleEnt ent) {
+        if (ent == RoleEnt.ADMIN) {
+            return Role.ADMIN;
+        }
+        else if (ent == RoleEnt.CLIENT) {
+            return Role.CLIENT;
+        }
+        else if (ent == RoleEnt.RESOURCE_MANAGER) {
+            return Role.RESOURCE_MANAGER;
+        }
+        return null;
+    }
+
+    private RoleEnt convert(Role role) {
+        if (role == Role.ADMIN) {
+            return RoleEnt.ADMIN;
+        }
+        else if (role == Role.CLIENT) {
+            return RoleEnt.CLIENT;
+        }
+        else if (role == Role.RESOURCE_MANAGER) {
+            return RoleEnt.RESOURCE_MANAGER;
+        }
+        return null;
     }
 }

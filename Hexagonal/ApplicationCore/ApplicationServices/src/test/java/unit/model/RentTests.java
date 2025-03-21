@@ -3,12 +3,12 @@ package unit.model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.lodz.p.model.AppleArch;
-import pl.lodz.p.model.MongoUUID;
-import pl.lodz.p.model.Rent;
-import pl.lodz.p.model.VMachine;
-import pl.lodz.p.model.user.Client;
-import pl.lodz.p.model.user.Standard;
+import pl.lodz.p.core.domain.AppleArch;
+import pl.lodz.p.core.domain.MongoUUID;
+import pl.lodz.p.core.domain.Rent;
+import pl.lodz.p.core.domain.VMachine;
+import pl.lodz.p.core.domain.user.Client;
+import pl.lodz.p.core.domain.user.Standard;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

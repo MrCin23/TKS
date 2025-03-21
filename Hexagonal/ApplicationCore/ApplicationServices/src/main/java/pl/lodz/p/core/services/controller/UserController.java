@@ -15,7 +15,7 @@ import pl.lodz.p.core.services.exception.DeactivatedUserException;
 import pl.lodz.p.core.services.exception.WrongPasswordException;
 import pl.lodz.p.core.domain.user.User;
 import pl.lodz.p.core.services.security.JwsProvider;
-import pl.lodz.p.service.IUserService;
+import pl.lodz.p.core.services.service.IUserService;
 
 import java.util.List;
 import java.util.Map;
@@ -38,6 +38,7 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getAllErrors());
             }
             try {
+                System.out.println("Szczepaniak chuj: Controller, Obj: " + user.getClass());
                 return ResponseEntity.status(HttpStatus.CREATED).body(clientServiceImplementation.createUser(user));
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

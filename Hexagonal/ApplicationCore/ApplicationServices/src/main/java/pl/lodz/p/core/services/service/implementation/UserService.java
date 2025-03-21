@@ -1,6 +1,8 @@
 package pl.lodz.p.core.services.service.implementation;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -29,10 +31,14 @@ import java.util.concurrent.ConcurrentHashMap;
 @AllArgsConstructor
 public class UserService implements IUserService, UserDetailsService {
 
-    UGet uGet;
-    UAdd uAdd;
-    URemove uRemove;
-    UUpdate uUpdate;
+    @Autowired
+    private final UGet uGet;
+    @Autowired
+    private final UAdd uAdd;
+    @Autowired
+    private final URemove uRemove;
+    @Autowired
+    private final UUpdate uUpdate;
 
     private JwtTokenProvider tokenProvider;
 

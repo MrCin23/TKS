@@ -2,9 +2,9 @@ package unit.model;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import pl.lodz.p.model.user.ClientType;
-import pl.lodz.p.model.user.Premium;
-import pl.lodz.p.model.user.Standard;
+import pl.lodz.p.core.domain.user.ClientType;
+import pl.lodz.p.core.domain.user.Premium;
+import pl.lodz.p.core.domain.user.Standard;
 
 public class ClientTypeTests {
 

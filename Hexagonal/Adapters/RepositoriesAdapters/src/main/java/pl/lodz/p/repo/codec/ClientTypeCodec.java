@@ -25,10 +25,10 @@ public class ClientTypeCodec implements Codec<ClientTypeEnt> {
         String clientType = bsonReader.readString();
         bsonReader.readEndDocument();
 
-        if(type.equals("standard")) {
+        if(type.equals("standardent")) {
             return new StandardEnt();
         }
-        else if(type.equals("premium")) {
+        else if(type.equals("premiument")) {
             return new PremiumEnt();
         }
         else {

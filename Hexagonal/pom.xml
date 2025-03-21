@@ -12,6 +12,7 @@
     <modules>
         <module>ApplicationCore</module>
         <module>Adapters</module>
+<!--        <module>Adapters/RepositoriesAdapters</module>-->
         <module>ApplicationPorts</module>
     </modules>
 
@@ -20,6 +21,7 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
 
     <licenses>
         <license>
@@ -128,7 +130,7 @@
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter</artifactId>
-                <version>RELEASE</version>
+                <version>5.10.2</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -236,6 +238,24 @@
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
                 <version>1.9.4</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers</artifactId>
+                <version>1.18.3</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>1.19.3</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>mongodb</artifactId>
+                <version>1.19.3</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

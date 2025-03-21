@@ -13,9 +13,9 @@ public class AdminEnt extends UserEnt {
         super(new MongoUUIDEnt(UUID.randomUUID()), firstName, username, password, surname, emailAddress, RoleEnt.ADMIN, true);
     }
 
-//    public Admin(MongoUUID uuid, String firstName, String surname, String username, String emailAddress) {
-//        super(uuid, firstName, username, surname, emailAddress, Role.ADMIN, true);
-//    }
+    public AdminEnt(MongoUUIDEnt uuid, String firstName, String surname, String username, String emailAddress, String password) {
+        super(uuid, firstName, username, password, surname, emailAddress, RoleEnt.ADMIN, true);
+    }
 
     @Override
     public String toString() {

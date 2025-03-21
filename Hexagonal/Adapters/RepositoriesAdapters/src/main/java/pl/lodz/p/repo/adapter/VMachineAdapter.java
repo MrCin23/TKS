@@ -1,6 +1,7 @@
 package pl.lodz.p.repo.adapter;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.stereotype.Component;
 import pl.lodz.p.core.domain.AppleArch;
@@ -26,7 +27,7 @@ import java.util.Map;
 @Component
 @AllArgsConstructor
 public class VMachineAdapter implements VMGet, VMUpdate, VMRemove, VMAdd {
-    private VMachineRepository vMachineRepo;
+    private final VMachineRepository vMachineRepo;
 
     @Override
     public void add(VMachine vMachine) {

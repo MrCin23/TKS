@@ -3,6 +3,7 @@ package pl.lodz.p.repo.repository;
 import com.mongodb.DuplicateKeyException;
 import com.mongodb.MongoCommandException;
 import com.mongodb.client.ClientSession;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoIterable;
 import com.mongodb.client.model.*;
@@ -97,9 +98,9 @@ public class UserRepository extends AbstractMongoRepository {
         );
     }
 
+
     //-------------METHODS---------------------------------------
     //TODO dorobić metody z diagramu
-
     public void update(MongoUUIDEnt uuid, Map<String, Object> fieldsToUpdate) {
         ClientSession session = getMongoClient().startSession();
         try {

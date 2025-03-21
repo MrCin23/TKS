@@ -3,10 +3,10 @@ package unit.model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.lodz.p.model.AppleArch;
-import pl.lodz.p.model.MongoUUID;
-import pl.lodz.p.model.VMachine;
-import pl.lodz.p.model.x86;
+import pl.lodz.p.core.domain.AppleArch;
+import pl.lodz.p.core.domain.MongoUUID;
+import pl.lodz.p.core.domain.VMachine;
+import pl.lodz.p.core.domain.x86;
 
 import java.util.UUID;
 
