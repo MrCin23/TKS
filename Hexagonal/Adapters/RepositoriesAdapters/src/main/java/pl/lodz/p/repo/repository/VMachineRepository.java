@@ -138,6 +138,7 @@ public class VMachineRepository extends AbstractMongoRepository {
     }
 
     public List<VMachineEnt> getVMachines() {
+        System.out.println("BBBBBBBBBBBBBBBBB" + vMachines.find().into(new ArrayList<>()).size());
         return vMachines.find().into(new ArrayList<>());
     }
 

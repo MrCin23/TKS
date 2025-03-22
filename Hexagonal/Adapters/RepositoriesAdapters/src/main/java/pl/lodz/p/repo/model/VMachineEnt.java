@@ -1,6 +1,8 @@
 package pl.lodz.p.repo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,6 +10,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
+import pl.lodz.p.repo.model.user.PremiumEnt;
+import pl.lodz.p.repo.model.user.StandardEnt;
 
 import java.util.UUID;
 

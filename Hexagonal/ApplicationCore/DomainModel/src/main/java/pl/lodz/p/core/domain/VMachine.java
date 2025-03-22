@@ -3,6 +3,8 @@ package pl.lodz.p.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,10 +22,12 @@ import java.util.UUID;
 })
 public abstract class VMachine extends AbstractEntityMgd {
 
+    @Min(1)
     private int CPUNumber;
 
     private String ramSize;
 
+    @Min(0)
     private int isRented;
 
     protected float actualRentalPrice;

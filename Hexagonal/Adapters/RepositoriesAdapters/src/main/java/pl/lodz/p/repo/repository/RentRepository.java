@@ -83,7 +83,7 @@ public class RentRepository extends AbstractMongoRepository {
         UserEnt client;
         try {
             session.startTransaction();
-//            VMachine vm = getVMachineById(rent.getVMachine().getEntityId().getUuid());
+//            VMachineEnt vm = getVMachineById(rent.getVMachine().getEntityId().getUuid());
 //            if(vm.isRented()>0){
 //                throw new RuntimeException("I really shouldnt have to do this");
 //            }

@@ -38,7 +38,6 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getAllErrors());
             }
             try {
-                System.out.println("Szczepaniak chuj: Controller, Obj: " + user.getClass());
                 return ResponseEntity.status(HttpStatus.CREATED).body(clientServiceImplementation.createUser(user));
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

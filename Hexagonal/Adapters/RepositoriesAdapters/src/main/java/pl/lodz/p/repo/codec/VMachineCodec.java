@@ -30,14 +30,14 @@ public class VMachineCodec implements Codec<VMachineEnt> {
         int isRented = bsonReader.readInt32("isRented");
         float actualRentalPrice = (float) bsonReader.readDouble("actualRentalPrice");
         String CPUManufacturer = "";
-        if(type.equals("x86")) {
-            CPUManufacturer = bsonReader.readString("CPUManufacturer");
+        if(type.equals("x86ent") || type.equals("x86")) {
+            CPUManufacturer = bsonReader.readString("cpumanufacturer");
         }
         bsonReader.readEndDocument();
-        if(type.equals("x86")) {
+        if(type.equals("x86ent")  || type.equals("x86")) {
             return new x86Ent(uuid, CPUNumber, ramSize, isRented, CPUManufacturer);
         }
-        else if(type.equals("applearch")) {
+        else if(type.equals("applearchent") || type.equals("applearch")) {
             return new AppleArchEnt(uuid, CPUNumber, ramSize, isRented);
         }
         else {
@@ -54,9 +54,9 @@ public class VMachineCodec implements Codec<VMachineEnt> {
         bsonWriter.writeString("ramSize", vMachine.getRamSize());
         bsonWriter.writeInt32("isRented", vMachine.isRented());
         bsonWriter.writeDouble("actualRentalPrice", vMachine.getActualRentalPrice());
-        if(vMachine.getClass().getSimpleName().equals("x86")) {
+        if(vMachine.getClass().getSimpleName().equals("x86ent") || vMachine.getClass().getSimpleName().equals("x86")) {
             x86Ent pom = (x86Ent) vMachine;
-            bsonWriter.writeString("CPUManufacturer", pom.getCPUManufacturer());
+            bsonWriter.writeString("cpumanufacturer", pom.getCPUManufacturer());
         }
         bsonWriter.writeEndDocument();
     }

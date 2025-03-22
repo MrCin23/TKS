@@ -5,21 +5,22 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import org.junit.jupiter.api.*;
-//import pl.lodz.p.data.DataInitializer;
+import pl.lodz.p.core.services.data.DataInitializer;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class RentTests {
 
-//    DataInitializer dataInitializer = new DataInitializer();
+    DataInitializer dataInitializer = new DataInitializer();
 
     @BeforeEach
     public void initCollection() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = 8081;
         RestAssured.basePath = "/REST/api";
+        dataInitializer.dropAndCreateRent();
+        dataInitializer.initRent();
     }
 
 
@@ -43,7 +44,7 @@ public class RentTests {
                     "emailAddress": "john.doe@example.com",
                     "_clazz": "Client",
                     "role": "CLIENT",
-                    "clientTypeEnt": {
+                    "clientType": {
                         "_clazz": "standard",
                         "entityId": {
                             "uuid": "5bd23f3d-0be9-41d7-9cd8-0ae77e6f463d"
@@ -54,7 +55,7 @@ public class RentTests {
                     "currentRents": 0,
                     "active": true,
                     "password": "12345678"
-                }"""; //todo co to ma byc "clientTypeEnt": {
+                }""";
 
         RestAssured.given()
                 .contentType(ContentType.JSON)
@@ -76,7 +77,7 @@ public class RentTests {
                 .contentType(ContentType.JSON)
                 .body(payloadLogin)
                 .when()
-                .post("/clientEnt/login")
+                .post("/client/login")
                 .then()
                 .statusCode(200)
                 .extract()
@@ -94,7 +95,7 @@ public class RentTests {
                 .contentType(ContentType.JSON)
                 .body(payloadLogin)
                 .when()
-                .post("/clientEnt/login")
+                .post("/client/login")
                 .then()
                 .statusCode(200)
                 .extract()
@@ -109,7 +110,8 @@ public class RentTests {
                         "uuid": "7ab44a0b-8347-41cb-a64a-452666d0494a"
                     },
                     "ramSize": "4GB",
-                    "cpunumber": 4
+                    "cpunumber": 4,
+                    "isRented": 0
                 }""";
 
         RestAssured.given()
@@ -125,7 +127,7 @@ public class RentTests {
 
     @Test
     public void testCreateRent() {
-        //create clientEnt
+        //create client
         createClient();
         //create vm
         createVM();
@@ -148,7 +150,7 @@ public class RentTests {
 
     @Test
     public void testRentRented(){
-        //create clientEnt
+        //create client
         createClient();
         //create vm
         createVM();

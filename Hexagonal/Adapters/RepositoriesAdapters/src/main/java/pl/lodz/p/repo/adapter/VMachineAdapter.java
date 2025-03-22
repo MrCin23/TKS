@@ -37,7 +37,8 @@ public class VMachineAdapter implements VMGet, VMUpdate, VMRemove, VMAdd {
     @Override
     public List<VMachine> getVMachines() {
         List<VMachine> result = new ArrayList<>();
-        for (VMachineEnt ent : vMachineRepo.getVMachines()) {
+        List<VMachineEnt> ents = vMachineRepo.getVMachines();
+        for (VMachineEnt ent : ents) {
             result.add(convert(ent));
         }
         return result;
@@ -45,6 +46,7 @@ public class VMachineAdapter implements VMGet, VMUpdate, VMRemove, VMAdd {
 
     @Override
     public VMachine getVMachineByID(MongoUUID uuid) {
+        System.out.println("Elo");
         return convert(vMachineRepo.getVMachineByID(convert(uuid)));
     }
 
@@ -64,31 +66,25 @@ public class VMachineAdapter implements VMGet, VMUpdate, VMRemove, VMAdd {
     }
 
     private VMachineEnt convert(VMachine vm) {
-        VMachineEnt ent = switch (vm.getClass().getSimpleName()) {
-            case "x86" -> new x86Ent();
-            case "AppleArch" -> new AppleArchEnt();
+        if (vm == null) {
+            return null;
+        }
+        return switch (vm.getClass().getSimpleName()) {
+            case "x86" -> new x86Ent(convert(vm.getEntityId()), vm.getCPUNumber(), vm.getRamSize(), vm.isRented(), ((x86)vm).getCPUManufacturer());
+            case "AppleArch" -> new AppleArchEnt(convert(vm.getEntityId()), vm.getCPUNumber(), vm.getRamSize(), vm.isRented());
             default -> throw new RuntimeException(vm.getClass().getSimpleName() + " not supported");
         };
-        try {
-            PropertyUtils.copyProperties(ent, vm);
-        } catch (IllegalAccessException | java.lang.reflect.InvocationTargetException | NoSuchMethodException e) {
-            throw new RuntimeException("Property copying failed: " + e);
-        }
-        return ent;
     }
 
     private VMachine convert(VMachineEnt ent) {
-        VMachine vm = switch (ent.getClass().getSimpleName()) {
-            case "x86Ent" -> new x86();
-            case "AppleArchEnt" -> new AppleArch();
+        if (ent == null) {
+            return null;
+        }
+        return switch (ent.getClass().getSimpleName()) {
+            case "x86Ent" -> new x86(convert(ent.getEntityId()), ent.getCPUNumber(), ent.getRamSize(), ent.isRented(), ((x86Ent)ent).getCPUManufacturer());
+            case "AppleArchEnt" -> new AppleArch(convert(ent.getEntityId()), ent.getCPUNumber(), ent.getRamSize(), ent.isRented());
             default -> throw new RuntimeException(ent.getClass().getSimpleName() + " not supported");
         };
-        try {
-            PropertyUtils.copyProperties(vm, ent);
-        } catch (IllegalAccessException | java.lang.reflect.InvocationTargetException | NoSuchMethodException e) {
-            throw new RuntimeException("Property copying failed: " + e);
-        }
-        return vm;
     }
 
     private MongoUUID convert(MongoUUIDEnt ent) {

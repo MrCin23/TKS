@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.*;
-//import pl.lodz.p.data.DataInitializer;
+import pl.lodz.p.core.services.data.DataInitializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,26 +16,27 @@ import static org.hamcrest.Matchers.greaterThan;
 
 public class VMachineTests {
 
-//    DataInitializer dataInitializer = new DataInitializer();
+    DataInitializer dataInitializer = new DataInitializer();
 
 
     @BeforeEach
-//    public static void init() {
     public void initCollection() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = 8081;
         RestAssured.basePath = "/REST/api";
-//        dataInitializer.dropAndCreateVMachine();
-//        dataInitializer.dropAndCreateClient();
-//        dataInitializer.initClient();
-//        dataInitializer.initVM();
+        dataInitializer.dropAndCreateVMachine();
+        dataInitializer.dropAndCreateClient();
+        dataInitializer.initClient();
+        dataInitializer.initVM();
     }
 
-//    @AfterEach
-//    public void dropCollection() {
-//        dataInitializer.dropAndCreateVMachine();
-//        dataInitializer.initVM();
-//    }
+    @AfterEach
+    public void dropCollection() {
+        dataInitializer.dropAndCreateVMachine();
+        dataInitializer.dropAndCreateClient();
+        dataInitializer.initClient();
+        dataInitializer.initVM();
+    }
 
     public String loginManager()  {
         String payloadLogin = """
@@ -107,7 +108,7 @@ public class VMachineTests {
                 .get("/vmachine")
                 .then()
                 .statusCode(200)
-                .body("size()", greaterThan(0)); // Ensure there are VMachine entries
+                .body("size()", greaterThan(0));
 
     }
 

@@ -99,8 +99,7 @@ public class UserRepository extends AbstractMongoRepository {
     }
 
 
-    //-------------METHODS---------------------------------------
-    //TODO dorobić metody z diagramu
+
     public void update(MongoUUIDEnt uuid, Map<String, Object> fieldsToUpdate) {
         ClientSession session = getMongoClient().startSession();
         try {
