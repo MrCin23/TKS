@@ -27,7 +27,7 @@ public class RentTests {
     String rentJson = """
                 {
                     "username": "JDoe",
-                    "vmId": "7ab44a0b-8347-41cb-a64a-452666d0494a",
+                    "vmId": "11111111-8347-41cb-a64a-452666d0494a",
                     "startTime": "2024-11-11T11:11"
                 }
                 """;
@@ -35,8 +35,8 @@ public class RentTests {
     public void createClient() {
         String clientJson = """
                 {
-                    "entityId": {
-                        "uuid": "123e4567-e89b-12d3-a456-426614174000"
+                    "_id": {
+                        "uuid": "11111111-e89b-12d3-a456-426614174000"
                     },
                     "firstName": "John",
                     "surname": "Doe",
@@ -107,7 +107,7 @@ public class RentTests {
                 {
                     "_clazz": "applearch",
                     "entityId": {
-                        "uuid": "7ab44a0b-8347-41cb-a64a-452666d0494a"
+                        "uuid": "11111111-8347-41cb-a64a-452666d0494a"
                     },
                     "ramSize": "4GB",
                     "cpunumber": 4,
@@ -144,7 +144,7 @@ public class RentTests {
 
         String responseBody = response.getBody().asString();
         assertThat(responseBody, containsString("JDoe"));
-        assertThat(responseBody, containsString("7ab44a0b-8347-41cb-a64a-452666d0494a"));
+        assertThat(responseBody, containsString("11111111-8347-41cb-a64a-452666d0494a"));
         assertThat(responseBody, containsString("[2024,11,11,11,11]"));
     }
 
@@ -165,7 +165,7 @@ public class RentTests {
 
         String responseBody = response.getBody().asString();
         assertThat(responseBody, containsString("JDoe"));
-        assertThat(responseBody, containsString("7ab44a0b-8347-41cb-a64a-452666d0494a"));
+        assertThat(responseBody, containsString("11111111-8347-41cb-a64a-452666d0494a"));
         assertThat(responseBody, containsString("[2024,11,11,11,11]"));
         //create rent of rented machine
         Response response2 = RestAssured.given()

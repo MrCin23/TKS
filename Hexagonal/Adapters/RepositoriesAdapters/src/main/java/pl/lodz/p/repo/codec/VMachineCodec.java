@@ -29,13 +29,13 @@ public class VMachineCodec implements Codec<VMachineEnt> {
         String ramSize = bsonReader.readString("ramSize");
         int isRented = bsonReader.readInt32("isRented");
         float actualRentalPrice = (float) bsonReader.readDouble("actualRentalPrice");
-        String CPUManufacturer = "";
-        if(type.equals("x86ent") || type.equals("x86")) {
-            CPUManufacturer = bsonReader.readString("cpumanufacturer");
+        String manufacturer = "";
+        if(type.equalsIgnoreCase("x86ent") || type.equalsIgnoreCase("x86")) {
+            manufacturer = bsonReader.readString("manufacturer");
         }
         bsonReader.readEndDocument();
-        if(type.equals("x86ent")  || type.equals("x86")) {
-            return new x86Ent(uuid, CPUNumber, ramSize, isRented, CPUManufacturer);
+        if(type.equalsIgnoreCase("x86ent")  || type.equalsIgnoreCase("x86")) {
+            return new x86Ent(uuid, CPUNumber, ramSize, isRented, manufacturer);
         }
         else if(type.equals("applearchent") || type.equals("applearch")) {
             return new AppleArchEnt(uuid, CPUNumber, ramSize, isRented);
@@ -54,9 +54,11 @@ public class VMachineCodec implements Codec<VMachineEnt> {
         bsonWriter.writeString("ramSize", vMachine.getRamSize());
         bsonWriter.writeInt32("isRented", vMachine.isRented());
         bsonWriter.writeDouble("actualRentalPrice", vMachine.getActualRentalPrice());
-        if(vMachine.getClass().getSimpleName().equals("x86ent") || vMachine.getClass().getSimpleName().equals("x86")) {
+        System.out.println("GIGABALLS" + vMachine.getClass().getSimpleName().toLowerCase());
+        if(vMachine.getClass().getSimpleName().equalsIgnoreCase("x86ent") || vMachine.getClass().getSimpleName().equalsIgnoreCase("x86")) {
             x86Ent pom = (x86Ent) vMachine;
-            bsonWriter.writeString("cpumanufacturer", pom.getCPUManufacturer());
+            bsonWriter.writeString("manufacturer", pom.getManufacturer());
+            System.out.println("MEGABALLS" + vMachine.getClass().getSimpleName().toLowerCase() + "        " + pom + pom.getManufacturer());
         }
         bsonWriter.writeEndDocument();
     }

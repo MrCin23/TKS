@@ -70,7 +70,7 @@ public class VMachineAdapter implements VMGet, VMUpdate, VMRemove, VMAdd {
             return null;
         }
         return switch (vm.getClass().getSimpleName()) {
-            case "x86" -> new x86Ent(convert(vm.getEntityId()), vm.getCPUNumber(), vm.getRamSize(), vm.isRented(), ((x86)vm).getCPUManufacturer());
+            case "x86" -> new x86Ent(convert(vm.getEntityId()), vm.getCPUNumber(), vm.getRamSize(), vm.isRented(), ((x86)vm).getManufacturer());
             case "AppleArch" -> new AppleArchEnt(convert(vm.getEntityId()), vm.getCPUNumber(), vm.getRamSize(), vm.isRented());
             default -> throw new RuntimeException(vm.getClass().getSimpleName() + " not supported");
         };
@@ -81,7 +81,7 @@ public class VMachineAdapter implements VMGet, VMUpdate, VMRemove, VMAdd {
             return null;
         }
         return switch (ent.getClass().getSimpleName()) {
-            case "x86Ent" -> new x86(convert(ent.getEntityId()), ent.getCPUNumber(), ent.getRamSize(), ent.isRented(), ((x86Ent)ent).getCPUManufacturer());
+            case "x86Ent" -> new x86(convert(ent.getEntityId()), ent.getCPUNumber(), ent.getRamSize(), ent.isRented(), ((x86Ent)ent).getManufacturer());
             case "AppleArchEnt" -> new AppleArch(convert(ent.getEntityId()), ent.getCPUNumber(), ent.getRamSize(), ent.isRented());
             default -> throw new RuntimeException(ent.getClass().getSimpleName() + " not supported");
         };

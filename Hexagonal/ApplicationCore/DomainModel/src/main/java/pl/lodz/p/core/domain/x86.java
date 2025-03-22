@@ -9,11 +9,11 @@ import lombok.Setter;
 public class x86 extends VMachine {
 
 
-    private String CPUManufacturer;
+    private String manufacturer;
 
-    public x86(int CPUNumber, String ramSize, String CPUManufacturer) {
+    public x86(int CPUNumber, String ramSize, String manufacturer) {
         super(CPUNumber, ramSize, 0);
-        this.CPUManufacturer = CPUManufacturer;
+        this.manufacturer = manufacturer;
         this.actualRentalPrice = getActualRentalPrice();
     }
 
@@ -23,9 +23,9 @@ public class x86 extends VMachine {
 
 
     public x86(MongoUUID uuid, int CPUNumber, String ramSize,
-               int isRented, String CPUManufacturer) {
+               int isRented, String manufacturer) {
         super(uuid, CPUNumber, ramSize, isRented);
-        this.CPUManufacturer = CPUManufacturer;
+        this.manufacturer = manufacturer;
         this.actualRentalPrice = getActualRentalPrice();
     }
 
@@ -44,9 +44,9 @@ public class x86 extends VMachine {
         float threadMultiplier = getCPUNumber() / 2.0f;
 
         float manufacturerMultiplier = 1;
-        if (CPUManufacturer.equalsIgnoreCase("Intel")) {
+        if (manufacturer.equalsIgnoreCase("Intel")) {
             manufacturerMultiplier = 3;
-        } else if (CPUManufacturer.equalsIgnoreCase("AMD")) {
+        } else if (manufacturer.equalsIgnoreCase("AMD")) {
             manufacturerMultiplier = 2;
         }
 
@@ -54,6 +54,6 @@ public class x86 extends VMachine {
     }
 
     public String toString() {
-        return "x86 architecture: " + this.getEntityId().toString() + " " + this.getCPUNumber() + " " + this.getRamSize() + " " + this.isRented() + " " + this.getCPUManufacturer() + " " + this.getActualRentalPrice();
+        return "x86 architecture: " + this.getEntityId().toString() + " " + this.getCPUNumber() + " " + this.getRamSize() + " " + this.isRented() + " " + this.getManufacturer() + " " + this.getActualRentalPrice();
     }
 }

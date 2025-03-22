@@ -122,7 +122,7 @@ public class RentAdapter implements RentAdd, RentEnd, RentGet, RentRemove, RentS
             default -> throw new RuntimeException("Unsupported type: " + ent.getClientEnt().getClass().getSimpleName());
         };
         VMachine vMachine = switch (ent.getVMachine().getClass().getSimpleName()) {
-            case "x86Ent" -> new x86(convert(ent.getVMachine().getEntityId()), ent.getVMachine().getCPUNumber(), ent.getVMachine().getRamSize(), ent.getVMachine().isRented(), ((x86Ent)ent.getVMachine()).getCPUManufacturer());
+            case "x86Ent" -> new x86(convert(ent.getVMachine().getEntityId()), ent.getVMachine().getCPUNumber(), ent.getVMachine().getRamSize(), ent.getVMachine().isRented(), ((x86Ent)ent.getVMachine()).getManufacturer());
             case "AppleArchEnt" -> new AppleArch(convert(ent.getVMachine().getEntityId()), ent.getVMachine().getCPUNumber(), ent.getVMachine().getRamSize(), ent.getVMachine().isRented());
             default -> throw new RuntimeException(ent.getVMachine().getClass().getSimpleName() + " not supported");
         };
@@ -143,7 +143,7 @@ public class RentAdapter implements RentAdd, RentEnd, RentGet, RentRemove, RentS
 //            default -> throw new RuntimeException("Unsupported type: " + rent.getClient().getClass().getSimpleName());
 //        };
         VMachineEnt vMachine = switch (rent.getVMachine().getClass().getSimpleName()) {
-            case "x86" -> new x86Ent(convert(rent.getVMachine().getEntityId()), rent.getVMachine().getCPUNumber(), rent.getVMachine().getRamSize(), rent.getVMachine().isRented(), ((x86)rent.getVMachine()).getCPUManufacturer());
+            case "x86" -> new x86Ent(convert(rent.getVMachine().getEntityId()), rent.getVMachine().getCPUNumber(), rent.getVMachine().getRamSize(), rent.getVMachine().isRented(), ((x86)rent.getVMachine()).getManufacturer());
             case "AppleArch" -> new AppleArchEnt(convert(rent.getVMachine().getEntityId()), rent.getVMachine().getCPUNumber(), rent.getVMachine().getRamSize(), rent.getVMachine().isRented());
             default -> throw new RuntimeException(rent.getVMachine().getClass().getSimpleName() + " not supported");
         };

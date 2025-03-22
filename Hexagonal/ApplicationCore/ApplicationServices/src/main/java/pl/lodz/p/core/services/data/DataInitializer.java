@@ -92,7 +92,7 @@ public class DataInitializer {
                         "actualRentalPrice" : {
                             "bsonType": "double"
                         }
-                        "CPUManufacturer" : {
+                        "manufacturer" : {
                             "bsonType": "string"
                         }
                     }
@@ -132,10 +132,10 @@ public class DataInitializer {
         vms = new ArrayList<>();
         vms.add(new AppleArchEnt(4, "4GB"));
         vms.add(new AppleArchEnt(24, "128GB"));
-//        vms.add(new x86Ent(8, "8GB", "AMD"));
-//        vms.add(new x86Ent(16, "32GB", "Intel"));
-//        vms.add(new x86Ent(128, "256GB", "Other"));
-//        vms.add(new x86Ent(128, "256GB", "Other"));
+        vms.add(new x86Ent(8, "8GB", "AMD"));
+        vms.add(new x86Ent(16, "32GB", "Intel"));
+        vms.add(new x86Ent(128, "256GB", "Other"));
+        vms.add(new x86Ent(128, "256GB", "Other"));
         for(VMachineEnt vm: vms ){
             vmRepo.add(vm);
         }

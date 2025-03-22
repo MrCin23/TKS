@@ -7,6 +7,7 @@ import com.mongodb.client.MongoIterable;
 import com.mongodb.client.model.*;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.stereotype.Repository;
 import pl.lodz.p.repo.model.MongoUUIDEnt;
 import pl.lodz.p.repo.model.VMachineEnt;
@@ -62,7 +63,7 @@ public class VMachineRepository extends AbstractMongoRepository {
                         "actualRentalPrice" : {
                             "bsonType": "double"
                         }
-                        "CPUManufacturer" : {
+                        "manufacturer" : {
                             "bsonType": "string"
                         }
                     }

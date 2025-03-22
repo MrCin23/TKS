@@ -47,7 +47,6 @@ public class RentController {
             }
             return ResponseEntity.status(HttpStatus.CREATED).body(rentService.createRent(rentDTO));
         } catch (RuntimeException e) {
-            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAA" + e.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());

@@ -32,8 +32,8 @@
 //        vMachinesRepository.add(vm);
 //    }
 //
-//    public void registerX86(int CPUNumber, String ramSize, String CPUManufacturer) {
-//        VMachine vMachine = new x86(CPUNumber, ramSize, CPUManufacturer);
+//    public void registerX86(int CPUNumber, String ramSize, String manufacturer) {
+//        VMachine vMachine = new x86(CPUNumber, ramSize, manufacturer);
 //        registerExistingVMachine(vMachine);
 //    }
 //

@@ -59,14 +59,14 @@ public class VMachineTests {
     @Test
     public void testCreateVMachine() throws JsonProcessingException {
         String payloadJson = """
-                {
-                    "_clazz": "applearch",
-                    "entityId": {
-                        "uuid": "7ab44a0b-8347-41cb-a64a-452666d0494a"
-                    },
-                    "ramSize": "4GB",
-                    "cpunumber": 4
-                }""";
+            {
+                "ramSize": "4GB",
+                "isRented": 0,
+                "cpunumber": 4,
+                "manufacturer": "AMD",
+                "_clazz":"x86"
+            }
+            """;
 
         RestAssured.given()
                 .header("Authorization", "Bearer " + loginManager())
@@ -76,7 +76,7 @@ public class VMachineTests {
                 .post("/vmachine")
                 .then()
                 .statusCode(201)
-                .body("_clazz", equalTo("applearch"))
+                .body("_clazz", equalTo("x86"))
                 .body("ramSize", equalTo("4GB"))
                 .body("cpunumber", equalTo(4));
     }
@@ -85,12 +85,14 @@ public class VMachineTests {
     public void testGetAllVMachines() {
         String payloadJson = """
                 {
-                    "_clazz": "applearch",
+                    "_clazz": "x86",
                     "entityId": {
-                        "uuid": "123e4567-e89b-12d3-a456-426614174000"
+                        "uuid": "11111111-e89b-12d3-a456-426614174000"
                     },
                     "ramSize": "8GB",
-                    "cpunumber": 2
+                    "cpunumber": 2,
+                    "isRented": 0,
+                    "manufacturer": "AMD"
                 }""";
 
         RestAssured.given()

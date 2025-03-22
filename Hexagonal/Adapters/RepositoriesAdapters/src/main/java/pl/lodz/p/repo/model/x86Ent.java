@@ -12,13 +12,13 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 @Setter
 @BsonDiscriminator(value="x86", key="_clazz")
 public class x86Ent extends VMachineEnt {
-    @BsonProperty("CPUManufacturer")
+    @BsonProperty("manufacturer")
     @NotNull(message = "CPU manufacturer cannot be null")
-    private String CPUManufacturer;
+    private String manufacturer;
 
-    public x86Ent(int CPUNumber, String ramSize, String CPUManufacturer) {
+    public x86Ent(int CPUNumber, String ramSize, String manufacturer) {
         super(CPUNumber, ramSize, 0);
-        this.CPUManufacturer = CPUManufacturer;
+        this.manufacturer = manufacturer;
         this.actualRentalPrice = getActualRentalPrice();
     }
 
@@ -28,9 +28,9 @@ public class x86Ent extends VMachineEnt {
 
     @BsonCreator
     public x86Ent(@BsonProperty("_id") MongoUUIDEnt uuid, @BsonProperty("CPUNumber") int CPUNumber, @BsonProperty("ramSize") String ramSize,
-                  @BsonProperty("isRented") int isRented, @BsonProperty("CPUManufacturer") String CPUManufacturer) {
+                  @BsonProperty("isRented") int isRented, @BsonProperty("manufacturer") String manufacturer) {
         super(uuid, CPUNumber, ramSize, isRented);
-        this.CPUManufacturer = CPUManufacturer;
+        this.manufacturer = manufacturer;
         this.actualRentalPrice = getActualRentalPrice();
     }
 
@@ -49,9 +49,9 @@ public class x86Ent extends VMachineEnt {
         float threadMultiplier = getCPUNumber() / 2.0f;
 
         float manufacturerMultiplier = 1;
-        if (CPUManufacturer.equalsIgnoreCase("Intel")) {
+        if (manufacturer.equalsIgnoreCase("Intel")) {
             manufacturerMultiplier = 3;
-        } else if (CPUManufacturer.equalsIgnoreCase("AMD")) {
+        } else if (manufacturer.equalsIgnoreCase("AMD")) {
             manufacturerMultiplier = 2;
         }
 
@@ -59,6 +59,6 @@ public class x86Ent extends VMachineEnt {
     }
 
     public String toString() {
-        return "x86 architecture: " + this.getEntityId().toString() + " " + this.getCPUNumber() + " " + this.getRamSize() + " " + this.isRented() + " " + this.getCPUManufacturer() + " " + this.getActualRentalPrice();
+        return "x86 architecture: " + this.getEntityId().toString() + " " + this.getCPUNumber() + " " + this.getRamSize() + " " + this.isRented() + " " + this.getManufacturer() + " " + this.getActualRentalPrice();
     }
 }

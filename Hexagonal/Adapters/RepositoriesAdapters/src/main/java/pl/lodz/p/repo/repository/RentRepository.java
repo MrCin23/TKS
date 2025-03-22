@@ -87,11 +87,12 @@ public class RentRepository extends AbstractMongoRepository {
 //            if(vm.isRented()>0){
 //                throw new RuntimeException("I really shouldnt have to do this");
 //            }
-            Bson clientFilter = Filters.eq("_id", rent.getClientEnt().getEntityId().getUuid());
+            Bson clientFilter = Filters.eq("username", rent.getClientEnt().getUsername());
             Bson updateClientFilter = Updates.inc("currentRents", 1);
             clients.updateOne(session, clientFilter, updateClientFilter);
             Bson currentRentsFilter = Filters.lt("currentRents", rent.getClientEnt().getClientTypeEnt().getMaxRentedMachines());
-            client = clients.find(Filters.and(clientFilter, currentRentsFilter)).first(); //TODO tutaj zwraca z jakiegoś powodu null i robi rollback transakcji
+            List<UserEnt> tmp = clients.find(Filters.and(clientFilter, currentRentsFilter)).into(new ArrayList<>());
+            client = clients.find(Filters.and(clientFilter, currentRentsFilter)).first();
             if(client == null || !client.isActive()){
                 throw new RuntimeException("Client doesnt exist or is not active");
             }
