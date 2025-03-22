@@ -91,7 +91,7 @@ public class RentRepository extends AbstractMongoRepository {
             Bson updateClientFilter = Updates.inc("currentRents", 1);
             clients.updateOne(session, clientFilter, updateClientFilter);
             Bson currentRentsFilter = Filters.lt("currentRents", rent.getClientEnt().getClientTypeEnt().getMaxRentedMachines());
-            client = clients.find(Filters.and(clientFilter, currentRentsFilter)).first();
+            client = clients.find(Filters.and(clientFilter, currentRentsFilter)).first(); //TODO tutaj zwraca z jakiegoś powodu null i robi rollback transakcji
             if(client == null || !client.isActive()){
                 throw new RuntimeException("Client doesnt exist or is not active");
             }
