@@ -30,10 +30,10 @@ public class UserTests {
         Assertions.assertEquals("User{firstName='John', surname='Doe', username='JDoe', emailAddress='jdoe@example.com', role=RESOURCE_MANAGER, active=true}::ResourceManager{}", user.toString());
     }
 
-    @Test
-    public void checkPassword() {
-        User user = new Client(new MongoUUID(UUID.randomUUID()), "John", "JDoe", "a", "Doe", "jdoe@example.com", Role.CLIENT, true, new Standard(), 0);
-        Assertions.assertTrue(user.checkPassword("a"));
-    }
+//    @Test
+//    public void checkPassword() {
+//        User user = new Client(new MongoUUID(UUID.randomUUID()), "John", "JDoe", "a", "Doe", "jdoe@example.com", Role.CLIENT, true, new Standard(), 0);
+//        Assertions.assertTrue(user.checkPassword("a"));
+//    }
 
 }

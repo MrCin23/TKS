@@ -5,6 +5,8 @@
     <file url="file://$PROJECT_DIR$/Adapters/RESTAdapter/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Adapters/RepositoriesAdapters/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Adapters/RepositoriesAdapters/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Adapters/SOAPAdapter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Adapters/SOAPAdapter/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Adapters/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Adapters/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ApplicationCore/ApplicationServices/src/main/java" charset="UTF-8" />
