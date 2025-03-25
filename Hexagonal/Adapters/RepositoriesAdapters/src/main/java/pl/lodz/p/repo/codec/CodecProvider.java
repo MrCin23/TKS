@@ -2,9 +2,9 @@ package pl.lodz.p.repo.codec;
 
 import org.bson.codecs.Codec;
 import org.bson.codecs.configuration.CodecRegistry;
-import pl.lodz.p.repo.model.MongoUUIDEnt;
-import pl.lodz.p.repo.model.VMachineEnt;
-import pl.lodz.p.repo.model.user.ClientTypeEnt;
+import pl.lodz.p.repo.MongoUUIDEnt;
+import pl.lodz.p.repo.vm.data.VMachineEnt;
+import pl.lodz.p.repo.user.data.ClientTypeEnt;
 
 public class CodecProvider implements org.bson.codecs.configuration.CodecProvider {
     public CodecProvider() {

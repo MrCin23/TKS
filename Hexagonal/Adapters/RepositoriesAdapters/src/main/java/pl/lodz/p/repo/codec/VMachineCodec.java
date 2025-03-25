@@ -6,10 +6,10 @@ import org.bson.codecs.Codec;
 import org.bson.codecs.DecoderContext;
 import org.bson.codecs.EncoderContext;
 import org.bson.codecs.configuration.CodecRegistry;
-import pl.lodz.p.repo.model.AppleArchEnt;
-import pl.lodz.p.repo.model.MongoUUIDEnt;
-import pl.lodz.p.repo.model.VMachineEnt;
-import pl.lodz.p.repo.model.x86Ent;
+import pl.lodz.p.repo.vm.data.AppleArchEnt;
+import pl.lodz.p.repo.MongoUUIDEnt;
+import pl.lodz.p.repo.vm.data.VMachineEnt;
+import pl.lodz.p.repo.vm.data.x86Ent;
 
 import java.util.UUID;
 

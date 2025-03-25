@@ -10,20 +10,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bson.Document;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import pl.lodz.p.core.domain.user.User;
-import pl.lodz.p.core.domain.AppleArch;
-import pl.lodz.p.core.domain.Rent;
-import pl.lodz.p.core.domain.VMachine;
-import pl.lodz.p.core.domain.user.*;
-import pl.lodz.p.core.domain.x86;
-import pl.lodz.p.repo.model.AppleArchEnt;
-import pl.lodz.p.repo.model.RentEnt;
-import pl.lodz.p.repo.model.VMachineEnt;
-import pl.lodz.p.repo.model.user.*;
-import pl.lodz.p.repo.model.x86Ent;
-import pl.lodz.p.repo.repository.RentRepository;
-import pl.lodz.p.repo.repository.UserRepository;
-import pl.lodz.p.repo.repository.VMachineRepository;
+import pl.lodz.p.repo.rent.repo.RentRepository;
+import pl.lodz.p.repo.user.repo.UserRepository;
+import pl.lodz.p.repo.vm.repo.VMachineRepository;
+import pl.lodz.p.repo.rent.data.RentEnt;
+import pl.lodz.p.repo.user.data.*;
+import pl.lodz.p.repo.vm.data.AppleArchEnt;
+import pl.lodz.p.repo.vm.data.VMachineEnt;
+import pl.lodz.p.repo.vm.data.x86Ent;
 
 
 import java.time.LocalDateTime;

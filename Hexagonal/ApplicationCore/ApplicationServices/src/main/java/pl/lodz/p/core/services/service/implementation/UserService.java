@@ -1,15 +1,14 @@
 package pl.lodz.p.core.services.service.implementation;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.core.services.dto.LoginDTO;
-import pl.lodz.p.core.services.exception.DeactivatedUserException;
-import pl.lodz.p.core.services.exception.WrongPasswordException;
+import pl.lodz.p.core.domain.exception.DeactivatedUserException;
+import pl.lodz.p.core.domain.exception.WrongPasswordException;
 import pl.lodz.p.core.domain.user.User;
 import pl.lodz.p.core.domain.MongoUUID;
 import pl.lodz.p.core.domain.user.UserPrincipal;
