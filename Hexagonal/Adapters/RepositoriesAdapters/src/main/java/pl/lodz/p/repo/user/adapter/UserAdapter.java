@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.lodz.p.core.domain.MongoUUID;
 import pl.lodz.p.core.domain.user.*;
-import pl.lodz.p.port.infrastructure.user.UAdd;
-import pl.lodz.p.port.infrastructure.user.UGet;
-import pl.lodz.p.port.infrastructure.user.URemove;
-import pl.lodz.p.port.infrastructure.user.UUpdate;
+import pl.lodz.p.infrastructure.user.UAdd;
+import pl.lodz.p.infrastructure.user.UGet;
+import pl.lodz.p.infrastructure.user.URemove;
+import pl.lodz.p.infrastructure.user.UUpdate;
 import pl.lodz.p.repo.MongoUUIDEnt;
 import pl.lodz.p.repo.user.repo.UserRepository;
 import pl.lodz.p.repo.user.data.*;
@@ -22,7 +22,7 @@ import java.util.Map;
 @Component
 @AllArgsConstructor
 public class UserAdapter implements UGet, UUpdate, URemove, UAdd {
-    @Autowired
+
     private final UserRepository userRepository;
 
     @Override

@@ -7,10 +7,10 @@ import pl.lodz.p.core.domain.AppleArch;
 import pl.lodz.p.core.domain.MongoUUID;
 import pl.lodz.p.core.domain.VMachine;
 import pl.lodz.p.core.domain.x86;
-import pl.lodz.p.port.infrastructure.vmachine.VMAdd;
-import pl.lodz.p.port.infrastructure.vmachine.VMGet;
-import pl.lodz.p.port.infrastructure.vmachine.VMRemove;
-import pl.lodz.p.port.infrastructure.vmachine.VMUpdate;
+import pl.lodz.p.infrastructure.vmachine.VMAdd;
+import pl.lodz.p.infrastructure.vmachine.VMGet;
+import pl.lodz.p.infrastructure.vmachine.VMRemove;
+import pl.lodz.p.infrastructure.vmachine.VMUpdate;
 import pl.lodz.p.repo.MongoUUIDEnt;
 import pl.lodz.p.repo.vm.repo.VMachineRepository;
 import pl.lodz.p.repo.vm.data.AppleArchEnt;
@@ -20,7 +20,6 @@ import pl.lodz.p.repo.vm.data.x86Ent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 @Component
 @AllArgsConstructor
 public class VMachineAdapter implements VMGet, VMUpdate, VMRemove, VMAdd {

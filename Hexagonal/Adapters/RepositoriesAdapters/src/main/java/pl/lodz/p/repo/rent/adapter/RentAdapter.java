@@ -5,7 +5,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.stereotype.Component;
 import pl.lodz.p.core.domain.*;
 import pl.lodz.p.core.domain.user.*;
-import pl.lodz.p.port.infrastructure.rent.*;
+import pl.lodz.p.infrastructure.rent.*;
 import pl.lodz.p.repo.MongoUUIDEnt;
 import pl.lodz.p.repo.rent.data.RentEnt;
 import pl.lodz.p.repo.rent.repo.RentRepository;
@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 @Component
 @AllArgsConstructor
 public class RentAdapter implements RentAdd, RentEnd, RentGet, RentRemove, RentSize {

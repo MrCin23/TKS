@@ -51,14 +51,8 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
         <dependency>
-            <groupId>pl.lodz.p</groupId>
-            <artifactId>ApplicationPorts</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>pl.lodz.p.core.domain</groupId>
-            <artifactId>DomainModel</artifactId>
+            <groupId>pl.lodz.p.infrastructure</groupId>
+            <artifactId>InfraPorts</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

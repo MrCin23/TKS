@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import pl.lodz.p.core.domain.user.Role;
-import pl.lodz.p.core.services.service.implementation.UserService;
+import pl.lodz.p.core.services.service.UserService;
 
 import java.io.IOException;
 import java.util.Collection;

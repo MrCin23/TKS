@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.*;
-import pl.lodz.p.core.services.data.DataInitializer;
+import pl.lodz.p.repo.data.DataInitializer;
 
 import java.util.HashMap;
 import java.util.Map;
