@@ -7,9 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import pl.lodz.p.core.domain.dto.UuidDTO;
+import pl.lodz.p.rest.model.RESTVMachine;
+import pl.lodz.p.rest.model.dto.UuidDTO;
 import pl.lodz.p.core.domain.VMachine;
-import pl.lodz.p.core.services.service.VMachineService;
+import pl.lodz.p.ui.VMServicePort;
 
 import java.util.List;
 import java.util.Map;
@@ -22,15 +23,15 @@ import java.util.Map;
 //@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class VMachineController {
 
-    private VMachineService vMachineService;
+    private final VMServicePort vMachineServicePort;
 
     @PostMapping//not tested
-    public ResponseEntity<Object> create(@Valid @RequestBody VMachine vm, BindingResult bindingResult) {
+    public ResponseEntity<Object> create(@Valid @RequestBody RESTVMachine vm, BindingResult bindingResult) {
         try {
             if(bindingResult.hasErrors()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getAllErrors());
             }
-            return ResponseEntity.status(HttpStatus.CREATED).body(vMachineService.createVMachine(vm));
+            return ResponseEntity.status(HttpStatus.CREATED).body(vMachineServicePort.createVMachine(vm));
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
         }
@@ -39,9 +40,9 @@ public class VMachineController {
     @GetMapping//not tested
     public ResponseEntity<Object> getAll() {
         try {
-            List<VMachine> vms;
+            List<RESTVMachine> vms;
             try {
-                vms = vMachineService.getAllVMachines();
+                vms = vMachineServicePort.getAllVMachines();
             } catch (RuntimeException ex) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No vms found");
             }
@@ -55,9 +56,9 @@ public class VMachineController {
     @GetMapping("/{uuid}")//not tested
     public ResponseEntity<Object> getVMachine(@PathVariable("uuid") UuidDTO uuid) {
         try {
-            VMachine vm;
+            RESTVMachine vm;
             try {
-                vm = vMachineService.getVMachine(uuid.uuid());
+                vm = vMachineServicePort.getVMachine(uuid.uuid());
             } catch (RuntimeException ex) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No vm found");
             }
@@ -74,7 +75,7 @@ public class VMachineController {
             if(bindingResult.hasErrors()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getAllErrors());
             }
-            vMachineService.updateVMachine(uuid.uuid(), fieldsToUpdate);//tried converting this to dto to validate, bad idea
+            vMachineServicePort.updateVMachine(uuid.uuid(), fieldsToUpdate);//tried converting this to dto to validate, bad idea
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
@@ -87,7 +88,7 @@ public class VMachineController {
     public ResponseEntity<Object> deleteVMachine(@PathVariable("uuid") UuidDTO uuid) {
         try {
             try {
-                vMachineService.deleteVMachine(uuid.uuid());
+                vMachineServicePort.deleteVMachine(uuid.uuid());
             } catch (RuntimeException ex) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No vm found");
             }

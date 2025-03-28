@@ -1,19 +1,21 @@
 package pl.lodz.p.ui;
 
 import org.springframework.security.core.userdetails.UserDetails;
-import pl.lodz.p.core.domain.dto.LoginDTO;
-import pl.lodz.p.core.domain.user.User;
+import org.springframework.stereotype.Component;
+import pl.lodz.p.rest.model.dto.LoginDTO;
+import pl.lodz.p.rest.model.user.RESTUser;
 
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public interface IUserService {
-    User createUser(User user);
+@Component
+public interface UserServicePort {
+    RESTUser createUser(RESTUser user);
 
-    List<User> getAllUsers();
+    List<RESTUser> getAllUsers();
 
-    User getUser(UUID uuid);
+    RESTUser getUser(UUID uuid);
 
     void updateUser(UUID uuid, Map<String, Object> fieldsToUpdate);
 
@@ -21,13 +23,11 @@ public interface IUserService {
 
     void deactivateUser(UUID uuid);
 
-    //void deleteUser(UUID uuid);
-
     String getUserByUsername(LoginDTO loginDTO);
 
-    User getUserByUsername(String username);
+    RESTUser getUserByUsername(String username);
 
-    List<User> getUsersByUsername(String username);
+    List<RESTUser> getUsersByUsername(String username);
 
     UserDetails loadUserByUsername(String username);
 

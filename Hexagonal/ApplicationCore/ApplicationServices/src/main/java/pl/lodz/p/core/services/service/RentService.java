@@ -2,21 +2,17 @@ package pl.lodz.p.core.services.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import pl.lodz.p.core.domain.MongoUUID;
 import pl.lodz.p.core.domain.Rent;
 import pl.lodz.p.core.domain.user.Client;
 import pl.lodz.p.core.domain.VMachine;
-import pl.lodz.p.core.domain.dto.RentDTO;
 import pl.lodz.p.core.services.security.JwtTokenProvider;
 import pl.lodz.p.infrastructure.rent.*;
 import pl.lodz.p.infrastructure.vmachine.VMGet;
 import pl.lodz.p.infrastructure.user.UGet;
-import pl.lodz.p.ui.IRentService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,7 +21,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class RentService implements IRentService {
+public class RentService {
 
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -35,18 +31,14 @@ public class RentService implements IRentService {
     RentSize rentSize;
     RentEnd rentEnd;
 
-    private final RestTemplate restTemplate;
-    private JwtTokenProvider tokenProvider;
-
     VMGet vmGet;
     UGet uGet;
 
-    @Override
-    public Rent createRent(RentDTO rentDTO) {
+    public Rent createRent(UUID vmID, LocalDateTime startTime) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         Client client = (Client)uGet.getUserByUsername(username);
-        VMachine vm = vmGet.getVMachineByID(new MongoUUID(rentDTO.getVmId()));
+        VMachine vm = vmGet.getVMachineByID(new MongoUUID(vmID));
         if(client == null) {
             throw new RuntimeException("Client not found");
         }
@@ -59,12 +51,11 @@ public class RentService implements IRentService {
         if(client.getCurrentRents()>client.getClientType().getMaxRentedMachines()){
             throw new RuntimeException("Client is not permitted to rent more machines: " + client.getCurrentRents() + " > " + client.getClientType().getMaxRentedMachines() +1);
         }
-        Rent rent = new Rent(client, vm, rentDTO.getStartTime());
+        Rent rent = new Rent(client, vm, startTime);
         rentAdd.add(rent);
         return rent;
     }
 
-    @Override
     public List<Rent> getAllRents() {
         List<Rent> rents = rentGet.getRents();
         if(rents == null || rents.isEmpty()) {
@@ -73,7 +64,6 @@ public class RentService implements IRentService {
         return rents;
     }
 
-    @Override
     public List<Rent> getActiveRents() {
         List<Rent> activeRents = rentGet.findBy("endTime", null);
         if(activeRents == null || activeRents.isEmpty()) {
@@ -82,7 +72,6 @@ public class RentService implements IRentService {
         return activeRents;
     }
 
-    @Override
     public List<Rent> getArchivedRents() {
         List<Rent> archivedRents = rentGet.findByNegation("endTime", null);
         if(archivedRents == null || archivedRents.isEmpty()) {
@@ -91,7 +80,6 @@ public class RentService implements IRentService {
         return archivedRents;
     }
 
-    @Override
     public Rent getRent(UUID uuid) {
         Rent rent = rentGet.getRentByID(new MongoUUID(uuid));
         if(rent == null) {
@@ -100,7 +88,6 @@ public class RentService implements IRentService {
         return rent;
     }
 
-    @Override
     public List<Rent> getClientAllRents(String authHeader) {
         String token = authHeader.replace("Bearer ", "");
 
@@ -115,7 +102,6 @@ public class RentService implements IRentService {
         return allRents;
     }
 
-    @Override
     public List<Rent> getClientAllRents(UUID uuid) {
         List<Rent> allRents = rentGet.getClientRents(uuid);
 
@@ -126,7 +112,6 @@ public class RentService implements IRentService {
         return allRents;
     }
 
-    @Override
     public List<Rent> getClientActiveRents(UUID uuid) {
         List<Rent> activeRents = rentGet.getClientRents(new MongoUUID(uuid),true);
         if(activeRents == null || activeRents.isEmpty()) {
@@ -135,7 +120,6 @@ public class RentService implements IRentService {
         return activeRents;
     }
 
-    @Override
     public List<Rent> getClientArchivedRents(UUID uuid) {
         List<Rent> archivedRents = rentGet.getClientRents(new MongoUUID(uuid),false);
         if(archivedRents == null || archivedRents.isEmpty()) {
@@ -144,7 +128,6 @@ public class RentService implements IRentService {
         return archivedRents;
     }
 
-    @Override
     public Rent getVMachineActiveRent(UUID uuid) {
         Rent activeRent = rentGet.getVMachineRents(new MongoUUID(uuid),true).getFirst();
         if(activeRent == null) {
@@ -153,7 +136,6 @@ public class RentService implements IRentService {
         return activeRent;
     }
 
-    @Override
     public List<Rent> getVMachineArchivedRents(UUID uuid) {
         List<Rent> archivedRents = rentGet.getVMachineRents(new MongoUUID(uuid),false);
         if(archivedRents == null || archivedRents.isEmpty()) {
@@ -162,12 +144,10 @@ public class RentService implements IRentService {
         return archivedRents;
     }
 
-    @Override
     public void endRent(UUID uuid, LocalDateTime endDate) {
         rentEnd.endRent(new MongoUUID(uuid), endDate);
     }
 
-    @Override
     public void removeRent(UUID uuid) {
         rentRemove.remove(new MongoUUID(uuid));
     }

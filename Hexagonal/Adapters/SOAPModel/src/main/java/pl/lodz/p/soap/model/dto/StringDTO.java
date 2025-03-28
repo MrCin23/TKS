@@ -1,4 +1,4 @@
-package pl.lodz.p.core.domain.dto;
+package pl.lodz.p.soap.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -11,12 +11,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChangePasswordDTO {
-    @NotBlank
-    private String username;
-    @NotBlank
-    private String oldPassword;
-    @NotBlank
-    @Size(min=6, max=20)
-    private String newPassword;
+public class StringDTO {
+    @NotBlank(message = "String cannot be blank")
+    @Size(min=4,max=20)
+    private String string;
 }

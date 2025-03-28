@@ -8,14 +8,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import pl.lodz.p.core.domain.dto.ChangePasswordDTO;
-import pl.lodz.p.core.domain.dto.LoginDTO;
-import pl.lodz.p.core.domain.dto.UuidDTO;
+import pl.lodz.p.rest.model.dto.ChangePasswordDTO;
+import pl.lodz.p.rest.model.dto.LoginDTO;
+import pl.lodz.p.rest.model.dto.UuidDTO;
 import pl.lodz.p.core.domain.exception.DeactivatedUserException;
 import pl.lodz.p.core.domain.exception.WrongPasswordException;
 import pl.lodz.p.core.domain.user.User;
 import pl.lodz.p.core.services.security.JwsProvider;
-import pl.lodz.p.ui.IUserService;
+import pl.lodz.p.rest.model.user.RESTUser;
+import pl.lodz.p.ui.UserServicePort;
 
 import java.util.List;
 import java.util.Map;
@@ -29,16 +30,16 @@ import java.util.Map;
 public class UserController {
 
     private JwsProvider jwsProvider;
-    private IUserService clientServiceImplementation;
+    private UserServicePort userServicePort;
 
     @PostMapping//tested
-    public ResponseEntity<Object> createUser(@Valid @RequestBody User user, BindingResult bindingResult) {
+    public ResponseEntity<Object> createUser(@Valid @RequestBody RESTUser user, BindingResult bindingResult) {
         try {
             if (bindingResult.hasErrors()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getAllErrors());
             }
             try {
-                return ResponseEntity.status(HttpStatus.CREATED).body(clientServiceImplementation.createUser(user));
+                return ResponseEntity.status(HttpStatus.CREATED).body(userServicePort.createUser(user));
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
             }
@@ -50,9 +51,9 @@ public class UserController {
     @GetMapping//tested
     public ResponseEntity<Object> getAllUsers() {
         try {
-            List<User> users;
+            List<RESTUser> users;
             try {
-                users = clientServiceImplementation.getAllUsers();
+                users = userServicePort.getAllUsers();
             } catch (RuntimeException ex) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No users found");
             }
@@ -65,9 +66,9 @@ public class UserController {
     @GetMapping("/{uuid}")
     public ResponseEntity<Object> getUser(@PathVariable("uuid") UuidDTO uuid) {
         try {
-            User user;
+            RESTUser user;
             try {
-                user = clientServiceImplementation.getUser(uuid.uuid());
+                user = userServicePort.getUser(uuid.uuid());
             } catch (RuntimeException ex) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No users found");
             }
@@ -87,13 +88,13 @@ public class UserController {
             if (bindingResult.hasErrors()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getAllErrors());
             }
-            User user = clientServiceImplementation.getUser(uuid.uuid());
+            RESTUser user = userServicePort.getUser(uuid.uuid());
 
             if (ifMatchHeader == null || !jwsProvider.validateJws(ifMatchHeader, user.getEntityId().getUuid().toString(), user.getUsername())) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
                         .body("ETag mismatch: Resource has been modified since you last fetched it.");
             }
-            clientServiceImplementation.updateUser(uuid.uuid(), fieldsToUpdate);
+            userServicePort.updateUser(uuid.uuid(), fieldsToUpdate);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("User with uuid " + uuid.uuid() + " has been updated");
 
         } catch (Exception ex) {
@@ -105,7 +106,7 @@ public class UserController {
     public ResponseEntity<Object> deactivateUser(@PathVariable("uuid") UuidDTO uuid) {
         try {
             try {
-                clientServiceImplementation.deactivateUser(uuid.uuid());
+                userServicePort.deactivateUser(uuid.uuid());
             } catch (RuntimeException ex) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No user found");
             }
@@ -119,7 +120,7 @@ public class UserController {
     public ResponseEntity<Object> activateUser(@PathVariable("uuid") UuidDTO uuid) {
         try {
             try {
-                clientServiceImplementation.activateUser(uuid.uuid());
+                userServicePort.activateUser(uuid.uuid());
             } catch (RuntimeException ex) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No user found");
             }
@@ -134,7 +135,7 @@ public class UserController {
         try {
             String token;
             try {
-                token = clientServiceImplementation.getUserByUsername(loginDTO);
+                token = userServicePort.getUserByUsername(loginDTO);
             } catch (DeactivatedUserException ex) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("User is deactivated");
             } catch (WrongPasswordException e) {
@@ -151,9 +152,9 @@ public class UserController {
     @GetMapping("/findClient/{username}")//tested
     public ResponseEntity<Object> findUser(@PathVariable("username") String username) {
         try {
-            User users;
+            RESTUser users;
             try {
-                users = clientServiceImplementation.getUserByUsername(username);
+                users = userServicePort.getUserByUsername(username);
             } catch (RuntimeException ex) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No users matching");
             }
@@ -166,9 +167,9 @@ public class UserController {
     @GetMapping("/findClients/{username}")//tested
     public ResponseEntity<Object> findUsers(@PathVariable("username") String username) {
         try {
-            List<User> users;
+            List<RESTUser> users;
             try {
-                users = clientServiceImplementation.getUsersByUsername(username);
+                users = userServicePort.getUsersByUsername(username);
             } catch (RuntimeException ex) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No users matching");
             }
@@ -182,7 +183,7 @@ public class UserController {
     public ResponseEntity<Object> logout(HttpServletRequest request) { // to jest chyba git
         String bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            clientServiceImplementation.invalidateToken(bearerToken.substring(7));
+            userServicePort.invalidateToken(bearerToken.substring(7));
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -193,8 +194,8 @@ public class UserController {
         try {
             String token;
             try {
-                token = clientServiceImplementation.getUserByUsername(new LoginDTO(changePasswordDTO.getUsername(), changePasswordDTO.getOldPassword()));
-                clientServiceImplementation.changePassword(changePasswordDTO.getUsername(), changePasswordDTO.getNewPassword());
+                token = userServicePort.getUserByUsername(new LoginDTO(changePasswordDTO.getUsername(), changePasswordDTO.getOldPassword()));
+                userServicePort.changePassword(changePasswordDTO.getUsername(), changePasswordDTO.getNewPassword());
             } catch (WrongPasswordException e) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
             } catch (RuntimeException ex) {

@@ -5,30 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>pl.lodz.p</groupId>
-        <artifactId>Hexagonal</artifactId>
+        <artifactId>Adapters</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>Adapters</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>RepositoriesAdapters</module>
-        <module>RESTAdapter</module>
-        <module>SOAPAdapter</module>
-        <module>RESTModel</module>
-        <module>SOAPModel</module>
-    </modules>
+    <groupId>pl.lodz.p.soap.model</groupId>
+    <artifactId>SOAPModel</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-    </dependencies>
 
 </project>

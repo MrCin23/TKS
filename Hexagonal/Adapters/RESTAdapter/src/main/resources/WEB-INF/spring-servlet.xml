@@ -44,7 +44,7 @@
     <bean id="jwsProvider" class="pl.lodz.p.core.services.security.JwsProvider"/>
     <bean id="customAuthEntryPoint" class="pl.lodz.p.core.services.CustomAuthenticationEntryPoint"/>
 
-<!--    <bean id="userAdapter" class="pl.lodz.p.repo.user.adapter.UserAdapter"/>-->
+<!--    <bean id="userAdapter" class="pl.lodz.p.repo.RESTUser.adapter.UserAdapter"/>-->
 <!--    <bean id="vMachineAdapter" class="pl.lodz.p.repo.vm.adapter.VMachineAdapter"/>-->
 <!--    <bean id="rentAdapter" class="pl.lodz.p.repo.rent.adapter.RentAdapter"/>-->
 

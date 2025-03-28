@@ -9,7 +9,6 @@ import pl.lodz.p.infrastructure.vmachine.VMAdd;
 import pl.lodz.p.infrastructure.vmachine.VMGet;
 import pl.lodz.p.infrastructure.vmachine.VMRemove;
 import pl.lodz.p.infrastructure.vmachine.VMUpdate;
-import pl.lodz.p.ui.IVMachineService;
 
 import java.util.List;
 import java.util.Map;
@@ -17,14 +16,13 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class VMachineService implements IVMachineService {
+public class VMachineService {
 
     VMGet vmget;
     VMAdd vmadd;
     VMRemove vmremove;
     VMUpdate vmupdate;
 
-    @Override
     public VMachine createVMachine(VMachine vm) {
         if(vmget.getVMachineByID(vm.getEntityId()) == null) {
             vmadd.add(vm);
@@ -33,7 +31,6 @@ public class VMachineService implements IVMachineService {
         throw new RuntimeException("VMachine with id " + vm.getEntityId() + " already exists");
     }
 
-    @Override
     public List<VMachine> getAllVMachines() {
         List<VMachine> vms = vmget.getVMachines();
         if(vms == null || vms.isEmpty()) {
@@ -42,7 +39,6 @@ public class VMachineService implements IVMachineService {
         return vmget.getVMachines();
     }
 
-    @Override
     public VMachine getVMachine(UUID uuid) {
         VMachine vm = vmget.getVMachineByID(new MongoUUID(uuid));
         if(vm == null) {
@@ -51,7 +47,6 @@ public class VMachineService implements IVMachineService {
         return vmget.getVMachineByID(new MongoUUID(uuid));
     }
 
-    @Override
     public void updateVMachine(UUID uuid, Map<String, Object> fieldsToUpdate) {
         if(vmget.getVMachineByID(new MongoUUID(uuid)) == null) {
             throw new RuntimeException("VMachine with id " + uuid + " does not exist");
@@ -59,7 +54,6 @@ public class VMachineService implements IVMachineService {
         vmupdate.update(new MongoUUID(uuid), fieldsToUpdate);
     }
 
-    @Override
     public void deleteVMachine(UUID uuid) {
         if(vmget.getVMachineByID(new MongoUUID(uuid)) == null) {
             throw new RuntimeException("VMachine with id " + uuid + " does not exist");

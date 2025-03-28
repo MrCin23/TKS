@@ -1,4 +1,4 @@
-package pl.lodz.p.core.domain.dto;
+package pl.lodz.p.rest.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

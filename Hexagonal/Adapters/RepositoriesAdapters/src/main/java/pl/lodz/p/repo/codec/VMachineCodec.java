@@ -54,11 +54,9 @@ public class VMachineCodec implements Codec<VMachineEnt> {
         bsonWriter.writeString("ramSize", vMachine.getRamSize());
         bsonWriter.writeInt32("isRented", vMachine.isRented());
         bsonWriter.writeDouble("actualRentalPrice", vMachine.getActualRentalPrice());
-        System.out.println("GIGABALLS" + vMachine.getClass().getSimpleName().toLowerCase());
         if(vMachine.getClass().getSimpleName().equalsIgnoreCase("x86ent") || vMachine.getClass().getSimpleName().equalsIgnoreCase("x86")) {
             x86Ent pom = (x86Ent) vMachine;
             bsonWriter.writeString("manufacturer", pom.getManufacturer());
-            System.out.println("MEGABALLS" + vMachine.getClass().getSimpleName().toLowerCase() + "        " + pom + pom.getManufacturer());
         }
         bsonWriter.writeEndDocument();
     }

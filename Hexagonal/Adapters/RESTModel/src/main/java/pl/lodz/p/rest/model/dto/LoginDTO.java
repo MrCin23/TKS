@@ -1,7 +1,10 @@
-package pl.lodz.p.core.domain.dto;
+package pl.lodz.p.rest.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Setter
 @Getter
