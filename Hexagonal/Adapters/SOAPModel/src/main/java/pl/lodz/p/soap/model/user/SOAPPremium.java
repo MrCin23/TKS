@@ -1,15 +1,14 @@
 package pl.lodz.p.soap.model.user;
 
-import pl.lodz.p.rest.model.RESTMongoUUID;
-import pl.lodz.p.rest.model.user.RESTClientType;
+import pl.lodz.p.soap.model.SOAPMongoUUID;
 
 import java.util.UUID;
 
-public class SOAPPremium extends RESTClientType {
+public class SOAPPremium extends SOAPClientType {
 
 
     public SOAPPremium() {
-        super(new RESTMongoUUID(UUID.randomUUID()), 10, "Admin");
+        super(new SOAPMongoUUID(UUID.randomUUID()), 10, "Admin");
     }
 
 

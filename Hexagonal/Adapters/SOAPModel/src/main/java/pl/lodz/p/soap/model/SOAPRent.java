@@ -2,10 +2,7 @@ package pl.lodz.p.soap.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import pl.lodz.p.rest.model.RESTAbstractEntityMgd;
-import pl.lodz.p.rest.model.RESTMongoUUID;
-import pl.lodz.p.rest.model.RESTVMachine;
-import pl.lodz.p.rest.model.user.RESTClient;
+import pl.lodz.p.soap.model.user.SOAPClient;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -14,10 +11,10 @@ import java.util.UUID;
 
 @Setter
 @Getter
-public class SOAPRent extends RESTAbstractEntityMgd {
-    private RESTClient client;
+public class SOAPRent extends SOAPAbstractEntityMgd {
+    private SOAPClient client;
     @Getter
-    private RESTVMachine RESTVMachine;
+    private SOAPVMachine vMachine;
     @Getter
     private LocalDateTime beginTime;
     @Getter
@@ -28,14 +25,14 @@ public class SOAPRent extends RESTAbstractEntityMgd {
     private double rentCost;
 
     public SOAPRent() {
-        super(new RESTMongoUUID(UUID.randomUUID()));
+        super(new SOAPMongoUUID(UUID.randomUUID()));
     }
 
-    public SOAPRent(RESTClient client, RESTVMachine RESTVMachine, LocalDateTime beginTime) {
-        super(new RESTMongoUUID(UUID.randomUUID()));
-        if(RESTVMachine.isRented() == 0) {
+    public SOAPRent(SOAPClient client, SOAPVMachine vMachine, LocalDateTime beginTime) {
+        super(new SOAPMongoUUID(UUID.randomUUID()));
+        if(vMachine.isRented() == 0) {
             this.client = client;
-            this.RESTVMachine = RESTVMachine;
+            this.vMachine = vMachine;
             beginRent(beginTime);
         }
         else {
@@ -43,11 +40,11 @@ public class SOAPRent extends RESTAbstractEntityMgd {
         }
     }
 
-    public SOAPRent(RESTMongoUUID uuid, RESTClient client, RESTVMachine RESTVMachine,
+    public SOAPRent(SOAPMongoUUID uuid, SOAPClient client, SOAPVMachine vMachine,
                     LocalDateTime beginTime, LocalDateTime endTime, double rentCost) {
         super(uuid);
         this.client = client;
-        this.RESTVMachine = RESTVMachine;
+        this.vMachine = vMachine;
         this.beginTime = beginTime;
         this.rentCost = rentCost;
 //        beginRent(beginTime);
@@ -62,9 +59,9 @@ public class SOAPRent extends RESTAbstractEntityMgd {
 
     //Methods
     public void beginRent(LocalDateTime beginTime) {
-        if(this.beginTime == null && getRESTVMachine().isRented()==0){
+        if(this.beginTime == null && getVMachine().isRented()==0){
             this.setBeginTime(Objects.requireNonNullElseGet(beginTime, LocalDateTime::now));
-            RESTVMachine.setIsRented(RESTVMachine.getIsRented()+1);
+            vMachine.setIsRented(vMachine.getIsRented()+1);
         }
         else if(beginTime == null){
             throw new RuntimeException("beginRent() called twice");
@@ -82,7 +79,7 @@ public class SOAPRent extends RESTAbstractEntityMgd {
             }
             this.setEndTime(endTime);
             this.calculateRentalPrice();
-            this.getRESTVMachine().setRented(0);
+            this.getVMachine().setRented(0);
         }
         else {
             throw new RuntimeException("endRent() called twice");
@@ -92,14 +89,14 @@ public class SOAPRent extends RESTAbstractEntityMgd {
     public void calculateRentalPrice() {
         Duration d = Duration.between(beginTime, endTime);
         int days = (int) d.toDays() + 1;
-        this.rentCost = days * RESTVMachine.getActualRentalPrice();
+        this.rentCost = days * vMachine.getActualRentalPrice();
     }
 
     @Override
     public String toString() {
         return "Rent{" +
                 "client=" + client +
-                ", vMachine=" + RESTVMachine +
+                ", vMachine=" + vMachine +
                 ", beginTime=" + beginTime +
                 ", endTime=" + endTime +
                 ", rentCost=" + rentCost +

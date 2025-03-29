@@ -3,12 +3,10 @@ package pl.lodz.p.soap.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import pl.lodz.p.rest.model.RESTMongoUUID;
-import pl.lodz.p.rest.model.RESTVMachine;
 
 @Getter
 @Setter
-public class SOAPx86 extends RESTVMachine {
+public class SOAPx86 extends SOAPVMachine {
 
 
     private String manufacturer;
@@ -24,7 +22,7 @@ public class SOAPx86 extends RESTVMachine {
     }
 
 
-    public SOAPx86(RESTMongoUUID uuid, int CPUNumber, String ramSize,
+    public SOAPx86(SOAPMongoUUID uuid, int CPUNumber, String ramSize,
                    int isRented, String manufacturer) {
         super(uuid, CPUNumber, ramSize, isRented);
         this.manufacturer = manufacturer;

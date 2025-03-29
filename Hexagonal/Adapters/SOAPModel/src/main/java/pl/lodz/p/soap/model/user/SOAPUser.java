@@ -7,12 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import pl.lodz.p.rest.model.RESTAbstractEntityMgd;
-import pl.lodz.p.rest.model.RESTMongoUUID;
-import pl.lodz.p.rest.model.user.RESTAdmin;
-import pl.lodz.p.rest.model.user.RESTClient;
-import pl.lodz.p.rest.model.user.RESTResourceManager;
-import pl.lodz.p.rest.model.user.RESTRole;
+import pl.lodz.p.soap.model.SOAPAbstractEntityMgd;
+import pl.lodz.p.soap.model.SOAPMongoUUID;
 
 @Getter
 @Setter
@@ -22,27 +18,27 @@ import pl.lodz.p.rest.model.user.RESTRole;
         property = "_clazz"
 )
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = RESTClient.class, name = "Client"),
-        @JsonSubTypes.Type(value = RESTAdmin.class, name = "Admin"),
-        @JsonSubTypes.Type(value = RESTResourceManager.class, name = "ResourceManager")
+        @JsonSubTypes.Type(value = SOAPClient.class, name = "Client"),
+        @JsonSubTypes.Type(value = SOAPAdmin.class, name = "Admin"),
+        @JsonSubTypes.Type(value = SOAPResourceManager.class, name = "ResourceManager")
 })
-public abstract class SOAPUser extends RESTAbstractEntityMgd {
+public abstract class SOAPUser extends SOAPAbstractEntityMgd {
     private String firstName;
     private String surname;
     private String username;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String emailAddress;
-    private RESTRole RESTRole;
+    private SOAPRole role;
     private boolean active;
 
-    public SOAPUser(RESTMongoUUID userId,
+    public SOAPUser(SOAPMongoUUID userId,
                     String firstName,
                     String username,
                     String password,
                     String surname,
                     String emailAddress,
-                    RESTRole RESTRole,
+                    SOAPRole role,
                     boolean active) {
         super(userId);
         this.firstName = firstName;
@@ -50,7 +46,7 @@ public abstract class SOAPUser extends RESTAbstractEntityMgd {
         this.username = username;
         this.password = password;//BCrypt.hashpw(password, BCrypt.gensalt());
         this.emailAddress = emailAddress;
-        this.RESTRole = RESTRole;
+        this.role = role;
         this.active = active;
     }
 
@@ -66,7 +62,7 @@ public abstract class SOAPUser extends RESTAbstractEntityMgd {
                 ", surname='" + surname + '\'' +
                 ", username='" + username + '\'' +
                 ", emailAddress='" + emailAddress + '\'' +
-                ", role=" + RESTRole +
+                ", role=" + role +
                 ", active=" + active +
                 '}';
     }

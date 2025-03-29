@@ -4,9 +4,8 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 import lombok.Setter;
-import pl.lodz.p.rest.model.RESTAbstractEntityMgd;
-import pl.lodz.p.rest.model.RESTMongoUUID;
-import pl.lodz.p.rest.model.user.RESTStandard;
+import pl.lodz.p.soap.model.SOAPAbstractEntityMgd;
+import pl.lodz.p.soap.model.SOAPMongoUUID;
 
 @Getter
 @Setter
@@ -15,16 +14,16 @@ import pl.lodz.p.rest.model.user.RESTStandard;
         property = "_clazz"
 )
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = RESTStandard.class, name = "standard"),
+        @JsonSubTypes.Type(value = SOAPStandard.class, name = "standard"),
         @JsonSubTypes.Type(value = SOAPPremium.class, name = "admin")
 })
-public abstract class SOAPClientType extends RESTAbstractEntityMgd {
+public abstract class SOAPClientType extends SOAPAbstractEntityMgd {
 
     protected int maxRentedMachines;
 
     protected String name;
 
-    public SOAPClientType(RESTMongoUUID uuid,
+    public SOAPClientType(SOAPMongoUUID uuid,
                           int maxRentedMachines,
                           String name){
         super(uuid);

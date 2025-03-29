@@ -1,9 +1,7 @@
 package pl.lodz.p.soap.model;
 
-import pl.lodz.p.rest.model.RESTMongoUUID;
-import pl.lodz.p.rest.model.RESTVMachine;
 
-public class SOAPAppleArch extends RESTVMachine {
+public class SOAPAppleArch extends SOAPVMachine {
     public SOAPAppleArch(int CPUNumber, String ramSize) {
         super(CPUNumber, ramSize, 0);
         this.actualRentalPrice = getActualRentalPrice();
@@ -13,7 +11,7 @@ public class SOAPAppleArch extends RESTVMachine {
         super();
     }
 
-    public SOAPAppleArch(RESTMongoUUID uuid, int CPUNumber, String ramSize,
+    public SOAPAppleArch(SOAPMongoUUID uuid, int CPUNumber, String ramSize,
                          int isRented) {
         super(uuid, CPUNumber, ramSize, isRented);
 

@@ -1,13 +1,9 @@
 package pl.lodz.p.soap.model.user;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.lodz.p.rest.model.RESTMongoUUID;
-import pl.lodz.p.rest.model.user.RESTClientType;
-import pl.lodz.p.rest.model.user.RESTRole;
-import pl.lodz.p.rest.model.user.RESTUser;
+import pl.lodz.p.soap.model.SOAPMongoUUID;
 
 import java.util.UUID;
 
@@ -15,14 +11,14 @@ import java.util.UUID;
 @Setter
 @Getter
 @NoArgsConstructor
-public class SOAPClient extends RESTUser {
-    private RESTClientType RESTClientType;
+public class SOAPClient extends SOAPUser {
+    private SOAPClientType clientType;
     private int currentRents;
 
     @Override
     public String toString() {
         return super.toString() + "::Client{" +
-                "clientType=" + RESTClientType +
+                "clientType=" + clientType +
                 ", currentRents=" + currentRents +
                 '}';
     }
@@ -32,24 +28,24 @@ public class SOAPClient extends RESTUser {
                       String username,
                       String password,
                       String emailAddress,
-                      RESTClientType RESTClientType) {
-        super(new RESTMongoUUID(UUID.randomUUID()), firstName, username, password, surname, emailAddress, pl.lodz.p.rest.model.user.RESTRole.CLIENT, true);
-        this.RESTClientType = RESTClientType;
+                      SOAPClientType clientType) {
+        super(new SOAPMongoUUID(UUID.randomUUID()), firstName, username, password, surname, emailAddress, SOAPRole.CLIENT, true);
+        this.clientType = clientType;
         this.currentRents = 0;
     }
 
-    public SOAPClient(RESTMongoUUID userId,
+    public SOAPClient(SOAPMongoUUID userId,
                       String firstName,
                       String username,
                       String password,
                       String surname,
                       String emailAddress,
-                      RESTRole RESTRole,
+                      SOAPRole SOAPRole,
                       boolean active,
-                      RESTClientType RESTClientType,
+                      SOAPClientType SOAPClientType,
                       int currentRents) {
-        super(userId, firstName, username, password, surname, emailAddress, RESTRole, active);
-        this.RESTClientType = RESTClientType;
+        super(userId, firstName, username, password, surname, emailAddress, SOAPRole, active);
+        this.clientType = SOAPClientType;
         this.currentRents = currentRents;
     }
 }
