@@ -45,14 +45,15 @@ public class RESTRent extends RESTAbstractEntityMgd {
         super(uuid);
         this.client = client;
         this.vMachine = vMachine;
-//        this.beginTime = beginTime;
+        this.beginTime = beginTime;
         this.rentCost = rentCost;
-        beginRent(beginTime);
+//        beginRent(beginTime);
         if(endTime == null) {
             this.endTime = null;
         }
         else {
-            endRent(endTime);
+//            endRent(endTime);
+            this.endTime = endTime;
         }
     }
 
