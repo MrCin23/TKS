@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Enable Spring-WS -->
+    <bean class="org.springframework.ws.transport.http.MessageDispatcherServlet">
+        <property name="transformWsdlLocations" value="true"/>
+    </bean>
+
+    <!-- Define Spring WS -->
+    <bean id="messageDispatcher" class="org.springframework.ws.server.endpoint.mapping.PayloadRootQNameEndpointMapping">
+        <property name="endpoint" ref="helloWorldEndpoint"/>
+    </bean>
+
+    <!-- Define the Endpoint -->
+    <bean id="helloWorldEndpoint" class="pl.lodz.p.soap.HelloWorldEndpoint"/>
+
+    <!-- WSDL Location -->
+    <bean id="defaultWsdl11Definition"
+          class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition">
+        <property name="portTypeName" value="HelloWorld"/>
+        <property name="locationUri" value="/ws"/>
+        <property name="schema" ref="helloSchema"/>
+    </bean>
+
+    <bean id="helloSchema"
+          class="org.springframework.xml.xsd.SimpleXsdSchema">
+        <property name="xsd" value="/WEB-INF/hello.xsd"/>
+    </bean>
+
+</beans>
