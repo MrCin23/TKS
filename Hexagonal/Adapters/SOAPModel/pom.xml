@@ -50,5 +50,6 @@
             <artifactId>jaxb-impl</artifactId>
             <scope>runtime</scope>
         </dependency>
+
     </dependencies>
 </project>

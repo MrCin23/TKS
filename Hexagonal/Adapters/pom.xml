@@ -9,6 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <groupId>pl.lodz.p</groupId>
     <artifactId>Adapters</artifactId>
     <packaging>pom</packaging>
     <modules>

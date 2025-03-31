@@ -2,20 +2,45 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:sws="http://www.springframework.org/schema/web-services"
-       xsi:schemaLocation="
-           http://www.springframework.org/schema/beans
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/web-services
-           http://www.springframework.org/schema/web-services/web-services.xsd">
+           http://www.springframework.org/schema/web-services/web-services.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan
+            base-package="pl.lodz.p" />
 
     <sws:annotation-driven/>
 
-    <bean id="helloEndpoint" class="pl.lodz.p.soap.endpoint.HelloWorldEndpoint"/>
+<!--    <bean id="helloEnd" class="pl.lodz.p.soap.endpoint.HelloWorldEndpoint"/>-->
+<!--    <bean id="userEnd" class="pl.lodz.p.soap.endpoint.UserEndpoint"/>-->
+<!--    <bean id="userService" class="pl.lodz.p.core.services.service.UserService"/>-->
+<!--    <bean id="jwtFilter" class="pl.lodz.p.core.services.security.JwtFilter"/>-->
+<!--    <bean id="tokenProvider" class="pl.lodz.p.core.services.security.JwtTokenProvider"/>-->
+<!--    <bean id="jwsProvider" class="pl.lodz.p.core.services.security.JwsProvider"/>-->
+<!--    <bean id="customAuthEntryPoint" class="pl.lodz.p.core.services.CustomAuthenticationEntryPoint"/>-->
 
-    <sws:dynamic-wsdl id="helloService"
+    <sws:dynamic-wsdl id="helloEndpoint"
                       portTypeName="HelloPort"
-                      locationUri="/ws"
+                      locationUri="/helloService"
                       targetNamespace="http://example.com/hello">
         <sws:xsd location="/WEB-INF/hello.xsd"/>
     </sws:dynamic-wsdl>
+    <sws:dynamic-wsdl id="userEndpoint"
+                      portTypeName="UserPort"
+                      locationUri="/userService"
+                      targetNamespace="http://example.com/users">
+        <sws:xsd location="/WEB-INF/users.xsd"/>
+    </sws:dynamic-wsdl>
+
+    <bean id="loggingInterceptor" class="org.springframework.ws.server.endpoint.interceptor.PayloadLoggingInterceptor">
+        <property name="logRequest" value="true"/>
+        <property name="logResponse" value="true"/>
+    </bean>
+
+    <sws:interceptors>
+        <ref bean="loggingInterceptor"/>
+    </sws:interceptors>
+
 </beans>

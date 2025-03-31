@@ -2,20 +2,20 @@ package pl.lodz.p.ui;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import pl.lodz.p.rest.model.dto.LoginDTO;
-import pl.lodz.p.rest.model.user.RESTUser;
+import pl.lodz.p.soap.model.dto.LoginDTO;
+import pl.lodz.p.soap.model.user.SOAPUser;
 
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 @Component
-public interface UserServicePort {
-    RESTUser createUser(RESTUser user);
+public interface SOAPUserServicePort {
+    SOAPUser createUser(SOAPUser user);
 
-    List<RESTUser> getAllUsers();
+    List<SOAPUser> getAllUsers();
 
-    RESTUser getUser(UUID uuid);
+    SOAPUser getUser(UUID uuid);
 
     void updateUser(UUID uuid, Map<String, Object> fieldsToUpdate);
 
@@ -25,9 +25,9 @@ public interface UserServicePort {
 
     String getUserByUsername(LoginDTO loginDTO);
 
-    RESTUser getUserByUsername(String username);
+    SOAPUser getUserByUsername(String username);
 
-    List<RESTUser> getUsersByUsername(String username);
+    List<SOAPUser> getUsersByUsername(String username);
 
     UserDetails loadUserByUsername(String username);
 

@@ -12,6 +12,9 @@
     <file url="file://$PROJECT_DIR$/Adapters/SOAPAdapter/src/main/webapp/WEB-INF" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Adapters/SOAPModel/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Adapters/SOAPModel/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Adapters/SharedConfig/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Adapters/SharedConfig/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Adapters/SharedConfig/src/main/resources/META-INF/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Adapters/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Adapters/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ApplicationCore/ApplicationServices/src/main/java" charset="UTF-8" />

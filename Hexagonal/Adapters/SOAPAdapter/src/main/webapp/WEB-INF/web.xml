@@ -6,7 +6,16 @@
         http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
         version="4.0">
 
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            /WEB-INF/root-context.xml  <!-- Wspólna konfiguracja z SharedConfig -->
+        </param-value>
+    </context-param>
     <display-name>SOAP Web Service</display-name>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
     <!-- Konfiguracja MessageDispatcherServlet -->
     <servlet>

@@ -14,6 +14,7 @@
         <module>Adapters</module>
 <!--        <module>Adapters/RepositoriesAdapters</module>-->
         <module>ApplicationPorts</module>
+        <module>Adapters/SharedConfig</module>
     </modules>
 
     <properties>

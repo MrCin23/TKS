@@ -3,6 +3,7 @@ package pl.lodz.p.rest.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -13,10 +14,9 @@ import pl.lodz.p.rest.model.dto.LoginDTO;
 import pl.lodz.p.rest.model.dto.UuidDTO;
 import pl.lodz.p.core.domain.exception.DeactivatedUserException;
 import pl.lodz.p.core.domain.exception.WrongPasswordException;
-import pl.lodz.p.core.domain.user.User;
 import pl.lodz.p.core.services.security.JwsProvider;
 import pl.lodz.p.rest.model.user.RESTUser;
-import pl.lodz.p.ui.UserServicePort;
+import pl.lodz.p.ui.RESTUserServicePort;
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +30,8 @@ import java.util.Map;
 public class UserController {
 
     private JwsProvider jwsProvider;
-    private UserServicePort userServicePort;
+    @Qualifier("RESTUserServicePort")
+    private RESTUserServicePort userServicePort;
 
     @PostMapping//tested
     public ResponseEntity<Object> createUser(@Valid @RequestBody RESTUser user, BindingResult bindingResult) {

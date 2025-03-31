@@ -1,6 +1,5 @@
 package controllers;
 
-import com.mongodb.MongoClientException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.exceptions.base.MockitoException;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +27,7 @@ import pl.lodz.p.rest.model.user.RESTClient;
 import pl.lodz.p.rest.model.user.RESTRole;
 import pl.lodz.p.rest.model.user.RESTStandard;
 import pl.lodz.p.rest.model.user.RESTUser;
-import pl.lodz.p.ui.UserServicePort;
+import pl.lodz.p.ui.RESTUserServicePort;
 
 import java.util.*;
 
@@ -44,7 +42,7 @@ public class RESTClientControllerTests {
     RESTUser client = new RESTClient(new RESTMongoUUID(uuid), "jan", "janowski", "janek", "janeczek", "janeczek@janko.jan", RESTRole.CLIENT, true, new RESTStandard(), 0);
 
     @Mock
-    private UserServicePort userServicePort;
+    private RESTUserServicePort userServicePort;
 
     @Mock
     private JwsProvider jwsProvider;
