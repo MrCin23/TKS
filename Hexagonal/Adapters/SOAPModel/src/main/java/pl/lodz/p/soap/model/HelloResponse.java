@@ -1,13 +1,13 @@
-package pl.lodz.p.soap;
+package pl.lodz.p.soap.model;
 
-import lombok.Setter;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
-@Setter
+
 @XmlRootElement(name = "HelloResponse", namespace = "http://example.com/hello")
 public class HelloResponse {
+
     private String message;
 
     @XmlElement
@@ -15,4 +15,7 @@ public class HelloResponse {
         return message;
     }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

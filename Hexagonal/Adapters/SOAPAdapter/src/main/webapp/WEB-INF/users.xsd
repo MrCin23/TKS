@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://example.com/users"
+           xmlns="http://example.com/users"
+           elementFormDefault="qualified">
+
+
+    <xs:element name="getUserByUsername">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="username" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getUsersRegex">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="username" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="loginUser">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="username" type="xs:string"/>
+                <xs:element name="password" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="collectionSize">
+        <xs:complexType>
+            <xs:sequence/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="User" type="UserType"/>
+
+    <xs:complexType name="UserType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string"/>
+            <xs:element name="firstName" type="xs:string"/>
+            <xs:element name="surname" type="xs:string"/>
+            <xs:element name="username" type="xs:string"/>
+            <xs:element name="emailAddress" type="xs:string"/>
+            <xs:element name="role" type="RoleType"/>
+            <xs:element name="active" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="RoleType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ADMIN"/>
+            <xs:enumeration value="RESOURCE_MANAGER"/>
+            <xs:enumeration value="CLIENT"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="token">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="token" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="size">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="size" type="xs:unsignedLong"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
