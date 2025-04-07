@@ -1,5 +1,8 @@
 package pl.lodz.p.soap.model.user;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.NoArgsConstructor;
 import pl.lodz.p.soap.model.SOAPMongoUUID;
 

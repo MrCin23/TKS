@@ -6,6 +6,7 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
+import pl.lodz.p.soap.model.GetUserByUsernameResponse;
 import pl.lodz.p.soap.model.request.GetUserByUsernameRequest;
 import pl.lodz.p.soap.model.user.SOAPUser;
 import pl.lodz.p.ui.SOAPUserServicePort;
@@ -17,10 +18,12 @@ public class UserEndpoint {
     @Qualifier("SOAPUserServicePort")
     private SOAPUserServicePort userService;
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserByUsername")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetUserByUsernameRequest")
     @ResponsePayload
-    public SOAPUser getUserByUsername(@RequestPayload GetUserByUsernameRequest request) {
+    public GetUserByUsernameResponse getUserByUsername(@RequestPayload GetUserByUsernameRequest request) {
         System.out.println("Recieved" + request.getUsername());
-        return userService.getUserByUsername(request.getUsername());
+        GetUserByUsernameResponse response = new GetUserByUsernameResponse();
+        response.setUser(userService.getUserByUsername(request.getUsername()));
+        return response;
     }
 }

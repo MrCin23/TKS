@@ -34,7 +34,7 @@ import pl.lodz.p.soap.model.SOAPMongoUUID;
         "role",
         "active"
 })
-public abstract class SOAPUser extends SOAPAbstractEntityMgd {
+public class SOAPUser extends SOAPAbstractEntityMgd {
 
     @XmlElement(namespace = "http://example.com/users", required = true)
     private String firstName;

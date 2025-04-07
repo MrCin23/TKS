@@ -12,9 +12,26 @@
            http://www.springframework.org/schema/security/spring-security.xsd">
 
 
-    <context:component-scan base-package="pl.lodz.p.core.services, pl.lodz.p.infrastructure"/>
+    <context:component-scan base-package="pl.lodz.p.core.services, pl.lodz.p.infrastructure, pl.lodz.p.repo"/>
 
-    <bean id="userService" class="pl.lodz.p.core.services.service.UserService"/>
+    <bean id="mvcHandlerMappingIntrospector" class="org.springframework.web.servlet.handler.HandlerMappingIntrospector" />
+
+    <bean id="userService" class="pl.lodz.p.core.services.service.UserService">
+        <constructor-arg ref="userAdapter"/>
+        <constructor-arg ref="userAdapter"/>
+        <constructor-arg ref="userAdapter"/>
+        <constructor-arg ref="userAdapter"/>
+        <constructor-arg ref="tokenProvider"/>
+    </bean>
+
+    <bean id="rentService" class="pl.lodz.p.core.services.service.RentService" >
+        <constructor-arg ref="userAdapter"/>
+    </bean>
+
+    <!-- Upewnij się, że ten bean istnieje -->
+<!--    <bean id="uCRUDBean" class="pl.lodz.p.repo.user.adapter.UserAdapter" />-->
+
+<!--    <bean id="userService" class="pl.lodz.p.core.services.service.UserService"/>-->
     <bean id="tokenProvider" class="pl.lodz.p.core.services.security.JwtTokenProvider"/>
     <bean id="jwsProvider" class="pl.lodz.p.core.services.security.JwsProvider"/>
     <bean id="customAuthEntryPoint" class="pl.lodz.p.core.services.CustomAuthenticationEntryPoint"/>
@@ -47,7 +64,6 @@
             <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
         </property>
     </bean>
-
 
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 </beans>

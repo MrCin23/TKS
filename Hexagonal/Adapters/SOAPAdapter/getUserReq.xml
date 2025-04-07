@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-                  xmlns:hel="http://example.com/users">
+                  xmlns:usr="http://example.com/users">
     <soapenv:Header/>
     <soapenv:Body>
-        <hel:getUserByUsername>
-            <hel:username>JEscobarr</hel:username>
-        </hel:getUserByUsername>
+        <usr:GetUserByUsernameRequest>
+            <usr:username>JEscobarr</usr:username>
+        </usr:GetUserByUsernameRequest>
     </soapenv:Body>
 </soapenv:Envelope>

@@ -5,7 +5,7 @@
            elementFormDefault="qualified">
 
 
-    <xs:element name="getUserByUsername">
+    <xs:element name="GetUserByUsernameRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="username" type="xs:string"/>
@@ -13,28 +13,37 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="getUsersRegex">
+    <!-- Response -->
+    <xs:element name="GetUserByUsernameResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="username" type="xs:string"/>
+                <xs:element name="User" type="UserType" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="loginUser">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="username" type="xs:string"/>
-                <xs:element name="password" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+<!--    <xs:element name="getUsersRegex">-->
+<!--        <xs:complexType>-->
+<!--            <xs:sequence>-->
+<!--                <xs:element name="username" type="xs:string"/>-->
+<!--            </xs:sequence>-->
+<!--        </xs:complexType>-->
+<!--    </xs:element>-->
 
-    <xs:element name="collectionSize">
-        <xs:complexType>
-            <xs:sequence/>
-        </xs:complexType>
-    </xs:element>
+<!--    <xs:element name="loginUser">-->
+<!--        <xs:complexType>-->
+<!--            <xs:sequence>-->
+<!--                <xs:element name="username" type="xs:string"/>-->
+<!--                <xs:element name="password" type="xs:string"/>-->
+<!--            </xs:sequence>-->
+<!--        </xs:complexType>-->
+<!--    </xs:element>-->
+
+<!--    <xs:element name="collectionSize">-->
+<!--        <xs:complexType>-->
+<!--            <xs:sequence/>-->
+<!--        </xs:complexType>-->
+<!--    </xs:element>-->
 
     <xs:element name="User" type="UserType"/>
 
@@ -58,19 +67,19 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:element name="token">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="token" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+<!--    <xs:element name="token">-->
+<!--        <xs:complexType>-->
+<!--            <xs:sequence>-->
+<!--                <xs:element name="token" type="xs:string"/>-->
+<!--            </xs:sequence>-->
+<!--        </xs:complexType>-->
+<!--    </xs:element>-->
 
-    <xs:element name="size">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="size" type="xs:unsignedLong"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+<!--    <xs:element name="size">-->
+<!--        <xs:complexType>-->
+<!--            <xs:sequence>-->
+<!--                <xs:element name="size" type="xs:unsignedLong"/>-->
+<!--            </xs:sequence>-->
+<!--        </xs:complexType>-->
+<!--    </xs:element>-->
 </xs:schema>
