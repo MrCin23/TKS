@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@Component
 public interface SOAPUserServicePort {
     SOAPUser createUser(SOAPUser user);
 

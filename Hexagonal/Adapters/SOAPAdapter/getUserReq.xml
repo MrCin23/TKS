@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-                  xmlns:usr="http://example.com/users">
+                  xmlns:usr="http://p.lodz.pl/users">
     <soapenv:Header/>
     <soapenv:Body>
         <usr:GetUserByUsernameRequest>

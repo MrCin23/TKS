@@ -12,18 +12,20 @@ import pl.lodz.p.soap.model.user.SOAPUser;
 import pl.lodz.p.ui.SOAPUserServicePort;
 
 @Endpoint
-@AllArgsConstructor
 public class UserEndpoint {
-    private static final String NAMESPACE_URI = "http://example.com/users";
-    @Qualifier("SOAPUserServicePort")
-    private SOAPUserServicePort userService;
+    private static final String NAMESPACE_URI = "http://p.lodz.pl/users";
+    private final SOAPUserServicePort userServicePort;
 
+    public UserEndpoint(SOAPUserServicePort userServicePort) {
+        this.userServicePort = userServicePort;
+    }
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetUserByUsernameRequest")
     @ResponsePayload
     public GetUserByUsernameResponse getUserByUsername(@RequestPayload GetUserByUsernameRequest request) {
-        System.out.println("Recieved" + request.getUsername());
+        System.out.println("Received" + request.getUsername());
         GetUserByUsernameResponse response = new GetUserByUsernameResponse();
-        response.setUser(userService.getUserByUsername(request.getUsername()));
+        response.setUser(userServicePort.getUserByUsername(request.getUsername()));
         return response;
+//        return null;
     }
 }

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>pl.lodz.p</groupId>
+        <artifactId>Hexagonal</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>Reporting</artifactId>
+    <packaging>jar</packaging>
+
+    <name>Reporting</name>
+    <description>Module for aggregate test coverage reporting</description>
+
+    <!-- Add dependencies to all modules that should be included in coverage -->
+    <dependencies>
+        <!-- Adapters modules -->
+        <dependency>
+            <groupId>pl.lodz.p.repo</groupId>
+            <artifactId>RepositoriesAdapters</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>pl.lodz.p.rest</groupId>
+            <artifactId>RESTAdapter</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>pl.lodz.p.rest.model</groupId>
+            <artifactId>RESTModel</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>pl.lodz.p.soap</groupId>
+            <artifactId>SOAPAdapter</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>pl.lodz.p.soap.model</groupId>
+            <artifactId>SOAPModel</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- ApplicationCore modules -->
+        <dependency>
+            <groupId>pl.lodz.p.core.domain</groupId>
+            <artifactId>DomainModel</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>pl.lodz.p.core</groupId>
+            <artifactId>ApplicationServices</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- ApplicationPorts modules -->
+        <dependency>
+            <groupId>pl.lodz.p.ui</groupId>
+            <artifactId>UIPorts</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>pl.lodz.p.infrastructure</groupId>
+            <artifactId>InfraPorts</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Ensure the module compiles -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+            </plugin>
+
+            <!-- Add empty source and test directories if they don't exist -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/test/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- JaCoCo configuration -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.12</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report-aggregate</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report-aggregate</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-aggregate</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.12.1</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.12</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report-aggregate</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
+</project>

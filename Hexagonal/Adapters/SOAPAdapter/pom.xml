@@ -80,7 +80,8 @@
                 </executions>
                 <configuration>
                     <sources>
-                            <source>${project.basedir}/src/main/webapp/WEB-INF/hello.xsd</source>
+                        <source>${project.basedir}/src/main/webapp/WEB-INF/hello.xsd</source>
+                        <source>${project.basedir}/src/main/webapp/WEB-INF/users.xsd</source>
                     </sources>
                 </configuration>
             </plugin>
@@ -92,4 +93,24 @@
             </resource>
         </resources>
     </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>

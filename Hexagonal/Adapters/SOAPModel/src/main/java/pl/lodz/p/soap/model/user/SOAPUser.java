@@ -14,17 +14,10 @@ import pl.lodz.p.soap.model.SOAPMongoUUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        property = "_clazz"
-)
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = SOAPClient.class, name = "Client"),
-        @JsonSubTypes.Type(value = SOAPAdmin.class, name = "Admin"),
-        @JsonSubTypes.Type(value = SOAPResourceManager.class, name = "ResourceManager")
-})
-@XmlRootElement(name = "User", namespace = "http://example.com/users")
+@XmlRootElement(name = "User", namespace = "http://p.lodz.pl/users")
 @XmlAccessorType(XmlAccessType.FIELD) // Zmienione na FIELD, aby działało z Lombokiem
+//@XmlSeeAlso({SOAPClient.class, SOAPAdmin.class, SOAPResourceManager.class})
+
 @XmlType(propOrder = { // Określenie kolejności elementów w XML
         "id",
         "firstName",
@@ -36,26 +29,25 @@ import pl.lodz.p.soap.model.SOAPMongoUUID;
 })
 public class SOAPUser extends SOAPAbstractEntityMgd {
 
-    @XmlElement(namespace = "http://example.com/users", required = true)
+    @XmlElement(namespace = "http://p.lodz.pl/users", required = true)
     private String firstName;
 
-    @XmlElement(namespace = "http://example.com/users", required = true)
+    @XmlElement(namespace = "http://p.lodz.pl/users", required = true)
     private String surname;
 
-    @XmlElement(namespace = "http://example.com/users", required = true)
+    @XmlElement(namespace = "http://p.lodz.pl/users", required = true)
     private String username;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @XmlTransient // Pole nie będzie serializowane do XML
     private String password;
 
-    @XmlElement(namespace = "http://example.com/users", required = true)
+    @XmlElement(namespace = "http://p.lodz.pl/users", required = true)
     private String emailAddress;
 
-    @XmlElement(namespace = "http://example.com/users", required = true)
+    @XmlElement(namespace = "http://p.lodz.pl/users", required = true)
     private SOAPRole role;
 
-    @XmlElement(namespace = "http://example.com/users", required = true)
+    @XmlElement(namespace = "http://p.lodz.pl/users", required = true)
     private boolean active;
 
     public SOAPUser(SOAPMongoUUID userId,

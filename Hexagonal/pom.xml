@@ -8,13 +8,14 @@
     <artifactId>Hexagonal</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <url>https://localhost:65000/hexagonal</url>
 
     <modules>
-        <module>ApplicationCore</module>
         <module>Adapters</module>
-<!--        <module>Adapters/RepositoriesAdapters</module>-->
+        <module>ApplicationCore</module>
         <module>ApplicationPorts</module>
         <module>Adapters/SharedConfig</module>
+        <module>Reporting</module>
     </modules>
 
     <properties>
@@ -297,91 +298,103 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
+    <distributionManagement>
+        <site>
+            <id>local-site</id>
+            <url>file:${project.build.directory}/staging</url>
+        </site>
+    </distributionManagement>
+    <!-- In your parent POM (Hexagonal), replace the PMD plugin in the reporting section with this: -->
     <reporting>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.12.1</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>3.6.2</version>
             </plugin>
             <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.12</version>
-<!--                <reportSets>-->
-<!--                    <reportSet>-->
-<!--                        <reports>-->
-<!--                            <report>report</report>-->
-<!--                        </reports>-->
-<!--                    </reportSet>-->
-<!--                </reportSets>-->
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
                 <version>3.4.0</version>
+                <configuration>
+                    <linkXRef>true</linkXRef>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.23.0</version>
+                <configuration>
+                    <linkXRef>true</linkXRef>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>pmd</report>
+                            <report>cpd</report>
+                            <report>aggregate-pmd</report>
+                            <report>aggregate-cpd</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.12</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
         </plugins>
     </reporting>
 
     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.12.1</version>
+                <configuration>
+                    <locales>en</locales>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.12</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
         <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.13.0</version>
-                    <configuration>
-                        <source>21</source>
-                        <target>21</target>
-                        <compilerArgs>
-                            <arg>-parameters</arg>
-                        </compilerArgs>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-war-plugin</artifactId>
-                    <version>3.2.1</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.2.5</version>
-                    <configuration>
-                        <includes>
-                            <include>**/*Tests.java</include>
-                        </includes>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.12</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>prepare-agent</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>report</id>
-                            <phase>test</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>3.12.1</version>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.6.2</version>
                 </plugin>
             </plugins>
         </pluginManagement>

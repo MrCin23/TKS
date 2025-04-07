@@ -12,7 +12,7 @@
            http://www.springframework.org/schema/security/spring-security.xsd">
 
 
-    <context:component-scan base-package="pl.lodz.p.core.services, pl.lodz.p.infrastructure, pl.lodz.p.repo"/>
+    <context:component-scan base-package="pl.lodz.p.core.services, pl.lodz.p.infrastructure, pl.lodz.p.repo, pl.lodz.p.soap, pl.lodz.p.rest, pl.lodz.p.ui"/>
 
     <bean id="mvcHandlerMappingIntrospector" class="org.springframework.web.servlet.handler.HandlerMappingIntrospector" />
 
@@ -21,7 +21,7 @@
         <constructor-arg ref="userAdapter"/>
         <constructor-arg ref="userAdapter"/>
         <constructor-arg ref="userAdapter"/>
-        <constructor-arg ref="tokenProvider"/>
+        <constructor-arg ref="jwtTokenProvider"/>
     </bean>
 
     <bean id="rentService" class="pl.lodz.p.core.services.service.RentService" >
@@ -32,7 +32,7 @@
 <!--    <bean id="uCRUDBean" class="pl.lodz.p.repo.user.adapter.UserAdapter" />-->
 
 <!--    <bean id="userService" class="pl.lodz.p.core.services.service.UserService"/>-->
-    <bean id="tokenProvider" class="pl.lodz.p.core.services.security.JwtTokenProvider"/>
+<!--    <bean id="tokenProvider" class="pl.lodz.p.core.services.security.JwtTokenProvider"/>-->
     <bean id="jwsProvider" class="pl.lodz.p.core.services.security.JwsProvider"/>
     <bean id="customAuthEntryPoint" class="pl.lodz.p.core.services.CustomAuthenticationEntryPoint"/>
     <bean id="jwtFilter" class="pl.lodz.p.core.services.security.JwtFilter"/>

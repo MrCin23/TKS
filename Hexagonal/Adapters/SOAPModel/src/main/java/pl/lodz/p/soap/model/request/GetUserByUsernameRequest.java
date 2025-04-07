@@ -7,12 +7,12 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Setter;
 
 @Setter
-@XmlRootElement(name = "GetUserByUsernameRequest", namespace = "http://example.com/users")
+@XmlRootElement(name = "GetUserByUsernameRequest", namespace = "http://p.lodz.pl/users")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 public class GetUserByUsernameRequest {
     private String username;
 
-    @XmlElement(namespace = "http://example.com/users")
+    @XmlElement(namespace = "http://p.lodz.pl/users")
     public String getUsername() {
         return username;
     }

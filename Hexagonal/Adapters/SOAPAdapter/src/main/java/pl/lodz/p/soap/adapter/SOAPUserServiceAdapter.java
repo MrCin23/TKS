@@ -3,6 +3,7 @@ package pl.lodz.p.soap.adapter;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import pl.lodz.p.core.domain.MongoUUID;
 import pl.lodz.p.core.domain.user.*;
 import pl.lodz.p.core.services.service.UserService;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@Component
+@Service("SOAPUserServicePort")
 @AllArgsConstructor
 public class SOAPUserServiceAdapter implements SOAPUserServicePort {
 
