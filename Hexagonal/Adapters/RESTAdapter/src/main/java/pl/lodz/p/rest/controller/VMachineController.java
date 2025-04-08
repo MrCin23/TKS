@@ -9,8 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.lodz.p.rest.model.RESTVMachine;
 import pl.lodz.p.rest.model.dto.UuidDTO;
-import pl.lodz.p.core.domain.VMachine;
-import pl.lodz.p.ui.VMServicePort;
+import pl.lodz.p.ui.RESTVMServicePort;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,7 @@ import java.util.Map;
 //@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class VMachineController {
 
-    private final VMServicePort vMachineServicePort;
+    private final RESTVMServicePort vMachineServicePort;
 
     @PostMapping//not tested
     public ResponseEntity<Object> create(@Valid @RequestBody RESTVMachine vm, BindingResult bindingResult) {

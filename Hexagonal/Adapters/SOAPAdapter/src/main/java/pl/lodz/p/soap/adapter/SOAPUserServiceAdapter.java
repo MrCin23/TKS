@@ -2,16 +2,18 @@ package pl.lodz.p.soap.adapter;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.core.domain.MongoUUID;
 import pl.lodz.p.core.domain.user.*;
 import pl.lodz.p.core.services.service.UserService;
 import pl.lodz.p.soap.model.SOAPMongoUUID;
 import pl.lodz.p.soap.model.dto.LoginDTO;
-import pl.lodz.p.soap.model.user.*;
 import pl.lodz.p.ui.SOAPUserServicePort;
+import pl.lodz.p.users.LoginUser;
+import pl.lodz.p.users.RoleType;
+import pl.lodz.p.users.UserType;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,13 +26,13 @@ public class SOAPUserServiceAdapter implements SOAPUserServicePort {
     private final UserService userService;
 
     @Override
-    public SOAPUser createUser(SOAPUser user) {
+    public UserType createUser(UserType user) {
         return convert(userService.createUser(convert(user)));
     }
 
     @Override
-    public List<SOAPUser> getAllUsers() {
-        List<SOAPUser> users = new ArrayList<>();
+    public List<UserType> getAllUsers() {
+        List<UserType> users = new ArrayList<>();
         for(User user : userService.getAllUsers()) {
             users.add(convert(user));
         }
@@ -38,7 +40,7 @@ public class SOAPUserServiceAdapter implements SOAPUserServicePort {
     }
 
     @Override
-    public SOAPUser getUser(UUID uuid) {
+    public UserType getUser(UUID uuid) {
         return convert(userService.getUser(uuid));
     }
 
@@ -58,18 +60,18 @@ public class SOAPUserServiceAdapter implements SOAPUserServicePort {
     }
 
     @Override
-    public String getUserByUsername(LoginDTO loginDTO) {
-        return userService.getUserByUsername(loginDTO.getUsername(), loginDTO.getPassword());
+    public String getUserByUsername(LoginUser loginUser) {
+        return userService.getUserByUsername(loginUser.getUsername(), loginUser.getPassword());
     }
 
     @Override
-    public SOAPUser getUserByUsername(String username) {
+    public UserType getUserByUsername(String username) {
         return convert(userService.getUserByUsername(username));
     }
 
     @Override
-    public List<SOAPUser> getUsersByUsername(String username) {
-        List<SOAPUser> users = new ArrayList<>();
+    public List<UserType> getUsersByUsername(String username) {
+        List<UserType> users = new ArrayList<>();
         for(User user : userService.getUsersByUsername(username)) {
             users.add(convert(user));
         }
@@ -96,6 +98,11 @@ public class SOAPUserServiceAdapter implements SOAPUserServicePort {
         userService.changePassword(username, newPassword);
     }
 
+    @Override
+    public long size() {
+        return userService.size();
+    }
+
     private MongoUUID convert(SOAPMongoUUID r) {
         return new MongoUUID(r.getUuid());
     }
@@ -103,50 +110,51 @@ public class SOAPUserServiceAdapter implements SOAPUserServicePort {
         return new SOAPMongoUUID(r.getUuid());
     }
 
-    private Role convert(SOAPRole ent) {
-        if (ent == SOAPRole.ADMIN) {
+    private Role convert(RoleType ent) {
+        if (ent == RoleType.ADMIN) {
             return Role.ADMIN;
         }
-        else if (ent == SOAPRole.CLIENT) {
+        else if (ent == RoleType.CLIENT) {
             return Role.CLIENT;
         }
-        else if (ent == SOAPRole.RESOURCE_MANAGER) {
+        else if (ent == RoleType.RESOURCE_MANAGER) {
             return Role.RESOURCE_MANAGER;
         }
         return null;
     }
-    private SOAPRole convert(Role role) {
+    private RoleType convert(Role role) {
         if (role == Role.ADMIN) {
-            return SOAPRole.ADMIN;
+            return RoleType.ADMIN;
         }
         else if (role == Role.CLIENT) {
-            return SOAPRole.CLIENT;
+            return RoleType.CLIENT;
         }
         else if (role == Role.RESOURCE_MANAGER) {
-            return SOAPRole.RESOURCE_MANAGER;
+            return RoleType.RESOURCE_MANAGER;
         }
         return null;
     }
 
-    private SOAPUser convert(User user) {
-        return switch (user.getClass().getSimpleName()) {
-            case "Client" -> new SOAPClient(convert(user.getEntityId()), user.getFirstName(), user.getUsername(), user.getPassword(),
-                    user.getSurname(), user.getEmailAddress(), convert(user.getRole()), user.isActive(), new SOAPStandard(), ((Client) user).getCurrentRents());
-            case "ResourceManager" -> new SOAPResourceManager(convert(user.getEntityId()), user.getFirstName(), user.getSurname(), user.getUsername(), user.getPassword(), user.getEmailAddress());
-            case "Admin" -> new SOAPAdmin(convert(user.getEntityId()), user.getFirstName(), user.getSurname(), user.getUsername(), user.getEmailAddress(), user.getPassword());
-            default -> throw new RuntimeException("Unsupported type: " + user.getClass().getSimpleName());
-        };
+    private UserType convert(User user) {
+        UserType userType = new UserType();
+        userType.setFirstName(user.getFirstName());
+        userType.setSurname(user.getSurname());
+        userType.setUsername(user.getUsername());
+        userType.setEmailAddress(user.getEmailAddress());
+        userType.setActive(user.isActive());
+        userType.setRole(convert(user.getRole()));
+        return userType;
     }
 
-    private User convert(SOAPUser ent) {
+    private User convert(UserType ent) {
         if (ent == null) {
             return null;
         }
         return switch (ent.getClass().getSimpleName()) {
-            case "SOAPClient" -> new Client(convert(ent.getEntityId()), ent.getFirstName(), ent.getUsername(), ent.getPassword(),
-                    ent.getSurname(), ent.getEmailAddress(), convert(ent.getRole()), ent.isActive(), new Standard(), ((SOAPClient) ent).getCurrentRents());
-            case "SOAPResourceManager" -> new ResourceManager(convert(ent.getEntityId()), ent.getFirstName(), ent.getSurname(), ent.getUsername(), ent.getPassword(), ent.getEmailAddress());
-            case "SOAPAdmin" -> new Admin(convert(ent.getEntityId()), ent.getFirstName(), ent.getSurname(), ent.getUsername(), ent.getEmailAddress(), ent.getPassword());
+            case "SOAPClient" -> new Client(ent.getFirstName(), ent.getUsername(), "",
+                    ent.getSurname(), ent.getEmailAddress(), new Standard());
+            case "SOAPResourceManager" -> new ResourceManager(ent.getFirstName(), ent.getSurname(), ent.getUsername(), "", ent.getEmailAddress());
+            case "SOAPAdmin" -> new Admin(ent.getFirstName(), ent.getSurname(), ent.getUsername(), ent.getEmailAddress(), "");
             default -> throw new RuntimeException("Unsupported type: " + ent.getClass().getSimpleName());
         };
     }

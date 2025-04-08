@@ -147,4 +147,8 @@ public class VMachineRepository extends AbstractMongoRepository {
         Bson filter = Filters.eq("_id", uuid.getUuid().toString());
         return vMachines.find(filter).first();
     }
+
+    public long size() {
+        return vMachines.find().into(new ArrayList<Object>()).size();
+    }
 }

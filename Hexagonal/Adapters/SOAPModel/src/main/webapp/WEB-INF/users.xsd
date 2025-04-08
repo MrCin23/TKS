@@ -45,7 +45,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="User" type="UserType"/>
+    <xs:element name="User"/>
 
     <xs:complexType name="UserType">
         <xs:sequence>
@@ -77,7 +77,7 @@
     <xs:element name="size">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="size" type="xs:unsignedLong"/>
+                <xs:element name="size" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

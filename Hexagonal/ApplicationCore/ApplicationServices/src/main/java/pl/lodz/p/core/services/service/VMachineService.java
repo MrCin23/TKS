@@ -63,4 +63,9 @@ public class VMachineService {
         }
         vmremove.remove(vmget.getVMachineByID(new MongoUUID(uuid)));
     }
+
+    public long size() {
+        return vmget.size();
+    }
+
 }

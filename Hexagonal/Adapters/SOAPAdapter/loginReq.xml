@@ -3,6 +3,9 @@
                   xmlns:usr="http://p.lodz.pl/users">
     <soapenv:Header/>
     <soapenv:Body>
-        <usr:collectionSize/>
+        <usr:loginUser>
+            <usr:username>JEscobarr</usr:username>
+            <usr:password>a</usr:password>
+        </usr:loginUser>
     </soapenv:Body>
 </soapenv:Envelope>

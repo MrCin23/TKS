@@ -42,8 +42,12 @@ public class VMachineAdapter implements VMGet, VMUpdate, VMRemove, VMAdd {
 
     @Override
     public VMachine getVMachineByID(MongoUUID uuid) {
-        System.out.println("Elo");
         return convert(vMachineRepo.getVMachineByID(convert(uuid)));
+    }
+
+    @Override
+    public long size() {
+        return vMachineRepo.size();
     }
 
     @Override

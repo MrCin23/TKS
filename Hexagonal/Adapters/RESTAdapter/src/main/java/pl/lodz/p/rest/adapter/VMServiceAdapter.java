@@ -1,13 +1,11 @@
 package pl.lodz.p.rest.adapter;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.lodz.p.core.domain.*;
 import pl.lodz.p.core.services.service.VMachineService;
 import pl.lodz.p.rest.model.*;
-import pl.lodz.p.ui.RentServicePort;
-import pl.lodz.p.ui.VMServicePort;
+import pl.lodz.p.ui.RESTVMServicePort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,7 @@ import java.util.UUID;
 
 @Component
 @AllArgsConstructor
-public class VMServiceAdapter implements VMServicePort {
+public class VMServiceAdapter implements RESTVMServicePort {
 
     private final VMachineService vMachineService;
 

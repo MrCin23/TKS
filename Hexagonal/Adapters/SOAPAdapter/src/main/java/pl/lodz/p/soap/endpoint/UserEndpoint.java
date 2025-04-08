@@ -1,15 +1,15 @@
 package pl.lodz.p.soap.endpoint;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-import pl.lodz.p.soap.model.GetUserByUsernameResponse;
 import pl.lodz.p.soap.model.request.GetUserByUsernameRequest;
-import pl.lodz.p.soap.model.user.SOAPUser;
 import pl.lodz.p.ui.SOAPUserServicePort;
+import pl.lodz.p.users.*;
 
 @Endpoint
 public class UserEndpoint {
@@ -26,6 +26,21 @@ public class UserEndpoint {
         GetUserByUsernameResponse response = new GetUserByUsernameResponse();
         response.setUser(userServicePort.getUserByUsername(request.getUsername()));
         return response;
-//        return null;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "collectionSize")
+    @ResponsePayload
+    public Size getCollectionSize(@RequestPayload CollectionSize request) {
+        Size size = new Size();
+        size.setSize(userServicePort.size());
+        return size;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "loginUser")
+    @ResponsePayload
+    public Token getLoginUser(@RequestPayload LoginUser request) {
+        Token token = new Token();
+        token.setToken(userServicePort.getUserByUsername(request));
+        return token;
     }
 }

@@ -2,18 +2,18 @@ package pl.lodz.p.ui;
 
 import org.springframework.stereotype.Component;
 import pl.lodz.p.rest.model.RESTVMachine;
+import pl.lodz.p.vmachines.VMachineSOAP;
 
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@Component
-public interface VMServicePort {
-    RESTVMachine createVMachine(RESTVMachine vm);
+public interface SOAPVMServicePort {
+    VMachineSOAP createVMachine(VMachineSOAP vm);
 
-    List<RESTVMachine> getAllVMachines();
+    List<VMachineSOAP> getAllVMachines();
 
-    RESTVMachine getVMachine(UUID uuid);
+    VMachineSOAP getVMachine(UUID uuid);
 
     void updateVMachine(UUID uuid, Map<String, Object> fieldsToUpdate);
 

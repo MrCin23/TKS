@@ -1,20 +1,21 @@
 package pl.lodz.p.ui;
 
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 import pl.lodz.p.soap.model.dto.LoginDTO;
-import pl.lodz.p.soap.model.user.SOAPUser;
+import pl.lodz.p.users.LoginUser;
+import pl.lodz.p.users.UserType;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public interface SOAPUserServicePort {
-    SOAPUser createUser(SOAPUser user);
+    UserType createUser(UserType user);
 
-    List<SOAPUser> getAllUsers();
+    List<UserType> getAllUsers();
 
-    SOAPUser getUser(UUID uuid);
+    UserType getUser(UUID uuid);
 
     void updateUser(UUID uuid, Map<String, Object> fieldsToUpdate);
 
@@ -22,11 +23,11 @@ public interface SOAPUserServicePort {
 
     void deactivateUser(UUID uuid);
 
-    String getUserByUsername(LoginDTO loginDTO);
+    String getUserByUsername(LoginUser loginUser);
 
-    SOAPUser getUserByUsername(String username);
+    UserType getUserByUsername(String username);
 
-    List<SOAPUser> getUsersByUsername(String username);
+    List<UserType> getUsersByUsername(String username);
 
     UserDetails loadUserByUsername(String username);
 
@@ -35,4 +36,6 @@ public interface SOAPUserServicePort {
     boolean checkToken(String token);
 
     void changePassword(String username, String newPassword);
+
+    long size();
 }

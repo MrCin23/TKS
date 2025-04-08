@@ -9,4 +9,5 @@ import java.util.List;
 public interface VMGet {
     List<VMachine> getVMachines();
     VMachine getVMachineByID(MongoUUID uuid);
+    long size();
 }

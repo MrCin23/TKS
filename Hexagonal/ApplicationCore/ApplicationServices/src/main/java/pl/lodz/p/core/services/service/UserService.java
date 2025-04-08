@@ -130,4 +130,8 @@ public class UserService implements UserDetailsService {
     public void changePassword(String username, String newPassword){
         uUpdate.update(uGet.getUserByUsername(username).getEntityId(), "password", BCrypt.hashpw(newPassword, BCrypt.gensalt()));
     }
+
+    public long size() {
+        return uGet.size();
+    }
 }

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://p.lodz.pl/vmachines"
+           targetNamespace="http://p.lodz.pl/vmachines"
+           elementFormDefault="qualified">
+
+    <!-- Abstract VMachine Type -->
+    <xs:complexType name="VMachineSOAP" abstract="true">
+        <xs:sequence>
+            <xs:element name="entityId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>UUID string representation</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CPUNumber" type="xs:int">
+                <xs:annotation>
+                    <xs:documentation>Minimum value: 1</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ramSize" type="xs:string"/>
+            <xs:element name="isRented" type="xs:int">
+                <xs:annotation>
+                    <xs:documentation>Minimum value: 0</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="actualRentalPrice" type="xs:float"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- x86 Type -->
+    <xs:complexType name="x86SOAP">
+        <xs:complexContent>
+            <xs:extension base="tns:VMachineSOAP">
+                <xs:sequence>
+                    <xs:element name="manufacturer" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- AppleArch Type -->
+    <xs:complexType name="AppleArchSOAP">
+        <xs:complexContent>
+            <xs:extension base="tns:VMachineSOAP">
+                <xs:sequence>
+                    <!-- No additional fields for AppleArch -->
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Root elements for SOAP operations -->
+    <xs:element name="getVMachineRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getVMachineResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="vmachine" type="tns:VMachineSOAP"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="createVMachineRequest">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element name="x86" type="tns:x86SOAP"/>
+                <xs:element name="appleArch" type="tns:AppleArchSOAP"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="createVMachineResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateVMachineRequest">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element name="x86" type="tns:x86SOAP"/>
+                <xs:element name="appleArch" type="tns:AppleArchSOAP"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateVMachineResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="success" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="deleteVMachineRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="deleteVMachineResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="success" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAllVMachinesRequest">
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name="getAllVMachinesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="vmachines" type="tns:VMachineList"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- List type for collections of VMachines -->
+    <xs:complexType name="VMachineList">
+        <xs:sequence>
+            <xs:element name="vmachine" type="tns:VMachineSOAP" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
