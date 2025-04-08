@@ -5,18 +5,17 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:security="http://www.springframework.org/schema/security"
        xsi:schemaLocation="
-        http://www.springframework.org/schema/security
-        http://www.springframework.org/schema/security/spring-security.xsd
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <context:component-scan
-            base-package="pl.lodz.p" />
-<!--    <mvc:default-servlet-handler />-->
+    <context:component-scan base-package="pl.lodz.p" />
+
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="viewClass"
@@ -26,66 +25,35 @@
     </bean>
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
     <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer"/>
-    <!--<bean id="postValidator" class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>-->
-    <mvc:annotation-driven validator="validator" />
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
-<!--    <bean id="vMachineManager" class="pl.lodz.p.manager.VMachineManager" />-->
-<!--    <bean id="clientManager" class="pl.lodz.p.manager.UserManager" />-->
-<!--    <bean id="rentManager" class="pl.lodz.p.manager.RentManager" />-->
-<!--    <bean id="dataInitializer" class="pl.lodz.p.data.DataInitializer" init-method="init">-->
-<!--        <property name="clientMan" ref="clientManager"/>-->
-<!--        <property name="rentMan" ref="rentManager"/>-->
-<!--        <property name="vmMan" ref="vMachineManager"/>-->
-<!--    </bean>-->
+    <bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <property name="userDetailsService" ref="userService"/>
+        <property name="passwordEncoder">
+            <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+        </property>
+    </bean>
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+    <bean id="jwsProvider" class="pl.lodz.p.core.services.security.JwsProvider"/>
+    <bean id="customAuthEntryPoint" class="pl.lodz.p.core.services.CustomAuthenticationEntryPoint"/>
+    <bean id="jwtFilter" class="pl.lodz.p.core.services.security.JwtFilter"/>
 
-<!--    <bean id="userService" class="pl.lodz.p.core.services.service.UserService"/>-->
-<!--    <bean id="jwtFilter" class="pl.lodz.p.core.services.security.JwtFilter"/>-->
-<!--    <bean id="tokenProvider" class="pl.lodz.p.core.services.security.JwtTokenProvider"/>-->
-<!--    <bean id="jwsProvider" class="pl.lodz.p.core.services.security.JwsProvider"/>-->
-<!--    <bean id="customAuthEntryPoint" class="pl.lodz.p.core.services.CustomAuthenticationEntryPoint"/>-->
-
-<!--    &lt;!&ndash;    &ndash;&gt;-->
-<!--&lt;!&ndash;    <security:http use-expressions="true" create-session="stateless" entry-point-ref="customAuthEntryPoint">&ndash;&gt;-->
-<!--    <security:http auto-config="true" use-expressions="true" create-session="stateless" entry-point-ref="customAuthEntryPoint">-->
-<!--&lt;!&ndash;    <security:http auto-config="true" use-expressions="true" create-session="stateless">&ndash;&gt;-->
-<!--        <security:csrf disabled="true"/>-->
-<!--        <security:intercept-url pattern="/api/client" method="POST" access="permitAll"/>-->
-<!--        <security:intercept-url pattern="/api/client/login" access="permitAll"/>-->
-<!--        <security:intercept-url pattern="/api/client/activate" access="hasRole('ADMIN')"/>-->
-<!--        <security:intercept-url pattern="/api/client/deactivate" access="hasRole('ADMIN')"/>-->
-<!--        <security:intercept-url pattern="/api/rent" access="isAuthenticated()"/>-->
-<!--        <security:intercept-url pattern="/api/rent/active" access="hasRole('RESOURCE_MANAGER')"/>-->
-<!--        <security:intercept-url pattern="/api/rent/archived" access="hasRole('RESOURCE_MANAGER')"/>-->
-<!--        <security:intercept-url pattern="/api/vmachine" method="POST" access="hasRole('RESOURCE_MANAGER')"/>-->
-<!--        <security:intercept-url pattern="/api/vmachine" method="PUT" access="hasRole('RESOURCE_MANAGER')"/>-->
-<!--        <security:intercept-url pattern="/api/vmachine" method="DELETE" access="hasRole('RESOURCE_MANAGER')"/>-->
-<!--&lt;!&ndash;        <intercept-url pattern="/auth/register" access="permitAll"/>&ndash;&gt;-->
-<!--&lt;!&ndash;        <intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/>&ndash;&gt;-->
-<!--        <security:intercept-url pattern="/**" access="isAuthenticated()"/>-->
-<!--&lt;!&ndash;        <security:intercept-url pattern="/**" access="permitAll()"/>&ndash;&gt;-->
-
-<!--&lt;!&ndash;        <security:entry-point-ref ref="customAuthEntryPoint"/>&ndash;&gt;-->
-
-<!--&lt;!&ndash;        <security:access-denied-handler ref="customAccessDeniedHandler"/>&ndash;&gt;-->
-<!--        <security:custom-filter ref="jwtFilter" before="FORM_LOGIN_FILTER"/>-->
-<!--    </security:http>-->
-
-<!--&lt;!&ndash;    <bean id="jwtFilter" class="pl.lodz.p.security.JwtFilter"/>&ndash;&gt;-->
-<!--&lt;!&ndash;    &lt;!&ndash; Bean dla filtra JWT &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;    <bean id="jwtFilter" class="pl.lodz.p.security.JwtFilter"/>&ndash;&gt;&ndash;&gt;-->
-
-<!--&lt;!&ndash;    &lt;!&ndash; Konfiguracja menedżera uwierzytelniania &ndash;&gt;&ndash;&gt;-->
-<!--    <security:authentication-manager>-->
-<!--        <security:authentication-provider ref="authProvider"/>-->
-<!--    </security:authentication-manager>-->
-
-<!--    <bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">-->
-<!--        <property name="userDetailsService" ref="userService"/>-->
-<!--        <property name="passwordEncoder">-->
-<!--            <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>-->
-<!--        </property>-->
-<!--    </bean>-->
-<!--&lt;!&ndash;    <bean class="pl.lodz.p.config.WebConfig"/>&ndash;&gt;-->
-<!--&lt;!&ndash;    <bean class="org.springframework.config.java"&ndash;&gt;-->
-<!--    &lt;!&ndash;<bean id="jacksonDatatype" class="com.fasterxml.jackson.datatype.jsr310.JavaTimeModule"/>&ndash;&gt;-->
+    <security:http auto-config="true" use-expressions="true" create-session="stateless" entry-point-ref="customAuthEntryPoint">
+        <security:csrf disabled="true"/>
+        <security:intercept-url pattern="/api/client" method="POST" access="permitAll"/>
+        <security:intercept-url pattern="/api/client/login" access="permitAll"/>
+        <security:intercept-url pattern="/api/client/activate" access="hasRole('ADMIN')"/>
+        <security:intercept-url pattern="/api/client/deactivate" access="hasRole('ADMIN')"/>
+        <security:intercept-url pattern="/api/rent" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/api/rent/active" access="hasRole('RESOURCE_MANAGER')"/>
+        <security:intercept-url pattern="/api/rent/archived" access="hasRole('RESOURCE_MANAGER')"/>
+        <security:intercept-url pattern="/api/vmachine" method="POST" access="hasRole('RESOURCE_MANAGER')"/>
+        <security:intercept-url pattern="/api/vmachine" method="PUT" access="hasRole('RESOURCE_MANAGER')"/>
+        <security:intercept-url pattern="/api/vmachine" method="DELETE" access="hasRole('RESOURCE_MANAGER')"/>
+        <security:intercept-url pattern="/" access="isAuthenticated()"/>
+        <security:custom-filter ref="jwtFilter" before="FORM_LOGIN_FILTER"/>
+    </security:http>
+    <security:authentication-manager>
+        <security:authentication-provider ref="authProvider"/>
+    </security:authentication-manager>
+    <mvc:annotation-driven validator="validator" />
 </beans>

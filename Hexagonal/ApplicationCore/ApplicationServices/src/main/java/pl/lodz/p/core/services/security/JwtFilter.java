@@ -21,7 +21,6 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Component
-@NoArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -38,6 +37,7 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String token = getTokenFromRequest(request);
+        System.out.println("AAAAAAAAAAAAAAAAAAAA"+ '\n'+ '\n'+ '\n'+ token + '\n'+ '\n'+ '\n'+ '\n' + jwtTokenProvider.validateToken(token));
         if (token != null && jwtTokenProvider.validateToken(token)) {
             if (userService.checkToken(token)) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
