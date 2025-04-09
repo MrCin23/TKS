@@ -34,9 +34,9 @@ public class RentService {
     VMGet vmGet;
     UGet uGet;
 
-    public Rent createRent(UUID vmID, LocalDateTime startTime) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
+    public Rent createRent(String username, UUID vmID, LocalDateTime startTime) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String username = auth.getName();
         Client client = (Client)uGet.getUserByUsername(username);
         VMachine vm = vmGet.getVMachineByID(new MongoUUID(vmID));
         if(client == null) {

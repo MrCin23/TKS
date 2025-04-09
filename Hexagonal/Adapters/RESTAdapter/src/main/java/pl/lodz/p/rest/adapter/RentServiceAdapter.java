@@ -23,7 +23,7 @@ public class RentServiceAdapter implements RentServicePort {
 
     @Override
     public RESTRent createRent(RentDTO rentDTO) {
-        return convert(rentService.createRent(rentDTO.getVmId(), rentDTO.getStartTime()));
+        return convert(rentService.createRent(rentDTO.getUsername(), rentDTO.getVmId(), rentDTO.getStartTime()));
     }
 
     @Override
