@@ -20,6 +20,8 @@ public class RESTMongoUUID {
 
     @Override
     public String toString() {
-        return uuid.toString();
+        return "RESTMongoUUID{" +
+                "uuid=" + uuid +
+                '}';
     }
 }

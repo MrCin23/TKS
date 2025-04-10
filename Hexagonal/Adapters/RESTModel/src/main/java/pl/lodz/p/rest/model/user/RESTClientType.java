@@ -30,8 +30,4 @@ public abstract class RESTClientType extends RESTAbstractEntityMgd {
         this.maxRentedMachines = maxRentedMachines;
         this.name = name;
     }
-
-    public String toString() {
-        return "Class: " + this.getClass().getSimpleName() + " " + this.getMaxRentedMachines() + " " + this.getName();
-    }
 }

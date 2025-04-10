@@ -211,8 +211,8 @@ public class RentServiceAdapter implements RentServicePort {
             return null;
         }
         return switch (ent.getClass().getSimpleName()) {
-            case "RESTx86" -> new x86(convert(ent.getEntityId()), ent.getCPUNumber(), ent.getRamSize(), ent.isRented(), ((RESTx86)ent).getManufacturer());
-            case "RESTAppleArch" -> new AppleArch(convert(ent.getEntityId()), ent.getCPUNumber(), ent.getRamSize(), ent.isRented());
+            case "RESTx86" -> new x86(convert(ent.getEntityId()), ent.getCPUNumber(), ent.getRamSize(), ent.getIsRented(), ((RESTx86)ent).getManufacturer());
+            case "RESTAppleArch" -> new AppleArch(convert(ent.getEntityId()), ent.getCPUNumber(), ent.getRamSize(), ent.getIsRented());
             default -> throw new RuntimeException(ent.getClass().getSimpleName() + " not supported");
         };
     }
