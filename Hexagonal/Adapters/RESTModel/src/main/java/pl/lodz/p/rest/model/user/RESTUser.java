@@ -50,9 +50,9 @@ public abstract class RESTUser extends RESTAbstractEntityMgd {
         this.active = active;
     }
 
-    public boolean checkPassword(String password) {
-        return BCrypt.checkpw(password, this.password);
-    }
+//    public boolean checkPassword(String password) {
+//        return BCrypt.checkpw(password, this.password);
+//    }
 
 
     @Override

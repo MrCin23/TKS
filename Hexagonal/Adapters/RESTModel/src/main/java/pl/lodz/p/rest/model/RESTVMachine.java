@@ -49,28 +49,6 @@ public abstract class RESTVMachine extends RESTAbstractEntityMgd {
         this.ramSize = ramSize;
         this.isRented = isRented;
     }
-
-    public int isRented() {
-        return isRented;
-    }
-
-    public void setRented(int rented) {
-        isRented = rented;
-    }
-
-    public float getActualRentalPrice() {
-        return 0;
-    }
-
-    @Override
-    public String toString() {
-        return "VMachine{" +
-                "CPUNumber=" + CPUNumber +
-                ", ramSize='" + ramSize + '\'' +
-                ", isRented=" + isRented +
-                ", actualRentalPrice=" + actualRentalPrice +
-                '}';
-    }
 };
 
 

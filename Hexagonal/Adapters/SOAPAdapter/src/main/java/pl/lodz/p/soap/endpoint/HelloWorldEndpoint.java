@@ -14,9 +14,6 @@ public class HelloWorldEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "HelloRequest")
     @ResponsePayload
     public HelloResponse sayHello(@RequestPayload HelloRequest request) {
-        System.out.println("Received raw request: " + request);  // Debug
-        System.out.println("Name value: " + request.getName()); // Debug
-
         HelloResponse response = new HelloResponse();
         response.setMessage("Hello, " + (request.getName() != null ? request.getName() : "Anonymous") + "!");
         return response;
