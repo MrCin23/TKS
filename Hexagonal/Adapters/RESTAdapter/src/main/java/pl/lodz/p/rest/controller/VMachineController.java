@@ -2,6 +2,7 @@ package pl.lodz.p.rest.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -22,6 +23,7 @@ import java.util.Map;
 //@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class VMachineController {
 
+    @Qualifier("RESTVMServicePort")
     private final RESTVMServicePort vMachineServicePort;
 
     @PostMapping//not tested
