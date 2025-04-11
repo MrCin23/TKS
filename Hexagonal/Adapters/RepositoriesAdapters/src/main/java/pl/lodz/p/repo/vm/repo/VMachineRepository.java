@@ -2,9 +2,11 @@ package pl.lodz.p.repo.vm.repo;
 
 import com.mongodb.MongoCommandException;
 import com.mongodb.client.ClientSession;
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoIterable;
 import com.mongodb.client.model.*;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.springframework.stereotype.Repository;
@@ -128,6 +130,8 @@ public class VMachineRepository extends AbstractMongoRepository {
             session.close();
         }
     }
+
+
 
     public void add(VMachineEnt vMachine) {
         vMachines.insertOne(vMachine);

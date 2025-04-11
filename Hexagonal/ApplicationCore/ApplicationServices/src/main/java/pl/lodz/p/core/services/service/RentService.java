@@ -48,7 +48,7 @@ public class RentService {
         if(vm.isRented() > 0){
             throw new RuntimeException("VMachine already rented");
         }
-        if(client.getCurrentRents()>client.getClientType().getMaxRentedMachines()){
+        if(client.getCurrentRents() + 1>client.getClientType().getMaxRentedMachines()){
             throw new RuntimeException("Client is not permitted to rent more machines: " + client.getCurrentRents() + " > " + client.getClientType().getMaxRentedMachines() +1);
         }
         Rent rent = new Rent(client, vm, startTime);
@@ -129,11 +129,11 @@ public class RentService {
     }
 
     public Rent getVMachineActiveRent(UUID uuid) {
-        Rent activeRent = rentGet.getVMachineRents(new MongoUUID(uuid),true).getFirst();
+        List<Rent> activeRent = rentGet.getVMachineRents(new MongoUUID(uuid),true);
         if(activeRent == null) {
             throw new RuntimeException("VMachine with UUID:" + uuid + " is not currently rented");
         }
-        return activeRent;
+        return activeRent.getFirst();
     }
 
     public List<Rent> getVMachineArchivedRents(UUID uuid) {

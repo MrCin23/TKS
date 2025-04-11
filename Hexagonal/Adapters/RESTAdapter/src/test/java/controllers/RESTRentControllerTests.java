@@ -359,6 +359,5 @@ class RESTRentControllerTests {
                         .header("Authorization", "Bearer validToken"))
                 .andExpect(status().isNotFound());
     }
-
 }
 

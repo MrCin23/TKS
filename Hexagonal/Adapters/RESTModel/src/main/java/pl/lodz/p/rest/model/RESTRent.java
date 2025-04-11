@@ -28,17 +28,18 @@ public class RESTRent extends RESTAbstractEntityMgd {
         super(new RESTMongoUUID(UUID.randomUUID()));
     }
 
-//    public RESTRent(RESTClient client, RESTVMachine vMachine, LocalDateTime beginTime) {
-//        super(new RESTMongoUUID(UUID.randomUUID()));
-//        if(vMachine.getIsRented() == 0) {
-//            this.client = client;
-//            this.vMachine = vMachine;
+    public RESTRent(RESTClient client, RESTVMachine vMachine, LocalDateTime beginTime) {
+        super(new RESTMongoUUID(UUID.randomUUID()));
+        if(vMachine.getIsRented() == 0) {
+            this.client = client;
+            this.vMachine = vMachine;
+            this.beginTime = beginTime;
 //            beginRent(beginTime);
-//        }
-//        else {
-//            throw new RuntimeException("This machine is already rented");
-//        }
-//    }
+        }
+        else {
+            throw new RuntimeException("This machine is already rented");
+        }
+    }
 
     public RESTRent(RESTMongoUUID uuid, RESTClient client, RESTVMachine vMachine,
                     LocalDateTime beginTime, LocalDateTime endTime, double rentCost) {

@@ -27,15 +27,11 @@ public class RentTests {
     @Test
     public void testCreateRent() {
         Rent rent1 = new Rent(client, vMachine, LocalDateTime.of(2015, 7, 12, 21, 37));
-        Assertions.assertInstanceOf(Rent.class, rent1);
         rent1.endRent(LocalDateTime.of(2015, 7, 12, 21, 37));
         Rent rent2 = new Rent(new MongoUUID(UUID.randomUUID()), client, vMachine, LocalDateTime.of(2015, 7, 12, 21, 37), LocalDateTime.of(2015, 7, 13, 21, 37), 0);
-        Assertions.assertInstanceOf(Rent.class, rent2);
         Assertions.assertEquals("Rent{client=User{firstName='John', surname='Doe', username='JDoe', emailAddress='jdoe@example.com', role=CLIENT, active=true}::Client{clientType=Standard Standard, currentRents=0}, vMachine=AppleArch: 577d1a4e-5577-4265-badb-5439cf4d8fc8 4 8GB 0 600.0, beginTime=2015-07-12T21:37, endTime=2015-07-13T21:37, rentCost=1200.0}", rent2.toString());
         Rent rent3 = new Rent();
-        Assertions.assertInstanceOf(Rent.class, rent3);
         Rent rent4 = new Rent(new MongoUUID(UUID.randomUUID()), client, vMachine, LocalDateTime.of(2015, 7, 12, 21, 37), null, 0);
-        Assertions.assertInstanceOf(Rent.class, rent4);
     }
 
     @Test
@@ -50,7 +46,6 @@ public class RentTests {
         Assertions.assertEquals(LocalDateTime.of(2015, 7, 14, 21, 37), endedRent.getEndTime());
         Assertions.assertEquals(1800, endedRent.getRentCost());
         Rent nullableEndTimeRent = new Rent(new MongoUUID(UUID.randomUUID()), client, vMachine, LocalDateTime.of(2015, 7, 12, 21, 37), null, 0);
-        Assertions.assertInstanceOf(Rent.class, nullableEndTimeRent);
         Assertions.assertNull(nullableEndTimeRent.getEndTime());
 //        nullableEndTimeRent.endRent(null);
 //        Assertions.assertTrue(nullableEndTimeRent.getRentCost() > 0);
@@ -59,7 +54,6 @@ public class RentTests {
     @Test
     public void testRentRentedVMachine() {
         Rent rent = new Rent(client, vMachine, LocalDateTime.of(2015, 7, 12, 21, 37));
-        Assertions.assertInstanceOf(Rent.class, rent);
         RuntimeException thrown = Assertions.assertThrows(RuntimeException.class, () -> {
             new Rent(new MongoUUID(UUID.randomUUID()), client, vMachine, LocalDateTime.of(2015, 7, 12, 21, 37), LocalDateTime.of(2015, 7, 13, 21, 37), 0);
         });

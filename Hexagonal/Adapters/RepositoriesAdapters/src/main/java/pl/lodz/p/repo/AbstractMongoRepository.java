@@ -7,6 +7,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import lombok.Getter;
+import lombok.Setter;
 import org.bson.UuidRepresentation;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
@@ -18,10 +19,11 @@ import pl.lodz.p.repo.vm.data.AppleArchEnt;
 import pl.lodz.p.repo.vm.data.x86Ent;
 
 @Getter
+@Setter
 public abstract class AbstractMongoRepository implements AutoCloseable {
 //    private final ConnectionString connectionString = new ConnectionString(
 //            "mongodb://localhost:27017,localhost:27018,localhost:27019/?replicaSet=replica_set_single");
-private final ConnectionString connectionString = new ConnectionString(
+private ConnectionString connectionString = new ConnectionString(
         "mongodb://mongodb1:27017,mongodb2:27018,mongodb3:27019/?replicaSet=replica_set_single"); //&authSource=admin
     private final MongoCredential credential = MongoCredential.createCredential(
             "admin", "admin", "adminpassword".toCharArray());
