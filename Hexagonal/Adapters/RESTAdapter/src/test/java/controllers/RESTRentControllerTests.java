@@ -61,7 +61,7 @@ class RESTRentControllerTests {
         rents.add(restRent);
         when(rentServicePort.getAllRents()).thenReturn(rents);
 
-        mockMvc.perform(get("/api/rent"))
+        mockMvc.perform(get("/rent"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.length()").value(1));
@@ -71,7 +71,7 @@ class RESTRentControllerTests {
     void testGetAllRentsNotFound() throws Exception {
         when(rentServicePort.getAllRents()).thenThrow(new RuntimeException());
 
-        mockMvc.perform(get("/api/rent"))
+        mockMvc.perform(get("/rent"))
                 .andExpect(status().isNotFound());
     }
 
@@ -80,7 +80,7 @@ class RESTRentControllerTests {
         UUID uuid = UUID.randomUUID();
         when(rentServicePort.getRent(uuid)).thenThrow(new RuntimeException("No rent found"));
 
-        mockMvc.perform(get("/api/rent/{uuid}", uuid))
+        mockMvc.perform(get("/rent/{uuid}", uuid))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string("No rent found"));
     }
@@ -90,7 +90,7 @@ class RESTRentControllerTests {
         RentDTO rentDTO = new RentDTO();
         when(rentServicePort.createRent(any())).thenReturn(new RESTRent());
 
-        mockMvc.perform(post("/api/rent")
+        mockMvc.perform(post("/rent")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(rentDTO)))
                 .andExpect(status().isCreated());
@@ -101,7 +101,7 @@ class RESTRentControllerTests {
         UUID uuid = UUID.randomUUID();
         doNothing().when(rentServicePort).endRent(eq(uuid), any());
 
-        mockMvc.perform(put("/api/rent/end/{uuid}", uuid))
+        mockMvc.perform(put("/rent/end/{uuid}", uuid))
                 .andExpect(status().isNoContent());
     }
 
@@ -110,7 +110,7 @@ class RESTRentControllerTests {
         UUID uuid = UUID.randomUUID();
         doNothing().when(rentServicePort).removeRent(uuid);
 
-        mockMvc.perform(delete("/api/rent/{uuid}", uuid))
+        mockMvc.perform(delete("/rent/{uuid}", uuid))
                 .andExpect(status().isNoContent());
     }
 
@@ -120,7 +120,7 @@ class RESTRentControllerTests {
         RESTRent restRent = new RESTRent(new RESTClient("John", "Doe", "JDoe", "a", "jdoe@example.com", new RESTStandard()), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
         when(rentServicePort.getRent(uuid)).thenReturn(restRent);
 
-        mockMvc.perform(get("/api/rent/{uuid}", uuid))
+        mockMvc.perform(get("/rent/{uuid}", uuid))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.client.firstName").value("John"))
                 .andExpect(jsonPath("$.vmachine.ramSize").value("8GB"));
@@ -133,7 +133,7 @@ class RESTRentControllerTests {
         rents.add(restRent);
         when(rentServicePort.getActiveRents()).thenReturn(rents);
 
-        mockMvc.perform(get("/api/rent/active"))
+        mockMvc.perform(get("/rent/active"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.length()").value(1));
@@ -146,7 +146,7 @@ class RESTRentControllerTests {
         rents.add(restRent);
         when(rentServicePort.getArchivedRents()).thenReturn(rents);
 
-        mockMvc.perform(get("/api/rent/archived"))
+        mockMvc.perform(get("/rent/archived"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.length()").value(1));
@@ -159,7 +159,7 @@ class RESTRentControllerTests {
         rents.add(restRent);
         when(rentServicePort.getClientAllRents(anyString())).thenReturn(rents);
 
-        mockMvc.perform(get("/api/rent/all/client")
+        mockMvc.perform(get("/rent/all/client")
                         .header("Authorization", "Bearer someValidToken"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
@@ -170,7 +170,7 @@ class RESTRentControllerTests {
     void testGetClientAllRentsNotFound() throws Exception {
         when(rentServicePort.getClientAllRents(anyString())).thenThrow(new RuntimeException());
 
-        mockMvc.perform(get("/api/rent/all/client")
+        mockMvc.perform(get("/rent/all/client")
                         .header("Authorization", "Bearer someValidToken"))
                 .andExpect(status().isNotFound());
     }
@@ -183,7 +183,7 @@ class RESTRentControllerTests {
         rents.add(restRent);
         when(rentServicePort.getClientActiveRents(uuid)).thenReturn(rents);
 
-        mockMvc.perform(get("/api/rent/active/client/{uuid}", uuid))
+        mockMvc.perform(get("/rent/active/client/{uuid}", uuid))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.length()").value(1));
@@ -195,7 +195,7 @@ class RESTRentControllerTests {
         RESTRent restRent = new RESTRent(new RESTClient("John", "Doe", "JDoe", "a", "jdoe@example.com", new RESTStandard()), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
         when(rentServicePort.getVMachineActiveRent(uuid)).thenReturn(restRent);
 
-        mockMvc.perform(get("/api/rent/active/vmachine/{uuid}", uuid))
+        mockMvc.perform(get("/rent/active/vmachine/{uuid}", uuid))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.client.firstName").value("John"))
                 .andExpect(jsonPath("$.vmachine.ramSize").value("8GB"));
@@ -206,7 +206,7 @@ class RESTRentControllerTests {
         UUID uuid = UUID.randomUUID();
         when(rentServicePort.getVMachineActiveRent(uuid)).thenThrow(new RuntimeException());
 
-        mockMvc.perform(get("/api/rent/active/vmachine/{uuid}", uuid))
+        mockMvc.perform(get("/rent/active/vmachine/{uuid}", uuid))
                 .andExpect(status().isNotFound());
     }
 
@@ -218,7 +218,7 @@ class RESTRentControllerTests {
         rents.add(restRent);
         when(rentServicePort.getClientArchivedRents(uuid)).thenReturn(rents);
 
-        mockMvc.perform(get("/api/rent/archived/client/{uuid}", uuid))
+        mockMvc.perform(get("/rent/archived/client/{uuid}", uuid))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.length()").value(1));
@@ -232,7 +232,7 @@ class RESTRentControllerTests {
         rents.add(restRent);
         when(rentServicePort.getVMachineArchivedRents(uuid)).thenReturn(rents);
 
-        mockMvc.perform(get("/api/rent/archived/vmachine/{uuid}", uuid))
+        mockMvc.perform(get("/rent/archived/vmachine/{uuid}", uuid))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.length()").value(1));
@@ -243,7 +243,7 @@ class RESTRentControllerTests {
         RentDTO rentDTO = new RentDTO();
         when(rentServicePort.createRent(any())).thenThrow(new IllegalArgumentException("Invalid rent data"));
 
-        mockMvc.perform(post("/api/rent")
+        mockMvc.perform(post("/rent")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(rentDTO)))
                 .andExpect(status().isConflict());
@@ -254,7 +254,7 @@ class RESTRentControllerTests {
         UUID uuid = UUID.randomUUID();
         doThrow(new RuntimeException("Rent not found")).when(rentServicePort).endRent(eq(uuid), any());
 
-        mockMvc.perform(put("/api/rent/end/{uuid}", uuid))
+        mockMvc.perform(put("/rent/end/{uuid}", uuid))
                 .andExpect(status().isBadRequest());
     }
 
@@ -263,7 +263,7 @@ class RESTRentControllerTests {
         UUID uuid = UUID.randomUUID();
         doThrow(new RuntimeException("No rent found")).when(rentServicePort).removeRent(uuid);
 
-        mockMvc.perform(delete("/api/rent/{uuid}", uuid))
+        mockMvc.perform(delete("/rent/{uuid}", uuid))
                 .andExpect(status().isBadRequest());
     }
 
@@ -272,7 +272,7 @@ class RESTRentControllerTests {
         UUID uuid = UUID.randomUUID();
         when(rentServicePort.getVMachineArchivedRents(uuid)).thenThrow(new RuntimeException("VMachine not found"));
 
-        mockMvc.perform(get("/api/rent/archived/vmachine/{uuid}", uuid))
+        mockMvc.perform(get("/rent/archived/vmachine/{uuid}", uuid))
                 .andExpect(status().isNotFound());
     }
 
@@ -280,7 +280,7 @@ class RESTRentControllerTests {
     void testGetArchivedRentsNotFound() throws Exception {
         when(rentServicePort.getArchivedRents()).thenThrow(new IllegalArgumentException("Invalid request for archived rents"));
 
-        mockMvc.perform(get("/api/rent/archived"))
+        mockMvc.perform(get("/rent/archived"))
                 .andExpect(status().isNotFound());
     }
 
@@ -288,7 +288,7 @@ class RESTRentControllerTests {
     void testGetActiveRentsNotFound() throws Exception {
         when(rentServicePort.getActiveRents()).thenThrow(new IllegalArgumentException("Invalid request for archived rents"));
 
-        mockMvc.perform(get("/api/rent/active"))
+        mockMvc.perform(get("/rent/active"))
                 .andExpect(status().isNotFound());
     }
 
@@ -298,7 +298,7 @@ class RESTRentControllerTests {
         UUID uuid = UUID.randomUUID();
         when(rentServicePort.getClientActiveRents(uuid)).thenThrow(new RuntimeException("Client has no active rents"));
 
-        mockMvc.perform(get("/api/rent/active/client/{uuid}", uuid))
+        mockMvc.perform(get("/rent/active/client/{uuid}", uuid))
                 .andExpect(status().isNotFound());
     }
 
@@ -307,7 +307,7 @@ class RESTRentControllerTests {
         UUID uuid = UUID.randomUUID();
         when(rentServicePort.getRent(uuid)).thenThrow(new IllegalArgumentException("Bad request"));
 
-        mockMvc.perform(get("/api/rent/{uuid}", uuid))
+        mockMvc.perform(get("/rent/{uuid}", uuid))
                 .andExpect(status().isNotFound());
     }
 
@@ -330,7 +330,7 @@ class RESTRentControllerTests {
                 new ExpiredJwtException(
                         null, null, "Expired JWT token", null));
 
-        mockMvc.perform(get("/api/rent/all/client")
+        mockMvc.perform(get("/rent/all/client")
                         .header("Authorization", "Bearer expiredToken"))
                 .andExpect(status().isUnauthorized());
     }
@@ -344,7 +344,7 @@ class RESTRentControllerTests {
 
         when(rentServicePort.getClientAllRents(clientId)).thenReturn(rents);
 
-        mockMvc.perform(get("/api/rent/all/client/{clientId}", clientId.toString())
+        mockMvc.perform(get("/rent/all/client/{clientId}", clientId.toString())
                         .header("Authorization", "Bearer validToken"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)));
@@ -355,7 +355,7 @@ class RESTRentControllerTests {
         UUID clientId = UUID.randomUUID();
         when(rentServicePort.getClientAllRents(clientId)).thenThrow(new RuntimeException());
 
-        mockMvc.perform(get("/api/rent/all/client/{clientId}", clientId.toString())
+        mockMvc.perform(get("/rent/all/client/{clientId}", clientId.toString())
                         .header("Authorization", "Bearer validToken"))
                 .andExpect(status().isNotFound());
     }
