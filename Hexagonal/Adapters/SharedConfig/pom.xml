@@ -7,18 +7,17 @@
         <groupId>pl.lodz.p</groupId>
         <artifactId>Adapters</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
     </parent>
 
     <groupId>pl.lodz.p.config</groupId>
     <artifactId>SharedConfig</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <build>
         <resources>
             <resource>
-                <directory>src/main/resources/META-INF/resources</directory>
+                <directory>src/main/webapp/META-INF/resources</directory>
                 <targetPath>META-INF/resources</targetPath>
             </resource>
         </resources>
@@ -42,6 +41,24 @@
             <groupId>pl.lodz.p.core</groupId>
             <artifactId>ApplicationServices</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.lodz.p.soap</groupId>
+            <artifactId>SOAPAdapter</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>war</type>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.lodz.p.rest</groupId>
+            <artifactId>RESTAdapter</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.ws</groupId>
+            <artifactId>spring-ws-core</artifactId>
         </dependency>
     </dependencies>
 

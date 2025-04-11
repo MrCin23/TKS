@@ -47,7 +47,7 @@ public class ClientTests {
     public void initCollection() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = 8081;
-        RestAssured.basePath = "/REST/api/client";
+        RestAssured.basePath = "/api/client";
         dataInitializer.dropAndCreateClient();
         dataInitializer.initClient();
     }

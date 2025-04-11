@@ -18,7 +18,7 @@ public class RentTests {
     public void initCollection() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = 8081;
-        RestAssured.basePath = "/REST/api";
+        RestAssured.basePath = "/api";
         dataInitializer.dropAndCreateRent();
         dataInitializer.initRent();
     }

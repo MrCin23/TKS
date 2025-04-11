@@ -9,7 +9,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            /WEB-INF/root-context.xml  <!-- Wspólna konfiguracja z SharedConfig -->
+            ../../../../SharedConfig/src/main/webapp/WEB-INF/root-context.xml  <!-- Wspólna konfiguracja z SharedConfig -->
         </param-value>
     </context-param>
     <display-name>SOAP Web Service</display-name>
@@ -23,7 +23,7 @@
         <servlet-class>org.springframework.ws.transport.http.MessageDispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/spring-ws-servlet.xml</param-value>
+            <param-value>../../../../SharedConfig/src/main/webapp/WEB-INF/spring-ws-servlet.xml</param-value>
         </init-param>
         <init-param>
             <param-name>transformWsdlLocations</param-name> <!-- Poprawiona nazwa parametru -->
