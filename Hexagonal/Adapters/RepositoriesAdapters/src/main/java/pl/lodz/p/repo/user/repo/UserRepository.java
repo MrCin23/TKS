@@ -2,6 +2,7 @@ package pl.lodz.p.repo.user.repo;
 
 import com.mongodb.DuplicateKeyException;
 import com.mongodb.MongoCommandException;
+import com.mongodb.WriteError;
 import com.mongodb.client.ClientSession;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoIterable;

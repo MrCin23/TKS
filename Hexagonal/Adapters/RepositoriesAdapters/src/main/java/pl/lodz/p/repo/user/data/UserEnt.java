@@ -75,11 +75,6 @@ public abstract class UserEnt extends AbstractEnt {
         this.active = active;
     }
 
-    public boolean checkPassword(String password) {
-        return BCrypt.checkpw(password, this.password);
-    }
-
-
     @Override
     public String toString() {
         return "User{" +
