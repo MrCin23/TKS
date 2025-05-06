@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:usr="http://p.lodz.pl/users">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <usr:collectionSize/>
+    </soapenv:Body>
+</soapenv:Envelope>

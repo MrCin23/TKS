@@ -1,0 +1,93 @@
+services:
+  mongo_b1:
+    build: .
+    image: mongocustom:7.0.2
+    container_name: mongodb_b1
+    hostname: mongodb_b1
+    networks:
+      - mongonet_b
+    ports:
+      - "27117:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=adminpassword
+      - MONGO_INITDB_DATABASE=vmrental_b
+    command: --config /etc/mongod.conf --port 27017 --replSet replica_set_b
+    healthcheck:
+      test: [ "CMD", "mongosh", "--port", "27017", "--eval", "db.adminCommand('ping')" ]
+      interval: 10s
+      timeout: 2s
+      retries: 5
+
+  mongo_b2:
+    build: .
+    image: mongocustom:7.0.2
+    container_name: mongodb_b2
+    hostname: mongodb_b2
+    networks:
+      - mongonet_b
+    ports:
+      - "27118:27018"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=adminpassword
+      - MONGO_INITDB_DATABASE=vmrental_b
+    command: --config /etc/mongod.conf --port 27018 --replSet replica_set_b
+    healthcheck:
+      test: [ "CMD", "mongosh", "--port", "27018", "--eval", "db.adminCommand('ping')" ]
+      interval: 10s
+      timeout: 2s
+      retries: 5
+
+  mongo_b3:
+    build: .
+    image: mongocustom:7.0.2
+    container_name: mongodb_b3
+    hostname: mongodb_b3
+    networks:
+      - mongonet_b
+    ports:
+      - "27119:27019"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=adminpassword
+      - MONGO_INITDB_DATABASE=vmrental_b
+    command: --config /etc/mongod.conf --port 27019 --replSet replica_set_b
+    healthcheck:
+      test: [ "CMD", "mongosh", "--port", "27019", "--eval", "db.adminCommand('ping')" ]
+      interval: 10s
+      timeout: 2s
+      retries: 5
+
+  mongoinit_b:
+    build: .
+    image: mongocustom:7.0.2
+    container_name: mongodbinit_b
+    hostname: mongodbinit_b
+    networks:
+      - mongonet_b
+    depends_on:
+      mongo_b1:
+        condition: service_healthy
+      mongo_b2:
+        condition: service_healthy
+      mongo_b3:
+        condition: service_healthy
+    command: >
+      mongosh --host mongodb_b1:27017 --username admin --password adminpassword --authenticationDatabase admin --eval
+      '
+      rsconf = 
+      {
+        _id: "replica_set_b",
+        version: 1,
+        members: [
+          { _id: 0, host : "mongodb_b1:27017" },
+          { _id: 1, host : "mongodb_b2:27018" },
+          { _id: 2, host : "mongodb_b3:27019" }
+        ]
+      };
+      rs.initiate(rsconf);
+      '
+
+networks:
+  mongonet_b: { }

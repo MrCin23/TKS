@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:usr="http://p.lodz.pl/users">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <usr:GetUserByUsernameRequest>
+            <usr:username>JEscobarr</usr:username>
+        </usr:GetUserByUsernameRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
