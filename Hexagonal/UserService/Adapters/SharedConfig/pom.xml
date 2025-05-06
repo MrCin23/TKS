@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>pl.lodz.p</groupId>
-        <artifactId>Adapters</artifactId>
+        <artifactId>UserAdapters</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <groupId>pl.lodz.p.config</groupId>
-    <artifactId>SharedConfig</artifactId>
+    <artifactId>UserSharedConfig</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -39,20 +39,20 @@
         <!-- Zależność do Twojego core -->
         <dependency>
             <groupId>pl.lodz.p.core</groupId>
-            <artifactId>ApplicationServices</artifactId>
+            <artifactId>UserApplicationServices</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>pl.lodz.p.soap</groupId>
-            <artifactId>SOAPAdapter</artifactId>
+            <artifactId>UserSOAPAdapter</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>war</type>
         </dependency>
 
         <dependency>
             <groupId>pl.lodz.p.rest</groupId>
-            <artifactId>RESTAdapter</artifactId>
+            <artifactId>UserRESTAdapter</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>war</type>
         </dependency>

@@ -3,7 +3,6 @@ package pl.lodz.p.repo.codec;
 import org.bson.codecs.Codec;
 import org.bson.codecs.configuration.CodecRegistry;
 import pl.lodz.p.repo.MongoUUIDEnt;
-import pl.lodz.p.repo.vm.data.VMachineEnt;
 import pl.lodz.p.repo.user.data.ClientTypeEnt;
 
 public class CodecProvider implements org.bson.codecs.configuration.CodecProvider {
@@ -15,9 +14,6 @@ public class CodecProvider implements org.bson.codecs.configuration.CodecProvide
     public <T> Codec<T> get(Class<T> clazz, CodecRegistry registry) {
         if (clazz == ClientTypeEnt.class) {
             return (Codec<T>) new ClientTypeCodec(registry);
-        }
-        if (clazz == VMachineEnt.class) {
-            return (Codec<T>) new VMachineCodec(registry);
         }
         if (clazz == MongoUUIDEnt.class) {
             return (Codec<T>) new MongoUUIDCodec(registry);

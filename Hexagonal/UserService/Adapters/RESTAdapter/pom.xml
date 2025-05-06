@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>pl.lodz.p</groupId>
-        <artifactId>Adapters</artifactId>
+        <artifactId>UserAdapters</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <groupId>pl.lodz.p.rest</groupId>
-    <artifactId>RESTAdapter</artifactId>
+    <artifactId>UserRESTAdapter</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -60,7 +60,7 @@
         </dependency>
         <dependency>
             <groupId>pl.lodz.p.ui</groupId>
-            <artifactId>UIPorts</artifactId>
+            <artifactId>UserUIPorts</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -85,13 +85,13 @@
         </dependency>
         <dependency>
             <groupId>pl.lodz.p.core</groupId>
-            <artifactId>ApplicationServices</artifactId>
+            <artifactId>UserApplicationServices</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>pl.lodz.p.rest.model</groupId>
-            <artifactId>RESTModel</artifactId>
+            <artifactId>UserRESTModel</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>pl.lodz.p</groupId>
-        <artifactId>Adapters</artifactId>
+        <artifactId>UserAdapters</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <groupId>pl.lodz.p.soap</groupId>
-    <artifactId>SOAPAdapter</artifactId>
+    <artifactId>UserSOAPAdapter</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -44,17 +44,17 @@
         </dependency>
         <dependency>
             <groupId>pl.lodz.p.soap.model</groupId>
-            <artifactId>SOAPModel</artifactId>
+            <artifactId>UserSOAPModel</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>pl.lodz.p.ui</groupId>
-            <artifactId>UIPorts</artifactId>
+            <artifactId>UserUIPorts</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>pl.lodz.p.core</groupId>
-            <artifactId>ApplicationServices</artifactId>
+            <artifactId>UserApplicationServices</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

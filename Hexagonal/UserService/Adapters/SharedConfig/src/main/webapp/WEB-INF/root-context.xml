@@ -23,9 +23,6 @@
         <constructor-arg ref="userAdapter"/>
         <constructor-arg ref="jwtTokenProvider"/>
     </bean>
-    <bean id="rentService" class="pl.lodz.p.core.services.service.RentService" >
-        <constructor-arg ref="userAdapter"/>
-    </bean>
 
     <bean id="jwtTokenProvider" class="pl.lodz.p.core.services.security.JwtTokenProvider"/>
     <bean id="jwsProvider" class="pl.lodz.p.core.services.security.JwsProvider"/>

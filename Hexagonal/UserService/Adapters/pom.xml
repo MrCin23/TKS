@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>pl.lodz.p</groupId>
-    <artifactId>Adapters</artifactId>
+    <artifactId>UserAdapters</artifactId>
     <packaging>pom</packaging>
     <modules>
         <module>RepositoriesAdapters</module>

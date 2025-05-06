@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.lodz.p.core.domain.AppleArch;
 import pl.lodz.p.core.domain.MongoUUID;
@@ -16,7 +15,6 @@ import pl.lodz.p.repo.vm.adapter.VMachineAdapter;
 import pl.lodz.p.repo.vm.repo.VMachineRepository;
 import pl.lodz.p.repo.vm.data.AppleArchEnt;
 import pl.lodz.p.repo.vm.data.VMachineEnt;
-import pl.lodz.p.repo.vm.data.x86Ent;
 
 import java.util.Collections;
 import java.util.Map;

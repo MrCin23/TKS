@@ -1,13 +1,11 @@
 package user.adapter;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import pl.lodz.p.core.domain.MongoUUID;
 import pl.lodz.p.core.domain.user.*;
-import pl.lodz.p.infrastructure.user.*;
 import pl.lodz.p.repo.MongoUUIDEnt;
 import pl.lodz.p.repo.user.adapter.UserAdapter;
 import pl.lodz.p.repo.user.data.*;

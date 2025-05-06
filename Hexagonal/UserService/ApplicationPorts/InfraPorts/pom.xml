@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>pl.lodz.p</groupId>
-        <artifactId>ApplicationPorts</artifactId>
+        <artifactId>UserApplicationPorts</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <groupId>pl.lodz.p.infrastructure</groupId>
-    <artifactId>InfraPorts</artifactId>
+    <artifactId>UserInfraPorts</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -23,7 +23,7 @@
     <dependencies>
         <dependency>
             <groupId>pl.lodz.p.core.domain</groupId>
-            <artifactId>DomainModel</artifactId>
+            <artifactId>UserDomainModel</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
