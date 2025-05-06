@@ -3,6 +3,7 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file url="file://$PROJECT_DIR$/RentService/Adapters/SharedConfig/overlays" />
+    <file url="file://$PROJECT_DIR$/UserService/Adapters/SharedConfig/overlays" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
