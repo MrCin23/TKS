@@ -18,7 +18,7 @@ public class RentTests {
     public void initCollection() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = 8081;
-        RestAssured.basePath = "/api";
+        RestAssured.basePath = "/Rent/api";
         dataInitializer.dropAndCreateRent();
         dataInitializer.initRent();
     }
@@ -38,12 +38,7 @@ public class RentTests {
                     "_id": {
                         "uuid": "11111111-e89b-12d3-a456-426614174000"
                     },
-                    "firstName": "John",
-                    "surname": "Doe",
                     "username": "JDoe",
-                    "emailAddress": "john.doe@example.com",
-                    "_clazz": "Client",
-                    "role": "CLIENT",
                     "clientType": {
                         "_clazz": "standard",
                         "entityId": {
@@ -54,7 +49,6 @@ public class RentTests {
                     },
                     "currentRents": 0,
                     "active": true,
-                    "password": "12345678"
                 }""";
 
         RestAssured.given()
@@ -64,42 +58,6 @@ public class RentTests {
                 .post("/client")
                 .then()
                 .statusCode(201);
-    }
-
-    public String loginClient()  {
-        String payloadLogin = """
-                    {
-                        "username": "JDoe",
-                        "password": "12345678"
-                    }
-                    """;
-        return RestAssured.given()
-                .contentType(ContentType.JSON)
-                .body(payloadLogin)
-                .when()
-                .post("/client/login")
-                .then()
-                .statusCode(200)
-                .extract()
-                .asString();
-    }
-
-    public String loginManager()  {
-        String payloadLogin = """
-                    {
-                        "username": "pepper",
-                        "password": "a"
-                    }
-                    """;
-        return RestAssured.given()
-                .contentType(ContentType.JSON)
-                .body(payloadLogin)
-                .when()
-                .post("/client/login")
-                .then()
-                .statusCode(200)
-                .extract()
-                .asString();
     }
 
     public void createVM() {
@@ -115,7 +73,6 @@ public class RentTests {
                 }""";
 
         RestAssured.given()
-                .header("Authorization", "Bearer " + loginManager())
                 .contentType(ContentType.JSON)
                 .body(vMJson)
                 .when()
@@ -135,7 +92,6 @@ public class RentTests {
 
 
         Response response = RestAssured.given()
-                .header("Authorization", "Bearer " + loginClient())
                 .contentType(ContentType.JSON)
                 .body(rentJson)
                 .when()
@@ -156,7 +112,6 @@ public class RentTests {
         createVM();
         //create rent
         Response response = RestAssured.given()
-                .header("Authorization", "Bearer " + loginClient())
                 .contentType(ContentType.JSON)
                 .body(rentJson)
                 .when()
@@ -169,7 +124,6 @@ public class RentTests {
         assertThat(responseBody, containsString("[2024,11,11,11,11]"));
         //create rent of rented machine
         Response response2 = RestAssured.given()
-                .header("Authorization", "Bearer " + loginClient())
                 .contentType(ContentType.JSON)
                 .body(rentJson)
                 .when()

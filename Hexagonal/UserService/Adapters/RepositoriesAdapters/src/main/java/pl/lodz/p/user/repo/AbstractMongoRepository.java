@@ -23,7 +23,7 @@ public abstract class AbstractMongoRepository implements AutoCloseable {
 //    private final ConnectionString connectionString = new ConnectionString(
 //            "mongodb://localhost:27017,localhost:27018,localhost:27019/?replicaSet=replica_set_single");
 private ConnectionString connectionString = new ConnectionString(
-        "mongodb://admin:adminpassword@mongodb_b1:27117,mongodb_b2:27118,mongodb_b3:27119/?replicaSet=replica_set_b&authSource=admin"); //&authSource=admin
+        "mongodb://mongodb1:27017,mongodb2:27018,mongodb3:27019/?replicaSet=replica_set_single"); //&authSource=admin
 //        "mongodb://mongodb_b1:27017,mongodb_b2:27018,mongodb_b3:27019/?replicaSet=replica_set_b"); //&authSource=admin
     private final MongoCredential credential = MongoCredential.createCredential(
             "admin", "admin", "adminpassword".toCharArray());
@@ -52,7 +52,7 @@ private ConnectionString connectionString = new ConnectionString(
                         ))
                 .build();
         mongoClient = MongoClients.create(settings);
-        database = mongoClient.getDatabase("vmrental");
+        database = mongoClient.getDatabase("users");
     }
 
     @Override

@@ -23,7 +23,7 @@ public class VMachineTests {
     public void initCollection() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = 8081;
-        RestAssured.basePath = "/api";
+        RestAssured.basePath = "/Rent/api";
         dataInitializer.dropAndCreateVMachine();
         dataInitializer.dropAndCreateClient();
         dataInitializer.initClient();
@@ -38,23 +38,6 @@ public class VMachineTests {
         dataInitializer.initVM();
     }
 
-    public String loginManager()  {
-        String payloadLogin = """
-                    {
-                        "username": "pepper",
-                        "password": "a"
-                    }
-                    """;
-        return RestAssured.given()
-                .contentType(ContentType.JSON)
-                .body(payloadLogin)
-                .when()
-                .post("/client/login")
-                .then()
-                .statusCode(200)
-                .extract()
-                .asString();
-    }
 
     @Test
     public void testCreateVMachine() throws JsonProcessingException {
@@ -69,7 +52,6 @@ public class VMachineTests {
             """;
 
         RestAssured.given()
-                .header("Authorization", "Bearer " + loginManager())
                 .contentType(ContentType.JSON)
                 .body(payloadJson)
                 .when()
@@ -96,7 +78,6 @@ public class VMachineTests {
                 }""";
 
         RestAssured.given()
-                .header("Authorization", "Bearer " + loginManager())
                 .contentType(ContentType.JSON)
                 .body(payloadJson)
                 .when()
@@ -105,7 +86,6 @@ public class VMachineTests {
                 .statusCode(201);
 
         RestAssured.given()
-                .header("Authorization", "Bearer " + loginManager())
                 .when()
                 .get("/vmachine")
                 .then()
@@ -127,7 +107,6 @@ public class VMachineTests {
                 }""";
 
         RestAssured.given()
-                .header("Authorization", "Bearer " + loginManager())
                 .contentType(ContentType.JSON)
                 .body(payloadJson)
                 .when()
@@ -138,7 +117,6 @@ public class VMachineTests {
         UUID uuid = UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
 
         RestAssured.given()
-                .header("Authorization", "Bearer " + loginManager())
                 .when()
                 .get("/vmachine/{uuid}", uuid)
                 .then()
@@ -159,7 +137,6 @@ public class VMachineTests {
                 }""";
 
         RestAssured.given()
-                .header("Authorization", "Bearer " + loginManager())
                 .contentType(ContentType.JSON)
                 .body(payloadJson)
                 .when()
@@ -173,7 +150,6 @@ public class VMachineTests {
         fieldsToUpdate.put("ramSize", "16GB");
 
         RestAssured.given()
-                .header("Authorization", "Bearer " + loginManager())
                 .contentType(ContentType.JSON)
                 .body(fieldsToUpdate)
                 .when()
@@ -195,7 +171,6 @@ public class VMachineTests {
                 }""";
 
         RestAssured.given()
-                .header("Authorization", "Bearer " + loginManager())
                 .contentType(ContentType.JSON)
                 .body(payloadJson)
                 .when()
@@ -206,7 +181,6 @@ public class VMachineTests {
         UUID uuid = UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
 
         RestAssured.given()
-                .header("Authorization", "Bearer " + loginManager())
                 .when()
                 .delete("/vmachine/{uuid}", "123e4567-e89b-12d3-a456-426614174000")
                 .then()
@@ -228,7 +202,6 @@ public class VMachineTests {
                 }""";
 
         RestAssured.given()
-                .header("Authorization", "Bearer " + loginManager())
                 .contentType(ContentType.JSON)
                 .body(payloadJson)
                 .when()

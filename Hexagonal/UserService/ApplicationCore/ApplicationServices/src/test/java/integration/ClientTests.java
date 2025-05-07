@@ -47,7 +47,7 @@ public class ClientTests {
     public void initCollection() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = 8081;
-        RestAssured.basePath = "/api/client";
+        RestAssured.basePath = "/User/api/client";
         dataInitializer.dropAndCreateClient();
         dataInitializer.initClient();
     }
@@ -295,10 +295,7 @@ public class ClientTests {
                 .post()
                 .then()
                 .statusCode(201)
-                .body("firstName", equalTo("John"))
-                .body("surname", equalTo("Doe"))
-                .body("username", equalTo("JDoe"))
-                .body("emailAddress", equalTo("john.doe@example.com"));
+                .body("username", equalTo("JDoe"));
 
 
         payloadJson = """
