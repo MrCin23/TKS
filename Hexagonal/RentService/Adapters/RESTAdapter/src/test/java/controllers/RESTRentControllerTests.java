@@ -57,7 +57,7 @@ class RESTRentControllerTests {
     @Test
     void testGetAllRents() throws Exception {
         List<RESTRent> rents = new ArrayList<>();
-        RESTRent restRent = new RESTRent(new RESTClient("John", "Doe", "JDoe", "a", "jdoe@example.com", new RESTStandard()), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
+        RESTRent restRent = new RESTRent(new RESTClient("JDoe", new RESTStandard(), true), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
         rents.add(restRent);
         when(rentServicePort.getAllRents()).thenReturn(rents);
 
@@ -117,7 +117,7 @@ class RESTRentControllerTests {
     @Test
     void testGetRent() throws Exception {
         UUID uuid = UUID.randomUUID();
-        RESTRent restRent = new RESTRent(new RESTClient("John", "Doe", "JDoe", "a", "jdoe@example.com", new RESTStandard()), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
+        RESTRent restRent = new RESTRent(new RESTClient("JDoe", new RESTStandard(), true), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
         when(rentServicePort.getRent(uuid)).thenReturn(restRent);
 
         mockMvc.perform(get("/rent/{uuid}", uuid))
@@ -129,7 +129,7 @@ class RESTRentControllerTests {
     @Test
     void testGetActiveRents() throws Exception {
         List<RESTRent> rents = new ArrayList<>();
-        RESTRent restRent = new RESTRent(new RESTClient("John", "Doe", "JDoe", "a", "jdoe@example.com", new RESTStandard()), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
+        RESTRent restRent = new RESTRent(new RESTClient("JDoe", new RESTStandard(), true), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
         rents.add(restRent);
         when(rentServicePort.getActiveRents()).thenReturn(rents);
 
@@ -142,7 +142,7 @@ class RESTRentControllerTests {
     @Test
     void testGetArchivedRents() throws Exception {
         List<RESTRent> rents = new ArrayList<>();
-        RESTRent restRent = new RESTRent(new RESTClient("John", "Doe", "JDoe", "a", "jdoe@example.com", new RESTStandard()), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
+        RESTRent restRent = new RESTRent(new RESTClient("JDoe", new RESTStandard(), true), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
         rents.add(restRent);
         when(rentServicePort.getArchivedRents()).thenReturn(rents);
 
@@ -155,7 +155,7 @@ class RESTRentControllerTests {
     @Test
     void testGetClientAllRents() throws Exception {
         List<RESTRent> rents = new ArrayList<>();
-        RESTRent restRent = new RESTRent(new RESTClient("John", "Doe", "JDoe", "a", "jdoe@example.com", new RESTStandard()), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
+        RESTRent restRent = new RESTRent(new RESTClient("JDoe", new RESTStandard(), true), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
         rents.add(restRent);
         when(rentServicePort.getClientAllRents(anyString())).thenReturn(rents);
 
@@ -179,7 +179,7 @@ class RESTRentControllerTests {
     void testGetClientActiveRents() throws Exception {
         UUID uuid = UUID.randomUUID();
         List<RESTRent> rents = new ArrayList<>();
-        RESTRent restRent = new RESTRent(new RESTClient("John", "Doe", "JDoe", "a", "jdoe@example.com", new RESTStandard()), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
+        RESTRent restRent = new RESTRent(new RESTClient("JDoe", new RESTStandard(), true), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
         rents.add(restRent);
         when(rentServicePort.getClientActiveRents(uuid)).thenReturn(rents);
 
@@ -192,7 +192,7 @@ class RESTRentControllerTests {
     @Test
     void testGetVMachineActiveRent() throws Exception {
         UUID uuid = UUID.randomUUID();
-        RESTRent restRent = new RESTRent(new RESTClient("John", "Doe", "JDoe", "a", "jdoe@example.com", new RESTStandard()), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
+        RESTRent restRent = new RESTRent(new RESTClient("JDoe", new RESTStandard(), true), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
         when(rentServicePort.getVMachineActiveRent(uuid)).thenReturn(restRent);
 
         mockMvc.perform(get("/rent/active/vmachine/{uuid}", uuid))
@@ -214,7 +214,7 @@ class RESTRentControllerTests {
     void testGetClientArchivedRents() throws Exception {
         UUID uuid = UUID.randomUUID();
         List<RESTRent> rents = new ArrayList<>();
-        RESTRent restRent = new RESTRent(new RESTClient("John", "Doe", "JDoe", "a", "jdoe@example.com", new RESTStandard()), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
+        RESTRent restRent = new RESTRent(new RESTClient("JDoe", new RESTStandard(), true), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
         rents.add(restRent);
         when(rentServicePort.getClientArchivedRents(uuid)).thenReturn(rents);
 
@@ -228,7 +228,7 @@ class RESTRentControllerTests {
     void testGetVMachineArchivedRents() throws Exception {
         UUID uuid = UUID.randomUUID();
         List<RESTRent> rents = new ArrayList<>();
-        RESTRent restRent = new RESTRent(new RESTClient("John", "Doe", "JDoe", "a", "jdoe@example.com", new RESTStandard()), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
+        RESTRent restRent = new RESTRent(new RESTClient("JDoe", new RESTStandard(), true), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
         rents.add(restRent);
         when(rentServicePort.getVMachineArchivedRents(uuid)).thenReturn(rents);
 
@@ -338,7 +338,7 @@ class RESTRentControllerTests {
     @Test
     public void testGetClientAllRentsByUUID() throws Exception {
         UUID clientId = UUID.randomUUID();
-        RESTRent rent1 = new RESTRent(new RESTClient("John", "Doe", "JDoe", "a", "jdoe@example.com", new RESTStandard()), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
+        RESTRent rent1 = new RESTRent(new RESTClient("JDoe", new RESTStandard(), true), new RESTAppleArch(4, "8GB"), LocalDateTime.now());
         List<RESTRent> rents = new ArrayList<>();
         rents.add(rent1);
 

@@ -7,7 +7,7 @@ import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import pl.lodz.p.repo.AbstractEnt;
 import pl.lodz.p.repo.MongoUUIDEnt;
-import pl.lodz.p.repo.user.data.ClientEnt;
+import pl.lodz.p.repo.client.data.ClientEnt;
 import pl.lodz.p.repo.vm.data.VMachineEnt;
 
 import java.time.Duration;

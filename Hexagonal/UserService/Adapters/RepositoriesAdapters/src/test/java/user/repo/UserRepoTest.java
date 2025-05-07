@@ -4,9 +4,12 @@ import com.mongodb.ConnectionString;
 import org.junit.jupiter.api.*;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.utility.DockerImageName;
-import pl.lodz.p.repo.MongoUUIDEnt;
-import pl.lodz.p.repo.user.data.*;
-import pl.lodz.p.repo.user.repo.UserRepository;
+import pl.lodz.p.user.repo.MongoUUIDEnt;
+import pl.lodz.p.user.repo.user.data.ClientEnt;
+import pl.lodz.p.user.repo.user.data.RoleEnt;
+import pl.lodz.p.user.repo.user.data.StandardEnt;
+import pl.lodz.p.user.repo.user.data.UserEnt;
+import pl.lodz.p.user.repo.user.repo.UserRepository;
 
 import java.util.*;
 

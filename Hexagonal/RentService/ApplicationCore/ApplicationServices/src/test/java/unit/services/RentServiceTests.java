@@ -75,7 +75,7 @@ class RentServiceTests {
 
         when(client.getClientType()).thenReturn(clientType);
         when(client.getCurrentRents()).thenReturn(0);
-        when(uGet.getUserByUsername(anyString())).thenReturn(client);
+        when(uGet.getClientByUsername(anyString())).thenReturn(client);
 
         when(vmachine.isRented()).thenReturn(0);
         when(vmGet.getVMachineByID(any())).thenReturn(vmachine);
@@ -89,7 +89,7 @@ class RentServiceTests {
 
     @Test
     void createRent_ClientNotFound() {
-        when(uGet.getUserByUsername(anyString())).thenReturn(null);
+        when(uGet.getClientByUsername(anyString())).thenReturn(null);
 
         Exception exception = assertThrows(RuntimeException.class, () ->
                 rentService.createRent("user1", vmId, startTime));
@@ -99,7 +99,7 @@ class RentServiceTests {
 
     @Test
     void createRent_VMNotFound() {
-        when(uGet.getUserByUsername(anyString())).thenReturn(client);
+        when(uGet.getClientByUsername(anyString())).thenReturn(client);
         when(vmGet.getVMachineByID(any())).thenReturn(null);
 
         Exception exception = assertThrows(RuntimeException.class, () ->
@@ -110,7 +110,7 @@ class RentServiceTests {
 
     @Test
     void createRent_RentedVM() {
-        when(uGet.getUserByUsername(anyString())).thenReturn(client);
+        when(uGet.getClientByUsername(anyString())).thenReturn(client);
         when(vmGet.getVMachineByID(any())).thenReturn(vmachine);
         when(vmachine.isRented()).thenReturn(1);
 
@@ -127,7 +127,7 @@ class RentServiceTests {
 
         when(client.getClientType()).thenReturn(clientType);
         when(client.getCurrentRents()).thenReturn(1);
-        when(uGet.getUserByUsername(anyString())).thenReturn(client);
+        when(uGet.getClientByUsername(anyString())).thenReturn(client);
 
         when(vmachine.isRented()).thenReturn(0);
         when(vmGet.getVMachineByID(any())).thenReturn(vmachine);

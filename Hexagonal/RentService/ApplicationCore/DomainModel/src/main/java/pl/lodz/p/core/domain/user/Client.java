@@ -4,6 +4,7 @@ package pl.lodz.p.core.domain.user;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.lodz.p.core.domain.AbstractEntityMgd;
 import pl.lodz.p.core.domain.MongoUUID;
 
 
@@ -13,9 +14,11 @@ import java.util.UUID;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Client extends User{
+public class Client extends AbstractEntityMgd {
+    private String username;
     private ClientType clientType;
     private int currentRents;
+    private boolean active;
 
     @Override
     public String toString() {
@@ -25,29 +28,11 @@ public class Client extends User{
                 '}';
     }
 
-    public Client(String firstName,
-                  String surname,
-                  String username,
-                  String password,
-                  String emailAddress,
-                  ClientType clientType) {
-        super(new MongoUUID(UUID.randomUUID()), firstName, username, password, surname, emailAddress, Role.CLIENT, true);
-        this.clientType = clientType;
-        this.currentRents = 0;
-    }
-
-    public Client(MongoUUID userId,
-                  String firstName,
-                  String username,
-                  String password,
-                  String surname,
-                  String emailAddress,
-                  Role role,
-                  boolean active,
-                  ClientType clientType,
-                  int currentRents) {
-        super(userId, firstName, username, password, surname, emailAddress, role, active);
+    public Client(MongoUUID entityId, String username, ClientType clientType, int currentRents, boolean active) {
+        super(entityId);
+        this.username = username;
         this.clientType = clientType;
         this.currentRents = currentRents;
+        this.active = active;
     }
 }

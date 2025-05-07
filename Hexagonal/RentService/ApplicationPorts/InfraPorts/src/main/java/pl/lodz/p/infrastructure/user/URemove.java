@@ -1,8 +1,11 @@
 package pl.lodz.p.infrastructure.user;
 
 import org.springframework.stereotype.Component;
-import pl.lodz.p.core.domain.user.User;
+import pl.lodz.p.core.domain.user.Client;
+
+import javax.crypto.Cipher;
+
 @Component
 public interface URemove {
-    void remove(User user);
+    void remove(Client client);
 }

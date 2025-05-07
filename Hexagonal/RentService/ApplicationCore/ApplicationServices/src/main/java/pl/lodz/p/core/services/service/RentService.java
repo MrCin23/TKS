@@ -37,7 +37,7 @@ public class RentService {
     public Rent createRent(String username, UUID vmID, LocalDateTime startTime) {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        String username = auth.getName();
-        Client client = (Client)uGet.getUserByUsername(username);
+        Client client = (Client)uGet.getClientByUsername(username);
         VMachine vm = vmGet.getVMachineByID(new MongoUUID(vmID));
         if(client == null) {
             throw new RuntimeException("Client not found");

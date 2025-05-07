@@ -14,7 +14,7 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.Conventions;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import pl.lodz.p.repo.codec.CodecProvider;
-import pl.lodz.p.repo.user.data.*;
+import pl.lodz.p.repo.client.data.*;
 import pl.lodz.p.repo.vm.data.AppleArchEnt;
 import pl.lodz.p.repo.vm.data.x86Ent;
 
@@ -34,7 +34,7 @@ private ConnectionString connectionString = new ConnectionString(
     private final CodecRegistry pojoCodecRegistry = CodecRegistries.fromProviders(
             PojoCodecProvider.builder().automatic(true)
                     .register(PremiumEnt.class).register(StandardEnt.class).register(x86Ent.class).register(AppleArchEnt.class)
-                    .register(ClientEnt.class).register(AdminEnt.class).register(ResourceManagerEnt.class)
+                    .register(ClientEnt.class)
                     .conventions(Conventions.DEFAULT_CONVENTIONS).build());
     private MongoClient mongoClient;
     private MongoDatabase database;

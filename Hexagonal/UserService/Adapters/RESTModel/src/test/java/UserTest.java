@@ -1,8 +1,7 @@
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import pl.lodz.p.rest.model.RESTMongoUUID;
-import pl.lodz.p.rest.model.user.*;
+import pl.lodz.p.user.rest.model.RESTMongoUUID;
+import pl.lodz.p.user.rest.model.user.*;
 
 import java.util.UUID;
 

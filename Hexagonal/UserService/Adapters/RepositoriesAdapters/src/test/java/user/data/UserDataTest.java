@@ -2,9 +2,8 @@ package user.data;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import pl.lodz.p.core.domain.user.Admin;
-import pl.lodz.p.repo.MongoUUIDEnt;
-import pl.lodz.p.repo.user.data.*;
+import pl.lodz.p.user.repo.MongoUUIDEnt;
+import pl.lodz.p.user.repo.user.data.*;
 
 import java.util.UUID;
 

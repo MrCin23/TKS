@@ -3,10 +3,9 @@ package unit.model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import pl.lodz.p.core.domain.user.Admin;
-import pl.lodz.p.core.domain.user.User;
-import pl.lodz.p.core.domain.user.UserPrincipal;
+import pl.lodz.p.user.core.domain.user.Admin;
+import pl.lodz.p.user.core.domain.user.User;
+import pl.lodz.p.user.core.domain.user.UserPrincipal;
 
 public class UserPrincipalTests {
 

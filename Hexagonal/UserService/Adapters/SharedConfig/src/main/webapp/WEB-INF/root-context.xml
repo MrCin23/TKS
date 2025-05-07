@@ -13,10 +13,10 @@
            http://www.springframework.org/schema/security/spring-security.xsd
            ">
 
-    <context:component-scan base-package="pl.lodz.p"/>
+    <context:component-scan base-package="pl.lodz.p.user"/>
 
 
-    <bean id="userService" class="pl.lodz.p.core.services.service.UserService">
+    <bean id="userService" class="pl.lodz.p.user.core.services.service.UserService">
         <constructor-arg ref="userAdapter"/>
         <constructor-arg ref="userAdapter"/>
         <constructor-arg ref="userAdapter"/>
@@ -24,10 +24,10 @@
         <constructor-arg ref="jwtTokenProvider"/>
     </bean>
 
-    <bean id="jwtTokenProvider" class="pl.lodz.p.core.services.security.JwtTokenProvider"/>
-    <bean id="jwsProvider" class="pl.lodz.p.core.services.security.JwsProvider"/>
-    <bean id="customAuthEntryPoint" class="pl.lodz.p.core.services.CustomAuthenticationEntryPoint"/>
-    <bean id="jwtFilter" class="pl.lodz.p.core.services.security.JwtFilter"/>
+    <bean id="jwtTokenProvider" class="pl.lodz.p.user.core.services.security.JwtTokenProvider"/>
+    <bean id="jwsProvider" class="pl.lodz.p.user.core.services.security.JwsProvider"/>
+    <bean id="customAuthEntryPoint" class="pl.lodz.p.user.core.services.CustomAuthenticationEntryPoint"/>
+    <bean id="jwtFilter" class="pl.lodz.p.user.core.services.security.JwtFilter"/>
     <bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
         <property name="userDetailsService" ref="userService"/>
         <property name="passwordEncoder">

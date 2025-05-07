@@ -11,10 +11,10 @@ import lombok.Setter;
 import org.bson.Document;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import pl.lodz.p.repo.rent.repo.RentRepository;
-import pl.lodz.p.repo.user.repo.UserRepository;
+import pl.lodz.p.repo.client.repo.ClientRepository;
 import pl.lodz.p.repo.vm.repo.VMachineRepository;
 import pl.lodz.p.repo.rent.data.RentEnt;
-import pl.lodz.p.repo.user.data.*;
+import pl.lodz.p.repo.client.data.*;
 import pl.lodz.p.repo.vm.data.AppleArchEnt;
 import pl.lodz.p.repo.vm.data.VMachineEnt;
 import pl.lodz.p.repo.vm.data.x86Ent;
@@ -29,10 +29,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DataInitializer {
-    private final UserRepository clientRepo = new UserRepository();
+    private final ClientRepository clientRepo = new ClientRepository();
     private final RentRepository rentRepo = new RentRepository();
     private final VMachineRepository vmRepo = new VMachineRepository();
-    List<UserEnt> clients;
+    List<ClientEnt> clients;
     List<RentEnt> rents;
     List<VMachineEnt> vms;
     public void init(){
@@ -109,15 +109,12 @@ public class DataInitializer {
 
     public void initClient(){
         clients = new ArrayList<>();
-        clients.add(new ClientEnt("Bart", "Fox", "Idontexist", "a","BFox@tul.com", new PremiumEnt()));
-        clients.add(new ClientEnt("Michael", "Corrugated", "DON_IAS","a", "MCorrugated@ias.pas.p.lodz.pl", new PremiumEnt()));
-        clients.add(new ClientEnt("Matthew", "Tar", "MTar","a", "MTar@TarVSCorrugated.com", new PremiumEnt()));
-        clients.add(new ClientEnt("Martin", "Bricky", "Brickman","a", "IntelEnjoyer@whatisonpage4035.com", new StandardEnt()));
-        clients.add(new ClientEnt("Juan", "Escobar", "JEscobar","a", "JEscobar@colombianSnow.com", new StandardEnt()));
-        clients.add(new AdminEnt("John Paul", "II", "jp2gmd","a", "kremowki@barka.va"));
-        clients.add(new ResourceManagerEnt("Frank", "Pepper", "pepper","a", "zgon@delta.p.lodz.pl"));
-        for(UserEnt client: clients ){
-            client.setPassword(BCrypt.hashpw(client.getPassword(), BCrypt.gensalt()));
+        clients.add(new ClientEnt("Idontexist", new PremiumEnt(), true));
+        clients.add(new ClientEnt("DON_IAS", new PremiumEnt(), true));
+        clients.add(new ClientEnt("MTar", new PremiumEnt(), true));
+        clients.add(new ClientEnt("Brickman", new StandardEnt(), true));
+        clients.add(new ClientEnt("JEscobar", new StandardEnt(), true));
+        for(ClientEnt client: clients ){
             clientRepo.add(client);
         }
     }

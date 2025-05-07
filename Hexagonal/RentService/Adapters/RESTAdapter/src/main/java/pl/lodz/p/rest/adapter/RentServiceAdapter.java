@@ -121,7 +121,7 @@ public class RentServiceAdapter implements RentServicePort {
     private Rent convert(RESTRent r) {
         return new Rent(
                 convert(r.getEntityId()),
-                (Client)convert(r.getClient()),
+                convert(r.getClient()),
                 convert(r.getVMachine()),
                 r.getBeginTime(),
                 r.getEndTime(),
@@ -172,27 +172,15 @@ public class RentServiceAdapter implements RentServicePort {
         return null;
     }
 
-    private RESTUser convert(User user) {
-        return switch (user.getClass().getSimpleName()) {
-            case "Client" -> new RESTClient(convert(user.getEntityId()), user.getFirstName(), user.getUsername(), user.getPassword(),
-                    user.getSurname(), user.getEmailAddress(), convert(user.getRole()), user.isActive(), new RESTStandard(), ((Client) user).getCurrentRents());
-            case "ResourceManager" -> new RESTResourceManager(convert(user.getEntityId()), user.getFirstName(), user.getSurname(), user.getUsername(), user.getPassword(), user.getEmailAddress());
-            case "Admin" -> new RESTAdmin(convert(user.getEntityId()), user.getFirstName(), user.getSurname(), user.getUsername(), user.getEmailAddress(), user.getPassword());
-            default -> throw new RuntimeException("Unsupported type: " + user.getClass().getSimpleName());
-        };
+    private RESTClient convert(Client user) {
+        return new RESTClient(convert(user.getEntityId()), user.getUsername(), user.isActive(), new RESTStandard(), user.getCurrentRents());
     }
 
-    private User convert(RESTUser ent) {
+    private Client convert(RESTClient ent) {
         if (ent == null) {
             return null;
         }
-        return switch (ent.getClass().getSimpleName()) {
-            case "RESTClient" -> new Client(convert(ent.getEntityId()), ent.getFirstName(), ent.getUsername(), ent.getPassword(),
-                    ent.getSurname(), ent.getEmailAddress(), convert(ent.getRole()), ent.isActive(), new Standard(), ((RESTClient) ent).getCurrentRents());
-            case "RESTResourceManager" -> new ResourceManager(convert(ent.getEntityId()), ent.getFirstName(), ent.getSurname(), ent.getUsername(), ent.getPassword(), ent.getEmailAddress());
-            case "RESTAdmin" -> new Admin(convert(ent.getEntityId()), ent.getFirstName(), ent.getSurname(), ent.getUsername(), ent.getEmailAddress(), ent.getPassword());
-            default -> throw new RuntimeException("Unsupported type: " + ent.getClass().getSimpleName());
-        };
+        return new Client(convert(ent.getEntityId()), ent.getUsername(), new Standard(), ent.getCurrentRents(), ent.isActive());
     }
 
     private RESTVMachine convert(VMachine vm) {

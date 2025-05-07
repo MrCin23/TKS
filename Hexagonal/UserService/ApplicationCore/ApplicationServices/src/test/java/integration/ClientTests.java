@@ -6,7 +6,7 @@ import io.restassured.response.Response;
 
 import org.junit.jupiter.api.*;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import pl.lodz.p.repo.data.DataInitializer;
+import pl.lodz.p.user.repo.data.DataInitializer;
 
 
 import java.util.UUID;

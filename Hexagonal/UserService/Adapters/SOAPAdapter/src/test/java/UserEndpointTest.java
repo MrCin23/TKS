@@ -9,11 +9,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import pl.lodz.p.soap.endpoint.HelloWorldEndpoint;
-import pl.lodz.p.soap.endpoint.UserEndpoint;
-import pl.lodz.p.soap.model.request.GetUserByUsernameRequest;
-import pl.lodz.p.soap.model.request.HelloRequest;
-import pl.lodz.p.ui.SOAPUserServicePort;
+import pl.lodz.p.user.soap.endpoint.HelloWorldEndpoint;
+import pl.lodz.p.user.soap.endpoint.UserEndpoint;
+import pl.lodz.p.user.soap.model.request.GetUserByUsernameRequest;
+import pl.lodz.p.user.soap.model.request.HelloRequest;
+import pl.lodz.p.user.ui.SOAPUserServicePort;
 import pl.lodz.p.users.*;
 
 import static org.mockito.Mockito.when;

@@ -18,6 +18,7 @@
         <module>SOAPAdapter</module>
         <module>RESTModel</module>
         <module>SOAPModel</module>
+        <module>SharedConfig</module>
     </modules>
 
     <properties>

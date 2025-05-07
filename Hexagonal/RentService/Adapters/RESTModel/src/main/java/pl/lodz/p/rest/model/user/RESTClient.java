@@ -4,10 +4,8 @@ package pl.lodz.p.rest.model.user;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.lodz.p.rest.model.RESTAbstractEntityMgd;
 import pl.lodz.p.rest.model.RESTMongoUUID;
-import pl.lodz.p.rest.model.user.RESTClientType;
-import pl.lodz.p.rest.model.user.RESTRole;
-import pl.lodz.p.rest.model.user.RESTUser;
 
 import java.util.UUID;
 
@@ -15,9 +13,11 @@ import java.util.UUID;
 @Setter
 @Getter
 @NoArgsConstructor
-public class RESTClient extends RESTUser {
+public class RESTClient extends RESTAbstractEntityMgd {
+    private String username;
     private RESTClientType clientType;
     private int currentRents;
+    private boolean active;
 
     @Override
     public String toString() {
@@ -27,28 +27,24 @@ public class RESTClient extends RESTUser {
                 '}';
     }
 
-    public RESTClient(String firstName,
-                      String surname,
-                      String username,
-                      String password,
-                      String emailAddress,
-                      RESTClientType RESTClientType) {
-        super(new RESTMongoUUID(UUID.randomUUID()), firstName, username, password, surname, emailAddress, pl.lodz.p.rest.model.user.RESTRole.CLIENT, true);
+    public RESTClient(String username,
+                      RESTClientType RESTClientType,
+                      boolean active) {
+        super(new RESTMongoUUID(UUID.randomUUID()));
+        this.username = username;
         this.clientType = RESTClientType;
         this.currentRents = 0;
+        this.active = active;
     }
 
     public RESTClient(RESTMongoUUID userId,
-                      String firstName,
                       String username,
-                      String password,
-                      String surname,
-                      String emailAddress,
-                      RESTRole RESTRole,
                       boolean active,
                       RESTClientType RESTClientType,
                       int currentRents) {
-        super(userId, firstName, username, password, surname, emailAddress, RESTRole, active);
+        super(userId);
+        this.username = username;
+        this.active = active;
         this.clientType = RESTClientType;
         this.currentRents = currentRents;
     }

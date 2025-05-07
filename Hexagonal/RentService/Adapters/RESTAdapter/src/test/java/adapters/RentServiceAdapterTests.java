@@ -49,8 +49,8 @@ class RentServiceAdapterTests {
     @BeforeEach
     void setUp() {
         uuid = UUID.fromString("00000000-0000-0000-0000-000000000000");
-        RESTClient restClient = new RESTClient(new RESTMongoUUID(uuid), "jan", "janowski", "janek", "janeczek", "janeczek@janko.jan", RESTRole.CLIENT, true, new RESTStandard(), 0);
-        Client client = new Client(new MongoUUID(uuid), "jan", "janowski", "janek", "janeczek", "janeczek@janko.jan", Role.CLIENT, true, new Standard(), 0);
+        RESTClient restClient = new RESTClient(new RESTMongoUUID(uuid), "janek", true, new RESTStandard(), 0);
+        Client client = new Client(new MongoUUID(uuid),"janek", new Standard(), 0, true);
         RESTVMachine restVMachine = new RESTAppleArch(new RESTMongoUUID(uuid), 4, "8GB", 0);
         VMachine vMachine = new AppleArch(new MongoUUID(uuid), 4, "8GB", 0);
         rent = new Rent(new MongoUUID(uuid), client, vMachine, LocalDateTime.now(), LocalDateTime.now().plusHours(1), 100.0);

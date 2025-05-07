@@ -9,8 +9,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import pl.lodz.p.soap.endpoint.HelloWorldEndpoint;
-import pl.lodz.p.soap.endpoint.UserEndpoint;
 import pl.lodz.p.soap.endpoint.VMachineEndpoint;
 import pl.lodz.p.soap.model.request.GetUserByUsernameRequest;
 import pl.lodz.p.soap.model.request.HelloRequest;

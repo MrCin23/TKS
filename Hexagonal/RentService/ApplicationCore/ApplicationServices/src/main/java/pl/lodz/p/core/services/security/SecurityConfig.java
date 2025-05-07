@@ -8,14 +8,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import pl.lodz.p.core.services.service.UserService;
+import pl.lodz.p.core.services.service.ClientService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private final UserService userService;
-    public SecurityConfig(UserService userService) {
-        this.userService = userService;
+    private final ClientService clientService;
+    public SecurityConfig(ClientService clientService) {
+        this.clientService = clientService;
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

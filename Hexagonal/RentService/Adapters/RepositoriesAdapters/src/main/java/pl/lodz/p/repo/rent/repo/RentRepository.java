@@ -11,8 +11,7 @@ import org.springframework.stereotype.Repository;
 import pl.lodz.p.repo.AbstractMongoRepository;
 import pl.lodz.p.repo.MongoUUIDEnt;
 import pl.lodz.p.repo.rent.data.RentEnt;
-import pl.lodz.p.repo.user.data.ClientEnt;
-import pl.lodz.p.repo.user.data.UserEnt;
+import pl.lodz.p.repo.client.data.ClientEnt;
 import pl.lodz.p.repo.vm.data.VMachineEnt;
 
 import java.time.LocalDateTime;
@@ -24,7 +23,7 @@ import java.util.UUID;
 public class RentRepository extends AbstractMongoRepository {
     private final MongoCollection<RentEnt> rents;
     private final MongoCollection<VMachineEnt> vMachines;
-    private final MongoCollection<UserEnt> clients;
+    private final MongoCollection<ClientEnt> clients;
 
     public RentRepository() {
         super.initDbConnection();
@@ -39,7 +38,7 @@ public class RentRepository extends AbstractMongoRepository {
 
         this.rents = this.getDatabase().getCollection("rents", RentEnt.class);
         this.vMachines = this.getDatabase().getCollection("vMachines", VMachineEnt.class);
-        this.clients = this.getDatabase().getCollection("users", UserEnt.class);
+        this.clients = this.getDatabase().getCollection("users", ClientEnt.class);
     }
 
     public void endRent(MongoUUIDEnt uuid, LocalDateTime endTime){
@@ -81,7 +80,7 @@ public class RentRepository extends AbstractMongoRepository {
 
     public void add(RentEnt rent) {
         ClientSession session = getMongoClient().startSession();
-        UserEnt client;
+        ClientEnt client;
         try {
             session.startTransaction();
 //            VMachineEnt vm = getVMachineById(rent.getVMachine().getEntityId().getUuid());
@@ -92,7 +91,7 @@ public class RentRepository extends AbstractMongoRepository {
             Bson updateClientFilter = Updates.inc("currentRents", 1);
             clients.updateOne(session, clientFilter, updateClientFilter);
             Bson currentRentsFilter = Filters.lt("currentRents", rent.getClientEnt().getClientTypeEnt().getMaxRentedMachines());
-            List<UserEnt> tmp = clients.find(Filters.and(clientFilter, currentRentsFilter)).into(new ArrayList<>());
+            List<ClientEnt> tmp = clients.find(Filters.and(clientFilter, currentRentsFilter)).into(new ArrayList<>());
             client = clients.find(Filters.and(clientFilter, currentRentsFilter)).first();
             if(client == null || !client.isActive()){
                 throw new RuntimeException("Client doesnt exist or is not active");

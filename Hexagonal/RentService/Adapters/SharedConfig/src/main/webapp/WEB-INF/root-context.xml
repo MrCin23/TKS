@@ -16,27 +16,27 @@
     <context:component-scan base-package="pl.lodz.p"/>
 
 
-    <bean id="userService" class="pl.lodz.p.core.services.service.UserService">
-        <constructor-arg ref="userAdapter"/>
-        <constructor-arg ref="userAdapter"/>
-        <constructor-arg ref="userAdapter"/>
-        <constructor-arg ref="userAdapter"/>
+    <bean id="clientService" class="pl.lodz.p.core.services.service.ClientService">
+        <constructor-arg ref="clientAdapter"/>
+        <constructor-arg ref="clientAdapter"/>
+        <constructor-arg ref="clientAdapter"/>
+        <constructor-arg ref="clientAdapter"/>
         <constructor-arg ref="jwtTokenProvider"/>
     </bean>
     <bean id="rentService" class="pl.lodz.p.core.services.service.RentService" >
-        <constructor-arg ref="userAdapter"/>
+        <constructor-arg ref="clientAdapter"/>
     </bean>
 
     <bean id="jwtTokenProvider" class="pl.lodz.p.core.services.security.JwtTokenProvider"/>
 <!--    <bean id="jwsProvider" class="pl.lodz.p.core.services.security.JwsProvider"/>-->
 <!--    <bean id="customAuthEntryPoint" class="pl.lodz.p.core.services.CustomAuthenticationEntryPoint"/>-->
 <!--    <bean id="jwtFilter" class="pl.lodz.p.core.services.security.JwtFilter"/>-->
-    <bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
-        <property name="userDetailsService" ref="userService"/>
-        <property name="passwordEncoder">
-            <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
-        </property>
-    </bean>
+<!--    <bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">-->
+<!--        <property name="userDetailsService" ref="clientService"/>-->
+<!--        <property name="passwordEncoder">-->
+<!--            <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>-->
+<!--        </property>-->
+<!--    </bean>-->
 <!--    <security:http auto-config="true" use-expressions="true" create-session="stateless" entry-point-ref="customAuthEntryPoint">-->
 <!--        <security:csrf disabled="true"/>-->
 <!--        <security:intercept-url pattern="/api/client" method="POST" access="permitAll"/>-->

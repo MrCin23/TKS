@@ -9,17 +9,17 @@
            http://www.springframework.org/schema/web-services/web-services.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan
-            base-package="pl.lodz.p, pl.lodz.p.ui, pl.lodz.p.soap.adapter, pl.lodz.p.soap.endpoint" />
+            base-package="pl.lodz.p.user, pl.lodz.p.user.ui, pl.lodz.p.user.soap.adapter, pl.lodz.p.user.soap.endpoint" />
 
     <sws:annotation-driven/>
 
-<!--    <bean id="helloEnd" class="pl.lodz.p.ui.SOAPUserServicePort.lodz.p.soap.endpoint.HelloWorldEndpoint"/>-->
-<!--    <bean id="userEnd" class="pl.lodz.p.soap.endpoint.UserEndpoint"/>-->
-<!--    <bean id="userService" class="pl.lodz.p.core.services.service.UserService"/>-->
-<!--    <bean id="jwtFilter" class="pl.lodz.p.core.services.security.JwtFilter"/>-->
-<!--    <bean id="tokenProvider" class="pl.lodz.p.core.services.security.JwtTokenProvider"/>-->
-<!--    <bean id="jwsProvider" class="pl.lodz.p.core.services.security.JwsProvider"/>-->
-<!--    <bean id="customAuthEntryPoint" class="pl.lodz.p.core.services.CustomAuthenticationEntryPoint"/>-->
+<!--    <bean id="helloEnd" class="pl.lodz.p.user.ui.SOAPUserServicePort.lodz.p.soap.endpoint.HelloWorldEndpoint"/>-->
+<!--    <bean id="userEnd" class="endpoint.pl.lodz.p.user.soap.UserEndpoint"/>-->
+<!--    <bean id="userService" class="service.pl.lodz.p.user.core.services.UserService"/>-->
+<!--    <bean id="jwtFilter" class="security.pl.lodz.p.user.core.services.JwtFilter"/>-->
+<!--    <bean id="tokenProvider" class="security.pl.lodz.p.user.core.services.JwtTokenProvider"/>-->
+<!--    <bean id="jwsProvider" class="security.pl.lodz.p.user.core.services.JwsProvider"/>-->
+<!--    <bean id="customAuthEntryPoint" class="pl.lodz.p.user.core.services.CustomAuthenticationEntryPoint"/>-->
 
 <!--    <sws:dynamic-wsdl id="helloEndpoint"-->
 <!--                      portTypeName="HelloPort"-->

@@ -9,9 +9,9 @@ import pl.lodz.p.infrastructure.rent.*;
 import pl.lodz.p.repo.MongoUUIDEnt;
 import pl.lodz.p.repo.rent.data.RentEnt;
 import pl.lodz.p.repo.rent.repo.RentRepository;
-import pl.lodz.p.repo.user.data.ClientEnt;
-import pl.lodz.p.repo.user.data.RoleEnt;
-import pl.lodz.p.repo.user.data.StandardEnt;
+import pl.lodz.p.repo.client.data.ClientEnt;
+import pl.lodz.p.repo.client.data.RoleEnt;
+import pl.lodz.p.repo.client.data.StandardEnt;
 import pl.lodz.p.repo.vm.data.AppleArchEnt;
 import pl.lodz.p.repo.vm.data.VMachineEnt;
 import pl.lodz.p.repo.vm.data.x86Ent;
@@ -117,34 +117,20 @@ public class RentAdapter implements RentAdd, RentEnd, RentGet, RentRemove, RentS
         if(ent == null) {
             return null;
         }
-        User user = switch (ent.getClientEnt().getClass().getSimpleName()) {
-            case "ClientEnt" -> new Client(convert(ent.getClientEnt().getEntityId()), ent.getClientEnt().getFirstName(), ent.getClientEnt().getUsername(), ent.getClientEnt().getPassword(),
-                    ent.getClientEnt().getSurname(), ent.getClientEnt().getEmailAddress(), convert(ent.getClientEnt().getRoleEnt()), ent.getClientEnt().isActive(), new Standard(), ((ClientEnt) ent.getClientEnt()).getCurrentRents());
-            case "ResourceManagerEnt" -> new ResourceManager(convert(ent.getClientEnt().getEntityId()), ent.getClientEnt().getFirstName(), ent.getClientEnt().getSurname(), ent.getClientEnt().getUsername(), ent.getClientEnt().getPassword(), ent.getClientEnt().getEmailAddress());
-            case "AdminEnt" -> new Admin(convert(ent.getClientEnt().getEntityId()), ent.getClientEnt().getFirstName(), ent.getClientEnt().getSurname(), ent.getClientEnt().getUsername(), ent.getClientEnt().getEmailAddress(), ent.getClientEnt().getPassword());
-            default -> throw new RuntimeException("Unsupported type: " + ent.getClientEnt().getClass().getSimpleName());
-        };
+        Client client = new Client(convert(ent.getEntityId()), ent.getClientEnt().getUsername(), new Standard(), ent.getClientEnt().getCurrentRents(), ent.getClientEnt().isActive());
         VMachine vMachine = switch (ent.getVMachine().getClass().getSimpleName()) {
             case "x86Ent" -> new x86(convert(ent.getVMachine().getEntityId()), ent.getVMachine().getCPUNumber(), ent.getVMachine().getRamSize(), ent.getVMachine().isRented(), ((x86Ent)ent.getVMachine()).getManufacturer());
             case "AppleArchEnt" -> new AppleArch(convert(ent.getVMachine().getEntityId()), ent.getVMachine().getCPUNumber(), ent.getVMachine().getRamSize(), ent.getVMachine().isRented());
             default -> throw new RuntimeException(ent.getVMachine().getClass().getSimpleName() + " not supported");
         };
-        return new Rent(convert(ent.getEntityId()), (Client) user, vMachine, ent.getBeginTime(), ent.getEndTime(), ent.getRentCost());
+        return new Rent(convert(ent.getEntityId()), (Client) client, vMachine, ent.getBeginTime(), ent.getEndTime(), ent.getRentCost());
     }
 
     private RentEnt convert(Rent rent) {
         if(rent == null) {
             return null;
         }
-        ClientEnt user = new ClientEnt(convert(rent.getVMachine().getEntityId()), rent.getClient().getFirstName(), rent.getClient().getUsername(), rent.getClient().getPassword(),
-                rent.getClient().getSurname(), rent.getClient().getEmailAddress(), convert(rent.getClient().getRole()), rent.getClient().isActive(), new StandardEnt(), ((Client) rent.getClient()).getCurrentRents());
-//                switch (rent.getClient().getClass().getSimpleName()) {
-//            case "Client" -> new ClientEnt(convert(rent.getVMachine().getEntityId()), rent.getClient().getFirstName(), rent.getClient().getUsername(), rent.getClient().getPassword(),
-//                    rent.getClient().getSurname(), rent.getClient().getEmailAddress(), convert(rent.getClient().getRole()), rent.getClient().isActive(), new StandardEnt(), ((Client) rent.getClient()).getCurrentRents());
-//            case "ResourceManager" -> new ResourceManagerEnt(convert(rent.getClient().getEntityId()), rent.getClient().getFirstName(), rent.getClient().getSurname(), rent.getClient().getUsername(), rent.getClient().getPassword(), rent.getClient().getEmailAddress());
-//            case "Admin" -> new AdminEnt(convert(rent.getClient().getEntityId()), rent.getClient().getFirstName(), rent.getClient().getSurname(), rent.getClient().getUsername(), rent.getClient().getEmailAddress(), rent.getClient().getPassword());
-//            default -> throw new RuntimeException("Unsupported type: " + rent.getClient().getClass().getSimpleName());
-//        };
+        ClientEnt user = new ClientEnt(convert(rent.getClient().getEntityId()), rent.getClient().getUsername(), rent.getClient().isActive(), new StandardEnt(), rent.getClient().getCurrentRents());
         VMachineEnt vMachine = switch (rent.getVMachine().getClass().getSimpleName()) {
             case "x86" -> new x86Ent(convert(rent.getVMachine().getEntityId()), rent.getVMachine().getCPUNumber(), rent.getVMachine().getRamSize(), rent.getVMachine().isRented(), ((x86)rent.getVMachine()).getManufacturer());
             case "AppleArch" -> new AppleArchEnt(convert(rent.getVMachine().getEntityId()), rent.getVMachine().getCPUNumber(), rent.getVMachine().getRamSize(), rent.getVMachine().isRented());

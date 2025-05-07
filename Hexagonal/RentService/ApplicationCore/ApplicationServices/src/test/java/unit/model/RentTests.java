@@ -20,7 +20,7 @@ public class RentTests {
 
     @BeforeEach
     public void setUp() {
-        client = new Client("John", "Doe",  "JDoe","a", "jdoe@example.com", new Standard());
+        client = new Client(new MongoUUID(UUID.randomUUID()), "JDoe", new Standard(), 0, true);
         vMachine = new AppleArch(new MongoUUID(UUID.fromString("577d1a4e-5577-4265-badb-5439cf4d8fc8")), 4, "8GB", 0);
     }
 

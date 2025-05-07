@@ -6,9 +6,9 @@ import org.bson.codecs.Codec;
 import org.bson.codecs.DecoderContext;
 import org.bson.codecs.EncoderContext;
 import org.bson.codecs.configuration.CodecRegistry;
-import pl.lodz.p.repo.user.data.ClientTypeEnt;
-import pl.lodz.p.repo.user.data.PremiumEnt;
-import pl.lodz.p.repo.user.data.StandardEnt;
+import pl.lodz.p.repo.client.data.ClientTypeEnt;
+import pl.lodz.p.repo.client.data.PremiumEnt;
+import pl.lodz.p.repo.client.data.StandardEnt;
 
 public class ClientTypeCodec implements Codec<ClientTypeEnt> {
     private final CodecRegistry codecRegistry;
