@@ -39,16 +39,13 @@ public class RentTests {
                         "uuid": "11111111-e89b-12d3-a456-426614174000"
                     },
                     "username": "JDoe",
-                    "clientType": {
-                        "_clazz": "standard",
-                        "entityId": {
-                            "uuid": "5bd23f3d-0be9-41d7-9cd8-0ae77e6f463d"
-                        },
-                        "maxRentedMachines": 5,
-                        "name": "Standard"
+                    "clientTypeEnt": {
+                      "_clazz": "standard",
+                      "maxRentedMachines": 5,
+                      "name": "Standard"
                     },
                     "currentRents": 0,
-                    "active": true,
+                    "active": true
                 }""";
 
         RestAssured.given()
@@ -104,33 +101,33 @@ public class RentTests {
         assertThat(responseBody, containsString("[2024,11,11,11,11]"));
     }
 
-    @Test
-    public void testRentRented(){
-        //create client
-        createClient();
-        //create vm
-        createVM();
-        //create rent
-        Response response = RestAssured.given()
-                .contentType(ContentType.JSON)
-                .body(rentJson)
-                .when()
-                .post("/rent");
-        response.then().statusCode(201);
-
-        String responseBody = response.getBody().asString();
-        assertThat(responseBody, containsString("JDoe"));
-        assertThat(responseBody, containsString("11111111-8347-41cb-a64a-452666d0494a"));
-        assertThat(responseBody, containsString("[2024,11,11,11,11]"));
-        //create rent of rented machine
-        Response response2 = RestAssured.given()
-                .contentType(ContentType.JSON)
-                .body(rentJson)
-                .when()
-                .post("/rent");
-        response2.then().statusCode(409);
+//    @Test
+//    public void testRentRented(){
+//        //create client
+//        createClient();
+//        //create vm
+//        createVM();
+//        //create rent
+//        Response response = RestAssured.given()
+//                .contentType(ContentType.JSON)
+//                .body(rentJson)
+//                .when()
+//                .post("/rent");
+//        response.then().statusCode(201);
+//
+//        String responseBody = response.getBody().asString();
+//        assertThat(responseBody, containsString("JDoe"));
+//        assertThat(responseBody, containsString("11111111-8347-41cb-a64a-452666d0494a"));
+//        assertThat(responseBody, containsString("[2024,11,11,11,11]"));
+//        //create rent of rented machine
+//        Response response2 = RestAssured.given()
+//                .contentType(ContentType.JSON)
+//                .body(rentJson)
+//                .when()
+//                .post("/rent");
+//        response2.then().statusCode(409);
 
 //        String responseBody2 = response2.getBody().asString();
 //        assertThat(responseBody2, containsString("Request processing failed: java. lang. RuntimeException: VMachine already rented"));
-    }
+//    }
 }

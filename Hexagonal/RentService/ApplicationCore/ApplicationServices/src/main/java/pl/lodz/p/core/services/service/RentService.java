@@ -2,6 +2,7 @@ package pl.lodz.p.core.services.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class RentService {
     public Rent createRent(String username, UUID vmID, LocalDateTime startTime) {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        String username = auth.getName();
-        Client client = (Client)uGet.getClientByUsername(username);
+        Client client = uGet.getClientByUsername(username);
         VMachine vm = vmGet.getVMachineByID(new MongoUUID(vmID));
         if(client == null) {
             throw new RuntimeException("Client not found");

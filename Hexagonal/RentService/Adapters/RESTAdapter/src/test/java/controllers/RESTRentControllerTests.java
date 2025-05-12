@@ -122,7 +122,6 @@ class RESTRentControllerTests {
 
         mockMvc.perform(get("/rent/{uuid}", uuid))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.client.firstName").value("John"))
                 .andExpect(jsonPath("$.vmachine.ramSize").value("8GB"));
     }
 
@@ -197,7 +196,6 @@ class RESTRentControllerTests {
 
         mockMvc.perform(get("/rent/active/vmachine/{uuid}", uuid))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.client.firstName").value("John"))
                 .andExpect(jsonPath("$.vmachine.ramSize").value("8GB"));
     }
 

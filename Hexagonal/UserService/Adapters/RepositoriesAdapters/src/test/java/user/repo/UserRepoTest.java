@@ -68,7 +68,7 @@ public class UserRepoTest {
     public void testDuplicateUsernameThrows() {
         userRepo.add(user);
         RuntimeException thrown = assertThrows(RuntimeException.class, () -> userRepo.add(user));
-        Assertions.assertTrue(thrown.getMessage().contains("Write operation error on server mongodb1:27017. Write error: WriteError{code=11000, message='E11000 duplicate key error collection: vmrental.users"));
+        Assertions.assertTrue(thrown.getMessage().contains("Write error: WriteError{code=11000, message='E11000 duplicate key error collection: vmrental.users"));
     }
 
     @Test

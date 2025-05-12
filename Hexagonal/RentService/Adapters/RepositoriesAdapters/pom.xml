@@ -111,6 +111,12 @@
             <artifactId>org.jacoco.agent</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>pl.lodz.p.core.domain</groupId>
+            <artifactId>UserDomainModel</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <reporting>
         <plugins>

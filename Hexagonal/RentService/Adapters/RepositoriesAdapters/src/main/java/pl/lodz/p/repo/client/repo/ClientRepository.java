@@ -46,7 +46,7 @@ public class ClientRepository extends AbstractMongoRepository {
                 "required": [ "_id", "active", "username", "clientType", "currentRents" ],
                 "properties": {
                     "_id": {
-                        "bsonType": "object"
+                        "bsonType": "binData"
                     },
                     "active": {
                         "bsonType": "bool"

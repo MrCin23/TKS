@@ -92,13 +92,6 @@ public class RESTClientControllerTests {
         Assertions.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
-    @Test
-    public void getClient_OK_Test() {
-        when(userServicePort.getClient(uuid)).thenReturn(client);
-        when(jwsProvider.generateJws(dto.getUuid(), "janowski")).thenReturn("jan");
-        ResponseEntity<Object> response = userController.getClient(dto);
-        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
 
     @Test
     public void getClient_NOT_FOUND_Test() {

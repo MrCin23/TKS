@@ -37,10 +37,8 @@ class RESTClientServiceAdapterTests {
     @BeforeEach
     void setUp() {
         uuid = UUID.fromString("00000000-0000-0000-0000-000000000000");
-        RESTClient restClient = new RESTClient(new RESTMongoUUID(uuid), "janek", true, new RESTStandard(), 0);
-        Client client = new Client(new MongoUUID(uuid),"janek", new Standard(), 0, true);
-        restClient = restClient;
-        user = client;
+        restClient = new RESTClient(new RESTMongoUUID(uuid), "janek", true, new RESTStandard(), 0);
+        user = new Client(new MongoUUID(uuid),"janek", new Standard(), 0, true);
     }
 
     @Test

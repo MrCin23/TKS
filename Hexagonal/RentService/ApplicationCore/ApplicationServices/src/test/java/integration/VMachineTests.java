@@ -25,16 +25,12 @@ public class VMachineTests {
         RestAssured.port = 8081;
         RestAssured.basePath = "/Rent/api";
         dataInitializer.dropAndCreateVMachine();
-        dataInitializer.dropAndCreateClient();
-        dataInitializer.initClient();
         dataInitializer.initVM();
     }
 
     @AfterEach
     public void dropCollection() {
         dataInitializer.dropAndCreateVMachine();
-        dataInitializer.dropAndCreateClient();
-        dataInitializer.initClient();
         dataInitializer.initVM();
     }
 

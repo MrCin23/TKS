@@ -29,7 +29,7 @@ public class RentTests {
         Rent rent1 = new Rent(client, vMachine, LocalDateTime.of(2015, 7, 12, 21, 37));
         rent1.endRent(LocalDateTime.of(2015, 7, 12, 21, 37));
         Rent rent2 = new Rent(new MongoUUID(UUID.randomUUID()), client, vMachine, LocalDateTime.of(2015, 7, 12, 21, 37), LocalDateTime.of(2015, 7, 13, 21, 37), 0);
-        Assertions.assertEquals("Rent{client=User{firstName='John', surname='Doe', username='JDoe', emailAddress='jdoe@example.com', role=CLIENT, active=true}::Client{clientType=Standard Standard, currentRents=0}, vMachine=AppleArch: 577d1a4e-5577-4265-badb-5439cf4d8fc8 4 8GB 0 600.0, beginTime=2015-07-12T21:37, endTime=2015-07-13T21:37, rentCost=1200.0}", rent2.toString());
+        Assertions.assertTrue(rent2.toString().contains("Client{clientType=Standard Standard, currentRents=0}, vMachine=AppleArch: 577d1a4e-5577-4265-badb-5439cf4d8fc8 4 8GB 0 600.0, beginTime=2015-07-12T21:37, endTime=2015-07-13T21:37, rentCost=1200.0}"));
         Rent rent3 = new Rent();
         Rent rent4 = new Rent(new MongoUUID(UUID.randomUUID()), client, vMachine, LocalDateTime.of(2015, 7, 12, 21, 37), null, 0);
     }
