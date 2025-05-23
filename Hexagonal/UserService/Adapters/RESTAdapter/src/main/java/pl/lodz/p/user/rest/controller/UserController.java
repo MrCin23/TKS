@@ -9,12 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import pl.lodz.p.broker.RabbitPublisher;
 import pl.lodz.p.user.rest.model.dto.ChangePasswordDTO;
 import pl.lodz.p.user.rest.model.dto.LoginDTO;
 import pl.lodz.p.user.rest.model.dto.UuidDTO;
 import pl.lodz.p.user.core.domain.exception.DeactivatedUserException;
 import pl.lodz.p.user.core.domain.exception.WrongPasswordException;
 import pl.lodz.p.user.core.services.security.JwsProvider;
+import pl.lodz.p.user.rest.model.user.RESTClient;
 import pl.lodz.p.user.rest.model.user.RESTUser;
 import pl.lodz.p.user.ui.RESTUserServicePort;
 
@@ -32,6 +34,7 @@ public class UserController {
     private JwsProvider jwsProvider;
     @Qualifier("RESTUserServicePort")
     private RESTUserServicePort userServicePort;
+    private final RabbitPublisher rabbitPublisher;
 
     @PostMapping//tested
     public ResponseEntity<Object> createUser(@Valid @RequestBody RESTUser user, BindingResult bindingResult) {
@@ -40,6 +43,10 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(bindingResult.getAllErrors());
             }
             try {
+                if(user instanceof RESTClient) {
+                    rabbitPublisher.sendCreate(user);
+                    return ResponseEntity.status(HttpStatus.CREATED).build();
+                }
                 return ResponseEntity.status(HttpStatus.CREATED).body(userServicePort.createUser(user));
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

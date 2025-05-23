@@ -7,7 +7,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.AmqpHeaders;
 import org.springframework.stereotype.Component;
 import pl.lodz.p.broker.config.RabbitConsts;
-import pl.lodz.p.broker.dto.UserDTO;
+import pl.lodz.p.user.rest.model.user.RESTUser;
 
 @Component
 @AllArgsConstructor
@@ -15,7 +15,7 @@ public class RabbitPublisher {
 
     private final RabbitTemplate rabbitTemplate;
 
-    public void sendCreate(UserDTO user) {
+    public void sendCreate(RESTUser user) {
         MessageProperties messageProperties = new MessageProperties();
         messageProperties.setContentType("text/json");
         messageProperties.setHeader(AmqpHeaders.RECEIVED_USER_ID, user.getEntityId().getUuid().toString());

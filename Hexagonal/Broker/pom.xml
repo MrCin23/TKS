@@ -50,6 +50,35 @@
 			<artifactId>spring-rabbit-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>pl.lodz.p.core</groupId>
+			<artifactId>UserApplicationServices</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>pl.lodz.p.core.domain</groupId>
+			<artifactId>DomainModel</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>pl.lodz.p.core</groupId>
+			<artifactId>ApplicationServices</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>pl.lodz.p.rest</groupId>
+			<artifactId>RESTAdapter</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>pl.lodz.p.rest.model</groupId>
+			<artifactId>RESTModel</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
