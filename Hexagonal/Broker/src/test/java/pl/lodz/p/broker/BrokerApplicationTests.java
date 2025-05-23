@@ -1,4 +1,4 @@
-package pl.lodz.p.broker.broker;
+package pl.lodz.p.broker;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
