@@ -14,7 +14,7 @@ import pl.lodz.p.user.core.domain.user.Client;
 import pl.lodz.p.user.core.domain.user.Role;
 import pl.lodz.p.user.core.domain.user.Standard;
 import pl.lodz.p.user.core.domain.user.User;
-import pl.lodz.p.user.core.services.security.JwtTokenProvider;
+import pl.lodz.p.user.core.services.service.JwtTokenProvider;
 import pl.lodz.p.user.core.services.service.UserService;
 import pl.lodz.p.user.infrastructure.user.UAdd;
 import pl.lodz.p.user.infrastructure.user.UGet;
