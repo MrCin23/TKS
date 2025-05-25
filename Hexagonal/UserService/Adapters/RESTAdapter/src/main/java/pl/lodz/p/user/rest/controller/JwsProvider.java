@@ -1,4 +1,4 @@
-package pl.lodz.p.user.core.services.security;
+package pl.lodz.p.user.rest.controller;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

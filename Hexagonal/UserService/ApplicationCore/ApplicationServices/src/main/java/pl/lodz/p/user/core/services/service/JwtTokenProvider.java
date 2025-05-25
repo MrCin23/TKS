@@ -1,4 +1,4 @@
-package pl.lodz.p.user.core.services.security;
+package pl.lodz.p.user.core.services.service;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

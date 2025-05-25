@@ -14,7 +14,6 @@ import pl.lodz.p.user.rest.model.dto.LoginDTO;
 import pl.lodz.p.user.rest.model.dto.UuidDTO;
 import pl.lodz.p.user.core.domain.exception.DeactivatedUserException;
 import pl.lodz.p.user.core.domain.exception.WrongPasswordException;
-import pl.lodz.p.user.core.services.security.JwsProvider;
 import pl.lodz.p.user.rest.model.user.RESTClient;
 import pl.lodz.p.user.rest.model.user.RESTUser;
 import pl.lodz.p.user.rest.publisher.RabbitPublisher;

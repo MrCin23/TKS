@@ -9,8 +9,6 @@ import pl.lodz.p.user.core.domain.exception.DeactivatedUserException;
 import pl.lodz.p.user.core.domain.exception.WrongPasswordException;
 import pl.lodz.p.user.core.domain.user.User;
 import pl.lodz.p.user.core.domain.MongoUUID;
-import pl.lodz.p.user.core.domain.user.UserPrincipal;
-import pl.lodz.p.user.core.services.security.JwtTokenProvider;
 import pl.lodz.p.user.infrastructure.user.UAdd;
 import pl.lodz.p.user.infrastructure.user.UGet;
 import pl.lodz.p.user.infrastructure.user.URemove;
@@ -115,7 +113,7 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new RuntimeException("User with login " + username + " not found");
         }
-        return new UserPrincipal(user);
+        return user;
     }
 
     public void invalidateToken(String token) {

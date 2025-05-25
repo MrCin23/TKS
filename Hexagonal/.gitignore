@@ -4,6 +4,8 @@ target/
 !**/src/test/**/target/
 Hexagonal/UserService/ApplicationCore/ApplicationServices/src/main/resources/application.properties
 Hexagonal/RentService/ApplicationCore/ApplicationServices/src/main/resources/application.properties
+Hexagonal/UserService/src/main/resources
+Hexagonal/RentService/Adapters/RESTAdapter/src/main/resources
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

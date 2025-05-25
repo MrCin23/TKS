@@ -27,8 +27,8 @@
         <constructor-arg ref="clientAdapter"/>
     </bean>
 
-    <bean id="jwtTokenProvider" class="pl.lodz.p.core.services.security.JwtTokenProvider"/>
-<!--    <bean id="jwsProvider" class="pl.lodz.p.core.services.security.JwsProvider"/>-->
+<!--    <bean id="jwtTokenProvider" class="pl.lodz.p.core.services.pl.lodz.p.user.core.services.service.JwtTokenProvider"/>-->
+<!--    <bean id="jwsProvider" class="pl.lodz.p.core.services.pl.lodz.p.user.rest.controller.JwsProvider"/>-->
 <!--    <bean id="customAuthEntryPoint" class="pl.lodz.p.core.services.CustomAuthenticationEntryPoint"/>-->
 <!--    <bean id="jwtFilter" class="pl.lodz.p.user.core.services.security.JwtFilter"/>-->
 <!--    <bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">-->

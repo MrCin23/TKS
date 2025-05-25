@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import pl.lodz.p.user.core.domain.AbstractEntityMgd;
 import pl.lodz.p.user.core.domain.MongoUUID;
@@ -22,7 +23,7 @@ import pl.lodz.p.user.core.domain.MongoUUID;
         @JsonSubTypes.Type(value = Admin.class, name = "Admin"),
         @JsonSubTypes.Type(value = ResourceManager.class, name = "ResourceManager")
 })
-public abstract class User extends AbstractEntityMgd {
+public abstract class User extends AbstractEntityMgd implements UserDetails {
     private String firstName;
     private String surname;
     private String username;
