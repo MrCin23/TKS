@@ -11,7 +11,7 @@ import javax.crypto.SecretKey;
 import java.security.Key;
 
 @Component
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:secrets.properties")
 public class JwsProvider {
 
     @Value("${app.jws_secret}")

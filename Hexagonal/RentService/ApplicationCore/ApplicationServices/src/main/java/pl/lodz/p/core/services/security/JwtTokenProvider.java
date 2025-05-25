@@ -12,7 +12,7 @@ import java.security.Key;
 import java.util.Date;
 
 @Component
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:secrets.properties")
 public class JwtTokenProvider {
 
     @Value("${app.jwt_secret}")

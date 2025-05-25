@@ -105,9 +105,14 @@
             <artifactId>json-path</artifactId>
         </dependency>
         <dependency>
-            <groupId>pl.lodz.p.broker</groupId>
-            <artifactId>Broker</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-amqp</artifactId>
+            <version>3.2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
+            <version>3.2.5</version>
         </dependency>
     </dependencies>
     <reporting>

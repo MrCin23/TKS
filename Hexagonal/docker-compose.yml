@@ -1,20 +1,20 @@
 services:
+
   rabbitmq:
     container_name: 'rabbitmq'
-    image: 'rabbitmq:latest'
+    image: 'rabbitmq:3-management'
     environment:
-      - 'RABBITMQ_DEFAULT_PASS=admin'
-      - 'RABBITMQ_DEFAULT_USER=adminpassword'
+      - 'RABBITMQ_DEFAULT_USER=admin'
+      - 'RABBITMQ_DEFAULT_PASS=adminpassword'
     ports:
       - '5672:5672'
+      - '15672:15672'
     healthcheck:
       test: ["CMD", "rabbitmq-diagnostics", "ping"]
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 10s
-
-
 
   mongo_1:
     build: .
