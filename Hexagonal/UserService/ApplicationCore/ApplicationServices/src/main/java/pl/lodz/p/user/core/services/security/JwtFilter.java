@@ -4,7 +4,10 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,23 +23,16 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Component
+@RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-    @Autowired
-    private UserService userService;
-
-    public JwtFilter(JwtTokenProvider jwtTokenProvider, UserService userService) {
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.userService = userService;
-    }
+    private final JwtTokenProvider jwtTokenProvider;
+    private final UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String token = getTokenFromRequest(request);
-        System.out.println("AAAAAAAAAAAAAAAAAAAA"+ '\n'+ '\n'+ '\n'+ token + '\n'+ '\n'+ '\n'+ '\n' + jwtTokenProvider.validateToken(token));
         if (token != null && jwtTokenProvider.validateToken(token)) {
             if (userService.checkToken(token)) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

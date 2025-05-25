@@ -30,7 +30,7 @@
     <bean id="jwtTokenProvider" class="pl.lodz.p.core.services.security.JwtTokenProvider"/>
 <!--    <bean id="jwsProvider" class="pl.lodz.p.core.services.security.JwsProvider"/>-->
 <!--    <bean id="customAuthEntryPoint" class="pl.lodz.p.core.services.CustomAuthenticationEntryPoint"/>-->
-<!--    <bean id="jwtFilter" class="pl.lodz.p.core.services.security.JwtFilter"/>-->
+<!--    <bean id="jwtFilter" class="pl.lodz.p.user.core.services.security.JwtFilter"/>-->
 <!--    <bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">-->
 <!--        <property name="userDetailsService" ref="clientService"/>-->
 <!--        <property name="passwordEncoder">-->
