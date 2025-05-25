@@ -5,10 +5,10 @@ import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,54 +25,69 @@ public class RabbitConfig {
         factory.setUsername("admin");
         factory.setPassword("adminpassword");
         factory.setVirtualHost("/");
+        factory.setPort(5672);
         return factory;
     }
 
     @Bean
-    public Declarables declarables() {
-        System.out.println("### Inicjalizacja RabbitMQ ###");
+    public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
+        RabbitAdmin admin = new RabbitAdmin(connectionFactory);
+        admin.setAutoStartup(true);
+        return admin;
+    }
 
-        TopicExchange exchange = new TopicExchange(
+    @Bean
+    public TopicExchange clientCreateExchange() {
+        return new TopicExchange(
                 RabbitConsts.CLIENT_CREATE_EXCHANGE,
-                true,  // durable
-                false  // autoDelete
+                true,
+                false
         );
+    }
 
-        Queue mainQueue = new Queue(
-                RabbitConsts.CLIENT_CREATE_QUEUE_NAME,
-                true,   // durable
-                false,  // exclusive
-                false,  // autoDelete
-                Map.of(
-                        "x-queue-type", "classic",
-                        "x-max-length", 10000
-                )
-        );
+    @Bean
+    public Queue clientCreateQueue() {
+        return QueueBuilder.durable(RabbitConsts.CLIENT_CREATE_QUEUE_NAME)
+                .withArgument("x-queue-type", "classic")
+                .withArgument("x-max-length", 10000)
+                .build();
+    }
 
-        Queue responseQueue = new Queue(
-                RabbitConsts.CLIENT_CREATE_RESPONSE_QUEUE_NAME,
-                true, false, false
-        );
+    @Bean
+    public Queue clientCreateResponseQueue() {
+        return QueueBuilder.durable(RabbitConsts.CLIENT_CREATE_RESPONSE_QUEUE_NAME)
+                .build();
+    }
 
-        return new Declarables(
-                exchange,
-                mainQueue,
-                responseQueue,
-                BindingBuilder.bind(mainQueue).to(exchange).with(RabbitConsts.CLIENT_CREATE_KEY),
-                BindingBuilder.bind(responseQueue).to(exchange).with(RabbitConsts.CLIENT_CREATE_RESPONSE_KEY)
-        );
+    @Bean
+    public Binding clientCreateBinding() {
+        return BindingBuilder
+                .bind(clientCreateQueue())
+                .to(clientCreateExchange())
+                .with(RabbitConsts.CLIENT_CREATE_KEY);
+    }
+
+    @Bean
+    public Binding clientCreateResponseBinding() {
+        return BindingBuilder
+                .bind(clientCreateResponseQueue())
+                .to(clientCreateExchange())
+                .with(RabbitConsts.CLIENT_CREATE_RESPONSE_KEY);
     }
 
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
         template.setMessageConverter(messageConverter());
+        template.setMandatory(true);
         return template;
     }
 
     @Bean
     public MessageConverter messageConverter() {
-        return new Jackson2JsonMessageConverter();
+        Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter();
+        converter.setCreateMessageIds(true);
+        return converter;
     }
 
     @Bean
@@ -83,6 +98,8 @@ public class RabbitConfig {
         factory.setMessageConverter(messageConverter());
         factory.setMissingQueuesFatal(false);
         factory.setFailedDeclarationRetryInterval(5000L);
+        factory.setConcurrentConsumers(1);
+        factory.setMaxConcurrentConsumers(1);
         return factory;
     }
 }

@@ -24,7 +24,11 @@ public class RabbitSubscriber {
                               @Header(AmqpHeaders.RECEIVED_ROUTING_KEY) String routingKey,
                               @Header(AmqpHeaders.RECEIVED_USER_ID) String userId) {
         try {
+            System.out.println("=== OTRZYMANO WIADOMOŚĆ ===");
+            System.out.println("Routing key: " + routingKey);
+            System.out.println("User ID: " + userId);
             System.out.println("Odebrano użytkownika: " + user);
+
             if (user instanceof RESTClient) {
                 RESTClient client = (RESTClient) user;
                 clientService.createClient(new pl.lodz.p.core.domain.user.Client(
@@ -34,8 +38,9 @@ public class RabbitSubscriber {
                         client.getCurrentRents(),
                         client.isActive()
                 ));
+                System.out.println("Klient został utworzony pomyślnie");
             } else {
-                System.err.println("Otrzymano nieprawidłowy typ użytkownika");
+                System.err.println("Otrzymano nieprawidłowy typ użytkownika: " + user.getClass().getName());
             }
         } catch (Exception e) {
             System.err.println("Błąd podczas przetwarzania wiadomości: " + e.getMessage());
