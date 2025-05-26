@@ -4,9 +4,12 @@ package pl.lodz.p.user.core.domain.user;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
 import pl.lodz.p.user.core.domain.MongoUUID;
 
 
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -49,5 +52,10 @@ public class Client extends User{
         super(userId, firstName, username, password, surname, emailAddress, role, active);
         this.clientType = clientType;
         this.currentRents = currentRents;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
     }
 }

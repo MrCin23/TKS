@@ -1,11 +1,13 @@
 package pl.lodz.p.core.services.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.core.domain.MongoUUID;
 import pl.lodz.p.core.domain.user.Client;
-import pl.lodz.p.core.services.security.JwtTokenProvider;
+//import pl.lodz.p.core.services.security.JwtTokenProvider;
 import pl.lodz.p.infrastructure.user.UAdd;
 import pl.lodz.p.infrastructure.user.UGet;
 import pl.lodz.p.infrastructure.user.URemove;
@@ -19,14 +21,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @AllArgsConstructor
-public class ClientService {
+public class ClientService implements UserDetailsService {
 
     private final UGet uGet;
     private final UAdd uAdd;
     private final URemove uRemove;
     private final UUpdate uUpdate;
 
-    private JwtTokenProvider tokenProvider;
+//    private JwtTokenProvider tokenProvider;
 
     private final Set<String> blacklistedTokens = ConcurrentHashMap.newKeySet();
 
@@ -89,6 +91,15 @@ public class ClientService {
         }
         return uGet.getClientsByUsername(username);
     }
+
+    public UserDetails loadUserByUsername(String username) {
+        Client client = uGet.getClientByUsername(username);
+        if (client == null) {
+            throw new RuntimeException("Client with login " + username + " not found");
+        }
+        return client;
+    }
+
 
     public void invalidateToken(String token) {
         blacklistedTokens.add(token);

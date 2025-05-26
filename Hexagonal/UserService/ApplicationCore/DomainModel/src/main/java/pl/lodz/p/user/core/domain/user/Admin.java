@@ -1,8 +1,11 @@
 package pl.lodz.p.user.core.domain.user;
 
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 import pl.lodz.p.user.core.domain.MongoUUID;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -18,5 +21,10 @@ public class Admin extends User{
     @Override
     public String toString() {
         return super.toString() + "::Admin{}";
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
     }
 }

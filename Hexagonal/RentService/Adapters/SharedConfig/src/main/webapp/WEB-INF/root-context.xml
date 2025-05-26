@@ -21,38 +21,37 @@
         <constructor-arg ref="clientAdapter"/>
         <constructor-arg ref="clientAdapter"/>
         <constructor-arg ref="clientAdapter"/>
-        <constructor-arg ref="jwtTokenProvider"/>
+<!--        <constructor-arg ref="jwtTokenProvider"/>-->
     </bean>
     <bean id="rentService" class="pl.lodz.p.core.services.service.RentService" >
         <constructor-arg ref="clientAdapter"/>
     </bean>
 
-<!--    <bean id="jwtTokenProvider" class="pl.lodz.p.core.services.pl.lodz.p.user.core.services.service.JwtTokenProvider"/>-->
-<!--    <bean id="jwsProvider" class="pl.lodz.p.core.services.pl.lodz.p.user.rest.controller.JwsProvider"/>-->
-<!--    <bean id="customAuthEntryPoint" class="pl.lodz.p.core.services.CustomAuthenticationEntryPoint"/>-->
-<!--    <bean id="jwtFilter" class="pl.lodz.p.user.core.services.security.JwtFilter"/>-->
-<!--    <bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">-->
-<!--        <property name="userDetailsService" ref="clientService"/>-->
-<!--        <property name="passwordEncoder">-->
-<!--            <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>-->
-<!--        </property>-->
-<!--    </bean>-->
-<!--    <security:http auto-config="true" use-expressions="true" create-session="stateless" entry-point-ref="customAuthEntryPoint">-->
-<!--        <security:csrf disabled="true"/>-->
-<!--        <security:intercept-url pattern="/api/client" method="POST" access="permitAll"/>-->
-<!--        <security:intercept-url pattern="/api/client/login" access="permitAll"/>-->
-<!--        <security:intercept-url pattern="/api/client/activate" access="hasRole('ADMIN')"/>-->
-<!--        <security:intercept-url pattern="/api/client/deactivate" access="hasRole('ADMIN')"/>-->
-<!--        <security:intercept-url pattern="/api/rent" access="isAuthenticated()"/>-->
-<!--        <security:intercept-url pattern="/api/rent/active" access="hasRole('RESOURCE_MANAGER')"/>-->
-<!--        <security:intercept-url pattern="/api/rent/archived" access="hasRole('RESOURCE_MANAGER')"/>-->
-<!--        <security:intercept-url pattern="/api/vmachine" method="POST" access="hasRole('RESOURCE_MANAGER')"/>-->
-<!--        <security:intercept-url pattern="/api/vmachine" method="PUT" access="hasRole('RESOURCE_MANAGER')"/>-->
-<!--        <security:intercept-url pattern="/api/vmachine" method="DELETE" access="hasRole('RESOURCE_MANAGER')"/>-->
-<!--        <security:intercept-url pattern="/" access="isAuthenticated()"/>-->
-<!--        <security:custom-filter ref="jwtFilter" before="FORM_LOGIN_FILTER"/>-->
-<!--    </security:http>-->
-<!--    <security:authentication-manager>-->
-<!--        <security:authentication-provider ref="authProvider"/>-->
-<!--    </security:authentication-manager>-->
+    <bean id="jwtTokenProvider" class="pl.lodz.p.core.services.security.JwtTokenProvider"/>
+    <bean id="customAuthEntryPoint" class="security.CustomAuthenticationEntryPoint"/>
+    <bean id="jwtFilter" class="security.JwtFilter">
+        <constructor-arg ref="jwtTokenProvider"/>
+        <constructor-arg ref="clientService"/>
+    </bean>
+    <bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <property name="userDetailsService" ref="clientService"/>
+        <property name="passwordEncoder">
+            <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+        </property>
+    </bean>
+
+    <security:http auto-config="true" use-expressions="true" create-session="stateless" entry-point-ref="customAuthEntryPoint">
+        <security:csrf disabled="true"/>
+        <security:intercept-url pattern="/error" access="permitAll()"/> <!-- for testing remove later -->
+        <security:intercept-url pattern="/ping" access="permitAll"/> <!-- for testing remove later -->
+        <security:intercept-url pattern="/me" access="isAuthenticated()"/> <!--for testing remove later -->
+        <security:intercept-url pattern="/rent" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/rent/active" access="hasRole('RESOURCE_MANAGER')"/>
+        <security:intercept-url pattern="/rent/archived" access="hasRole('RESOURCE_MANAGER')"/>
+        <security:intercept-url pattern="/vmachine" method="POST" access="hasRole('RESOURCE_MANAGER')"/>
+        <security:intercept-url pattern="/vmachine" method="PUT" access="hasRole('RESOURCE_MANAGER')"/>
+        <security:intercept-url pattern="/vmachine" method="DELETE" access="hasRole('RESOURCE_MANAGER')"/>
+        <security:intercept-url pattern="/" access="isAuthenticated()"/>
+        <security:custom-filter ref="jwtFilter" before="FORM_LOGIN_FILTER"/>
+    </security:http>
 </beans>
