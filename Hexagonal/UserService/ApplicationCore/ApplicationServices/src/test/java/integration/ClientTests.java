@@ -138,8 +138,32 @@ public class ClientTests {
     public void testGetClientByUUID() {
         UUID uuid = UUID.fromString("123e4567-e89b-12d3-a456-426614174000"); // Przykładowy UUID
 
+        String payloadLogin = """
+                {
+                    "username": "jp2gmd",
+                    "password": "a"
+                }
+                """;
+        String token = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .body(payloadLogin)
+                .when()
+                .post("/login")
+                .then()
+                .statusCode(200)
+                .extract()
+                .asString();
+
         RestAssured.given()
-                .header("Authorization", "Bearer " + loginClient())
+                .contentType(ContentType.JSON)
+                .body(payloadJson)
+                .when()
+                .post()
+                .then()
+                .statusCode(201);
+
+        RestAssured.given()
+                .header("Authorization", "Bearer " + token)
                 .when()
                 .get("/{uuid}", uuid)
                 .then()
@@ -195,8 +219,8 @@ public class ClientTests {
 
         String payloadLogin = """
                 {
-                    "username": "JDoe",
-                    "password": "12345678"
+                    "username": "jp2gmd",
+                    "password": "a"
                 }
                 """;
         String token = RestAssured.given()

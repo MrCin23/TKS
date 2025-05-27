@@ -46,11 +46,16 @@
         <security:intercept-url pattern="/ping" access="permitAll"/> <!-- for testing remove later -->
         <security:intercept-url pattern="/me" access="isAuthenticated()"/> <!--for testing remove later -->
         <security:intercept-url pattern="/rent" access="isAuthenticated()"/>
-        <security:intercept-url pattern="/rent/active" access="hasRole('RESOURCE_MANAGER')"/>
-        <security:intercept-url pattern="/rent/archived" access="hasRole('RESOURCE_MANAGER')"/>
-        <security:intercept-url pattern="/vmachine" method="POST" access="hasRole('RESOURCE_MANAGER')"/>
-        <security:intercept-url pattern="/vmachine" method="PUT" access="hasRole('RESOURCE_MANAGER')"/>
-        <security:intercept-url pattern="/vmachine" method="DELETE" access="hasRole('RESOURCE_MANAGER')"/>
+        <security:intercept-url pattern="/rent/active" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/rent/archived" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/vmachine" method="POST" access="permitAll()"/>
+        <security:intercept-url pattern="/vmachine" method="PUT" access="permitAll()"/>
+        <security:intercept-url pattern="/vmachine/*" method="PUT" access="permitAll()"/>
+        <security:intercept-url pattern="/vmachine/**" method="PUT" access="permitAll()"/>
+        <security:intercept-url pattern="/vmachine/*" method="DELETE" access="permitAll()"/>
+        <security:intercept-url pattern="/vmachine" method="GET" access="permitAll()"/>
+        <security:intercept-url pattern="/vmachine/*" method="GET" access="permitAll()"/>
+        <security:intercept-url pattern="/vmachine/**" method="GET" access="permitAll()"/>
         <security:intercept-url pattern="/" access="isAuthenticated()"/>
         <security:custom-filter ref="jwtFilter" before="FORM_LOGIN_FILTER"/>
     </security:http>

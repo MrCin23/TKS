@@ -45,9 +45,9 @@ public class DataInitializer {
     }
 
     public void dropAndCreateClient(){
-        clientRepo.getDatabase().getCollection("users").drop();
-        clientRepo.getDatabase().createCollection("users");
-        clientRepo.getDatabase().getCollection("users").createIndex(
+        clientRepo.getDatabase().getCollection("clients").drop();
+        clientRepo.getDatabase().createCollection("clients");
+        clientRepo.getDatabase().getCollection("clients").createIndex(
                 new Document("username", 1),
                 new IndexOptions().unique(true)
         );

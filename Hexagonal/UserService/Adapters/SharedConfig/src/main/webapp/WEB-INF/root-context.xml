@@ -44,9 +44,13 @@
         <security:intercept-url pattern="/ping" access="permitAll"/> <!-- for testing remove later -->
         <security:intercept-url pattern="/me" access="isAuthenticated()"/> <!--for testing remove later -->
         <security:intercept-url pattern="/client" method="POST" access="permitAll"/>
+        <security:intercept-url pattern="/client" method="GET" access="hasRole('ADMIN')"/>
+        <security:intercept-url pattern="/client/*" method="GET" access="hasRole('ADMIN')"/>
         <security:intercept-url pattern="/client/login" access="permitAll"/>
-        <security:intercept-url pattern="/client/activate" access="hasRole('ADMIN')"/>
-        <security:intercept-url pattern="/client/deactivate" access="hasRole('ADMIN')"/>
+        <security:intercept-url pattern="/client/activate/*" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/client/deactivate/*" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/client/findClient/*" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/client/findClients/*" access="hasRole('ADMIN')"/>
         <security:intercept-url pattern="/rent" access="isAuthenticated()"/>
         <security:intercept-url pattern="/rent/active" access="hasRole('RESOURCE_MANAGER')"/>
         <security:intercept-url pattern="/rent/archived" access="hasRole('RESOURCE_MANAGER')"/>

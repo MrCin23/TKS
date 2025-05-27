@@ -44,8 +44,7 @@ public class UserController {
             try {
                 if(user instanceof RESTClient) {
                     rabbitPublisher.sendCreate(user);
-                    userServicePort.createUser(user);
-                    return ResponseEntity.status(HttpStatus.CREATED).build();
+                    return ResponseEntity.status(HttpStatus.CREATED).body(userServicePort.createUser(user));
                 }
                 return ResponseEntity.status(HttpStatus.CREATED).body(userServicePort.createUser(user));
             } catch (Exception e) {
