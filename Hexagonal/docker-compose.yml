@@ -15,6 +15,9 @@ services:
       timeout: 10s
       retries: 5
       start_period: 10s
+    networks:
+      - mongonet
+      - monitoring
 
   mongo_1:
     build: .
@@ -23,6 +26,7 @@ services:
     hostname: mongodb1
     networks:
       - mongonet
+      - monitoring
     ports:
       - "27017:27017"
     environment:
@@ -43,6 +47,7 @@ services:
     hostname: mongodb2
     networks:
       - mongonet
+      - monitoring
     ports:
       - "27018:27018"
     environment:
@@ -55,6 +60,7 @@ services:
       interval: 10s
       timeout: 2s
       retries: 5
+
   mongo_3:
     build: .
     image: mongocustom:7.0.2
@@ -62,6 +68,7 @@ services:
     hostname: mongodb3
     networks:
       - mongonet
+      - monitoring
     ports:
       - "27019:27019"
     environment:
@@ -74,6 +81,7 @@ services:
       interval: 10s
       timeout: 2s
       retries: 5
+
   mongoinit:
     build: .
     image: mongocustom:7.0.2
@@ -103,7 +111,6 @@ services:
       };
       rs.initiate(rsconf);
       '
-      
 
   usermongo1:
     build: .
@@ -112,6 +119,7 @@ services:
     hostname: usermongo1
     networks:
       - mongonet
+      - monitoring
     ports:
       - "27117:27117"
     environment:
@@ -124,12 +132,14 @@ services:
       interval: 10s
       timeout: 2s
       retries: 5
+
   usermongo2:
     build: .
     container_name: usermongo2
     hostname: usermongo2
     networks:
       - mongonet
+      - monitoring
     ports:
       - "27118:27118"
     environment:
@@ -142,12 +152,14 @@ services:
       interval: 10s
       timeout: 2s
       retries: 5
+
   usermongo3:
     build: .
     container_name: usermongo3
     hostname: usermongo3
     networks:
       - mongonet
+      - monitoring
     ports:
       - "27119:27119"
     environment:
@@ -174,7 +186,6 @@ services:
         condition: service_healthy
       usermongo3:
         condition: service_healthy
-
     command: >
       mongosh --host usermongo1:27117 --username admin --password adminpassword --authenticationDatabase admin --eval
       '
@@ -190,7 +201,82 @@ services:
         }
       );
       '
-      
+
+  # Prometheus - zbiera metryki
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/alerts.yml:/etc/prometheus/alerts.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+  # Grafana - dashboardy i wizualizacje
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+  # Blackbox exporter - do testowania HTTP endpoints
+  blackbox:
+    image: prom/blackbox-exporter:latest
+    container_name: blackbox
+    ports:
+      - "9115:9115"
+    volumes:
+      - ./monitoring/blackbox.yml:/etc/blackbox_exporter/config.yml
+    networks:
+      - monitoring
+    restart: unless-stopped
+
+  # Node exporter - metryki systemowe (opcjonalnie)
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    ports:
+      - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    networks:
+      - monitoring
+    restart: unless-stopped
 
 networks:
   mongonet: { }
+  monitoring:
+    driver: bridge
+
+volumes:
+  prometheus_data:
+  grafana_data:

@@ -43,7 +43,9 @@
     <security:http auto-config="true" use-expressions="true" create-session="stateless" entry-point-ref="customAuthEntryPoint">
         <security:csrf disabled="true"/>
         <security:intercept-url pattern="/error" access="permitAll()"/> <!-- for testing remove later -->
-        <security:intercept-url pattern="/ping" access="permitAll"/> <!-- for testing remove later -->
+        <security:intercept-url pattern="/ping" access="permitAll()"/>
+        <security:intercept-url pattern="/health" access="permitAll()"/>
+        <security:intercept-url pattern="/metrics" access="permitAll()"/>
         <security:intercept-url pattern="/me" access="isAuthenticated()"/> <!--for testing remove later -->
         <security:intercept-url pattern="/rent" access="isAuthenticated()"/>
         <security:intercept-url pattern="/rent/active" access="isAuthenticated()"/>
