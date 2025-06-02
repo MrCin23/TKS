@@ -4,9 +4,11 @@ package pl.lodz.p.user.rest.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import pl.lodz.p.user.rest.aspect.Counted;
 import pl.lodz.p.user.rest.config.HealthIndicator;
 
 
@@ -22,6 +24,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/health")
+@Counted
 public class HealthController {
 
     @Autowired(required = false)
@@ -38,6 +41,13 @@ public class HealthController {
         response.put("service", getServiceName());
         response.put("timestamp", Instant.now().toString());
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/test")
+    @ResponseBody
+    @Counted
+    public ResponseEntity<String> test() {
+        return ResponseEntity.status(HttpStatus.OK).body(":)");
     }
 
     @RequestMapping("")

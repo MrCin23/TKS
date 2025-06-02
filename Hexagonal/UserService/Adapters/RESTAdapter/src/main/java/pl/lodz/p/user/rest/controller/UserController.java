@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import pl.lodz.p.user.rest.aspect.Counted;
 import pl.lodz.p.user.rest.model.dto.ChangePasswordDTO;
 import pl.lodz.p.user.rest.model.dto.LoginDTO;
 import pl.lodz.p.user.rest.model.dto.UuidDTO;
@@ -26,6 +27,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/client")
 @Validated
+@Counted
 //@CrossOrigin(origins = {"http://localhost", "https://localhost", "https://flounder-sunny-goldfish.ngrok-free.app", "http://localhost:8080", "http://192.168.1.105", "http://192.168.56.1", "https://192.168.1.105", "https://192.168.56.1"}, allowedHeaders = "*")
 //@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {

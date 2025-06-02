@@ -26,6 +26,10 @@
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
     <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer"/>
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
+    <bean id="metricConfig" class="pl.lodz.p.user.rest.config.MetricConfig"/>
+    <bean id="appConfig" class="pl.lodz.p.user.rest.config.AppConfig"/>
+    <bean id="countedAspect" class="pl.lodz.p.user.rest.aspect.CountedAspect"/>
+
 
     <!-- for debugging -->
     <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>

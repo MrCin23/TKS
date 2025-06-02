@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.lodz.p.rest.aspect.Counted;
 import pl.lodz.p.rest.model.RESTRent;
 import pl.lodz.p.rest.model.dto.RentDTO;
 import pl.lodz.p.rest.model.dto.UuidDTO;
@@ -19,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/rent")
+@Counted
 //@CrossOrigin(origins = {"http://localhost", "https://localhost", "https://flounder-sunny-goldfish.ngrok-free.app", "http://localhost:8080", "http://192.168.1.105", "http://192.168.56.1", "https://192.168.1.105", "https://192.168.56.1"}, allowedHeaders = "*")
 //@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class RentController {

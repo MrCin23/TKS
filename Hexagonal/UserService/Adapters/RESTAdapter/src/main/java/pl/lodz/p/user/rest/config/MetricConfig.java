@@ -1,15 +1,14 @@
-package pl.lodz.p.rest.config;
+package pl.lodz.p.user.rest.config;
 
-import io.micrometer.prometheus.PrometheusMeterRegistry;
-import io.micrometer.prometheus.PrometheusConfig;
+import io.micrometer.prometheusmetrics.PrometheusConfig;
+import io.micrometer.prometheusmetrics.PrometheusMeterRegistry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class MetricsConfig {
-
+public class MetricConfig {
+    @Bean
     public PrometheusMeterRegistry prometheusMeterRegistry() {
         return new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
     }
 }
-

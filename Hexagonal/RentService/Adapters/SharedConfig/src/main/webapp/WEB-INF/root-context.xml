@@ -45,7 +45,8 @@
         <security:intercept-url pattern="/error" access="permitAll()"/> <!-- for testing remove later -->
         <security:intercept-url pattern="/ping" access="permitAll()"/>
         <security:intercept-url pattern="/health" access="permitAll()"/>
-        <security:intercept-url pattern="/metrics" access="permitAll()"/>
+        <security:intercept-url pattern="/metric" access="permitAll()"/>
+        <security:intercept-url pattern="/health/test" access="permitAll()"/>
         <security:intercept-url pattern="/me" access="isAuthenticated()"/> <!--for testing remove later -->
         <security:intercept-url pattern="/rent" access="isAuthenticated()"/>
         <security:intercept-url pattern="/rent/active" access="isAuthenticated()"/>

@@ -1,12 +1,18 @@
 package pl.lodz.p.rest.controller;
 
 
+import io.micrometer.prometheusmetrics.PrometheusMeterRegistry;
+import io.micrometer.core.instrument.Counter;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import pl.lodz.p.rest.aspect.Counted;
 import pl.lodz.p.rest.config.HealthIndicator;
 
 import javax.sql.DataSource;
@@ -15,16 +21,26 @@ import java.io.File;
 import java.time.Instant;
 import java.util.*;
 
-
+@Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/health")
+@Counted
 public class HealthController {
+
 
     @Autowired(required = false)
     private DataSource dataSource;
 
     @Autowired(required = false)
     private List<HealthIndicator> healthIndicators = new ArrayList<>();
+
+    @GetMapping("/test")
+    @ResponseBody
+    @Counted
+    public ResponseEntity<String> test() {
+        return ResponseEntity.status(HttpStatus.OK).body(":)");
+    }
 
     @RequestMapping("/ping")
     @ResponseBody

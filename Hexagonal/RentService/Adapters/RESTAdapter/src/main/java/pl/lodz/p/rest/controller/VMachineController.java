@@ -3,11 +3,13 @@ package pl.lodz.p.rest.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import pl.lodz.p.rest.aspect.Counted;
 import pl.lodz.p.rest.model.RESTVMachine;
 import pl.lodz.p.rest.model.dto.UuidDTO;
 import pl.lodz.p.ui.RESTVMServicePort;
@@ -19,6 +21,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/vmachine")
 @Validated
+@Counted
 //@CrossOrigin(origins = {"http://localhost", "https://localhost", "https://flounder-sunny-goldfish.ngrok-free.app", "http://localhost:8080", "http://192.168.1.105", "http://192.168.56.1", "https://192.168.1.105", "https://192.168.56.1"}, allowedHeaders = "*")
 //@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class VMachineController {
