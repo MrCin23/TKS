@@ -1,0 +1,38 @@
+groups:
+  - name: health_checks
+    rules:
+      - alert: ServiceDown
+        expr: probe_success == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Service {{ $labels.instance }} is down"
+          description: "Service {{ $labels.instance }} has been down for more than 30 seconds"
+
+      - alert: ServiceSlowResponse
+        expr: probe_duration_seconds > 5
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Service {{ $labels.instance }} slow response"
+          description: "Service {{ $labels.instance }} is responding slowly (>5s)"
+
+  - name: database_checks
+    rules:
+      - alert: MongoDBDown
+        expr: mongodb_up == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "MongoDB instance {{ $labels.instance }} is down"
+
+      - alert: RabbitMQDown
+        expr: rabbitmq_up == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "RabbitMQ instance {{ $labels.instance }} is down"

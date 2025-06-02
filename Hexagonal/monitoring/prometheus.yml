@@ -1,0 +1,77 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "alerts.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+
+scrape_configs:
+  # Health checks dla twoich lokalnych serwisów przez blackbox
+  - job_name: 'api-health-checks'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+          - http://host.docker.internal:8081/User/api/health
+          - http://host.docker.internal:8081/Rent/api/health
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox:9115
+
+  # MongoDB health via blackbox (TCP connection)
+  - job_name: 'mongodb-health-checks'
+    metrics_path: /probe
+    params:
+      module: [tcp_connect]
+    static_configs:
+      - targets:
+          - mongodb1:27017
+          - mongodb2:27018
+          - mongodb3:27019
+          - usermongo1:27117
+          - usermongo2:27118
+          - usermongo3:27119
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox:9115
+
+  # RabbitMQ health (HTTP with basic auth)
+  - job_name: 'rabbitmq-health'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+          - http://admin:adminpassword@rabbitmq:15672/api/health/checks/alarms
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox:9115
+
+
+  # Node exporter - metryki systemu
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+
+  # Prometheus sam siebie
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
