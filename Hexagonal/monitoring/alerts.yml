@@ -1,38 +1,29 @@
 groups:
-  - name: health_checks
+  - name: service-alerts
     rules:
-      - alert: ServiceDown
-        expr: probe_success == 0
+      - alert: ApiHealthDown
+        expr: probe_success{job="api-health-checks"} == 0
         for: 30s
         labels:
           severity: critical
         annotations:
-          summary: "Service {{ $labels.instance }} is down"
-          description: "Service {{ $labels.instance }} has been down for more than 30 seconds"
+          summary: "API down: {{ $labels.instance }}"
+          description: "API instance {{ $labels.instance }} failed health check."
 
-      - alert: ServiceSlowResponse
-        expr: probe_duration_seconds > 5
-        for: 1m
+      - alert: MongoDBConnectionDown
+        expr: probe_success{job="mongodb-health-checks"} == 0
+        for: 30s
         labels:
           severity: warning
         annotations:
-          summary: "Service {{ $labels.instance }} slow response"
-          description: "Service {{ $labels.instance }} is responding slowly (>5s)"
+          summary: "MongoDB connection down: {{ $labels.instance }}"
+          description: "Could not connect to MongoDB at {{ $labels.instance }}."
 
-  - name: database_checks
-    rules:
-      - alert: MongoDBDown
-        expr: mongodb_up == 0
+      - alert: RabbitMQHealthCheckFailed
+        expr: probe_success{job="rabbitmq-health"} == 0
         for: 30s
         labels:
           severity: critical
         annotations:
-          summary: "MongoDB instance {{ $labels.instance }} is down"
-
-      - alert: RabbitMQDown
-        expr: rabbitmq_up == 0
-        for: 30s
-        labels:
-          severity: critical
-        annotations:
-          summary: "RabbitMQ instance {{ $labels.instance }} is down"
+          summary: "RabbitMQ health check failed"
+          description: "RabbitMQ instance {{ $labels.instance }} failed the HTTP check."

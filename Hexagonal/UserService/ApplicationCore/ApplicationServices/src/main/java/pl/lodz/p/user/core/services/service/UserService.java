@@ -79,6 +79,14 @@ public class UserService implements UserDetailsService {
         uUpdate.update(new MongoUUID(uuid), "active", false);
     }
 
+    public void deleteUser(String login) {
+        if(uGet.getUserByUsername(login) == null) {
+            throw new RuntimeException("User with id " + login + " does not exist");
+        }
+        User user = uGet.getUserByUsername(login);
+        uRemove.remove(user);
+    }
+
     public String getUserByUsername(String username, String password) {
         if(uGet.getUserByUsername(username) == null) {
             throw new RuntimeException("User with username " + username + " does not exist");

@@ -47,6 +47,15 @@ public class RabbitConfig {
     }
 
     @Bean
+    public TopicExchange clientCreateResponseExchange() {
+        return new TopicExchange(
+                RabbitConsts.CLIENT_CREATE_RESPONSE_EXCHANGE,
+                true,
+                false
+        );
+    }
+
+    @Bean
     public Queue clientCreateQueue() {
         return QueueBuilder.durable(RabbitConsts.CLIENT_CREATE_QUEUE_NAME)
                 .withArgument("x-queue-type", "classic")
@@ -72,7 +81,7 @@ public class RabbitConfig {
     public Binding clientCreateResponseBinding() {
         return BindingBuilder
                 .bind(clientCreateResponseQueue())
-                .to(clientCreateExchange())
+                .to(clientCreateResponseExchange())
                 .with(RabbitConsts.CLIENT_CREATE_RESPONSE_KEY);
     }
 

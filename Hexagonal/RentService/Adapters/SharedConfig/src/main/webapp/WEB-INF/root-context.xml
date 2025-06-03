@@ -51,6 +51,7 @@
         <security:intercept-url pattern="/rent" access="isAuthenticated()"/>
         <security:intercept-url pattern="/rent/active" access="isAuthenticated()"/>
         <security:intercept-url pattern="/rent/archived" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/client" method="POST" access="permitAll()"/>
         <security:intercept-url pattern="/vmachine" method="POST" access="permitAll()"/>
         <security:intercept-url pattern="/vmachine" method="PUT" access="permitAll()"/>
         <security:intercept-url pattern="/vmachine/*" method="PUT" access="permitAll()"/>

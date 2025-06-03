@@ -23,6 +23,8 @@ public interface RESTUserServicePort {
 
     void deactivateUser(UUID uuid);
 
+    void deleteUser(UUID uuid);
+
     String getUserByUsername(LoginDTO loginDTO);
 
     RESTUser getUserByUsername(String username);

@@ -6,9 +6,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import pl.lodz.p.user.rest.aspect.Counted;
 import pl.lodz.p.user.rest.model.dto.ChangePasswordDTO;
 import pl.lodz.p.user.rest.model.dto.LoginDTO;
@@ -20,6 +22,9 @@ import pl.lodz.p.user.rest.model.user.RESTUser;
 import pl.lodz.p.user.rest.publisher.RabbitPublisher;
 import pl.lodz.p.user.ui.RESTUserServicePort;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -45,8 +50,13 @@ public class UserController {
             }
             try {
                 if(user instanceof RESTClient) {
-                    rabbitPublisher.sendCreate(user);
-                    return ResponseEntity.status(HttpStatus.CREATED).body(userServicePort.createUser(user));
+                    RestTemplate restTemplate = new RestTemplate();
+                    ResponseEntity<Map> response = restTemplate.getForEntity("http://localhost:8081/Rent/api/health", Map.class);
+                    if (response.getStatusCode().is2xxSuccessful()) {
+                        rabbitPublisher.sendCreate(user);
+                        return ResponseEntity.status(HttpStatus.CREATED).body(userServicePort.createUser(user));
+                    }
+                    return ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Rent service unavailable");
                 }
                 return ResponseEntity.status(HttpStatus.CREATED).body(userServicePort.createUser(user));
             } catch (Exception e) {

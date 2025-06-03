@@ -1,5 +1,6 @@
 package pl.lodz.p.user.rest.adapter;
 
+import com.webauthn4j.util.exception.NotImplementedException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -55,6 +56,11 @@ public class RESTUserServiceAdapter implements RESTUserServicePort {
     @Override
     public void deactivateUser(UUID uuid) {
         userService.deactivateUser(uuid);
+    }
+
+    @Override
+    public void deleteUser(UUID uuid) {
+        throw new NotImplementedException("Bo się implement czepia");
     }
 
     @Override

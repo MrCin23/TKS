@@ -5,10 +5,8 @@ modules:
     http:
       valid_http_versions: ["HTTP/1.1", "HTTP/2"]
       method: GET
-      fail_if_ssl: false
-      fail_if_not_ssl: false
-      tls_config:
-        insecure_skip_verify: true
+      valid_status_codes: []  # dowolny 2xx
+      follow_redirects: true
 
   tcp_connect:
     prober: tcp
